@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,50 +23,50 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class PtrValue<T> : IFileAccess where T : class, IFileAccess, new()
+  public class PtrValue<T> : IFileAccess where T : class, IFileAccess, new()
+  {
+    private uint _offset;
+    private T _value;
+
+    public PtrValue()
     {
-        private uint _offset;
-        private T _value;
-
-        public PtrValue()
-        {
-        }
-
-        public PtrValue(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public uint Offset
-        {
-            get { return _offset; }
-        }
-
-        public T Value
-        {
-            get { return _value; }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            _offset = ResourceUtil.ReadOffset(br);
-
-            using (new StreamContext(br))
-            {
-                br.BaseStream.Seek(_offset, SeekOrigin.Begin);
-
-                _value = new T();
-                _value.Read(br);                
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public PtrValue(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public uint Offset
+    {
+      get { return _offset; }
+    }
+
+    public T Value
+    {
+      get { return _value; }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      _offset = ResourceUtil.ReadOffset(br);
+
+      using (new StreamContext(br))
+      {
+        br.BaseStream.Seek(_offset, SeekOrigin.Begin);
+
+        _value = new T();
+        _value.Read(br);
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,44 +22,44 @@ using System.Text;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValuePointerArray : StackValuePointerBase
+  internal class StackValuePointerArray : StackValuePointerBase
+  {
+    public StackValuePointerArray(StackValuePointerBase pointer, StackValue index, int itemSize)
     {
-        public StackValuePointerArray(StackValuePointerBase pointer, StackValue index, int itemSize)
-        {
-            Pointer = pointer;
-            Index = index;
-            ItemSize = itemSize;
-        }
-
-        public StackValuePointerBase Pointer { get; set; }
-        public int ItemSize { get; set; }
-        public StackValue Index { get; set; }
-
-        public override string GetDisplayText()
-        {
-            var sb = new StringBuilder();
-            
-            if (Pointer is StackValuePointerFake)
-            {
-                sb.Append("(");
-                sb.Append(Pointer.GetDisplayText());
-                sb.Append(")");
-            }
-            else
-            {
-                sb.Append(Pointer.GetDisplayText());
-            }
-            
-            sb.Append("[");
-            sb.Append(Index.ToString());
-            if (ItemSize > 1)
-            {
-                sb.Append(" * ");
-                sb.Append(ItemSize);
-            }
-            sb.Append("]");
-
-            return sb.ToString();
-        }
+      Pointer = pointer;
+      Index = index;
+      ItemSize = itemSize;
     }
+
+    public StackValuePointerBase Pointer { get; set; }
+    public int ItemSize { get; set; }
+    public StackValue Index { get; set; }
+
+    public override string GetDisplayText()
+    {
+      var sb = new StringBuilder();
+
+      if (Pointer is StackValuePointerFake)
+      {
+        sb.Append("(");
+        sb.Append(Pointer.GetDisplayText());
+        sb.Append(")");
+      }
+      else
+      {
+        sb.Append(Pointer.GetDisplayText());
+      }
+
+      sb.Append("[");
+      sb.Append(Index.ToString());
+      if (ItemSize > 1)
+      {
+        sb.Append(" * ");
+        sb.Append(ItemSize);
+      }
+      sb.Append("]");
+
+      return sb.ToString();
+    }
+  }
 }

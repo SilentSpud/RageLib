@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,11 +23,11 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank
 {
-    interface ISoundBank : IFileAccess
-    {
-        int WaveCount { get; }
-        ISoundWave this[int index] { get; }
-        void ExportAsPCM(int index, Stream soundBankStream, Stream outStream);
-        int ExportWaveBlockAsPCM(int waveIndex, int blockIndex, ref DviAdpcmDecoder.AdpcmState state, Stream soundBankStream, Stream outStream);
-    }
+  interface ISoundBank : IFileAccess
+  {
+    int WaveCount { get; }
+    ISoundWave this[int index] { get; }
+    void ExportAsPCM(int index, Stream soundBankStream, Stream outStream);
+    int ExportWaveBlockAsPCM(int waveIndex, int blockIndex, ref DviAdpcmDecoder.AdpcmState state, Stream soundBankStream, Stream outStream);
+  }
 }

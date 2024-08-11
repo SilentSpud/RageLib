@@ -27,41 +27,41 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal struct Header : IFileAccess
+  internal struct Header : IFileAccess
+  {
+    public long offsetBlockInfo;
+    public int numBlocks;
+    public long sizeBlock;
+    public long offsetChannelInfo;
+    public long offsetUnknownTable;
+    public int numChannels;
+    public int numUnknownTableEntries;
+    public int sizeHeader;
+
+    public Header(BinaryReader br) : this()
     {
-        public long offsetBlockInfo;
-        public int numBlocks;
-        public long sizeBlock;
-        public long offsetChannelInfo;
-        public long offsetUnknownTable;
-        public int numChannels;
-        public int numUnknownTableEntries;
-        public int sizeHeader;
-
-        public Header(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            offsetBlockInfo = br.ReadInt64();
-            numBlocks = br.ReadInt32();
-            sizeBlock = br.ReadInt64();
-            offsetChannelInfo = br.ReadInt64();
-            offsetUnknownTable = br.ReadInt64();
-            numChannels = br.ReadInt32();
-            numUnknownTableEntries = br.ReadInt32();
-            sizeHeader = br.ReadInt32();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      offsetBlockInfo = br.ReadInt64();
+      numBlocks = br.ReadInt32();
+      sizeBlock = br.ReadInt64();
+      offsetChannelInfo = br.ReadInt64();
+      offsetUnknownTable = br.ReadInt64();
+      numChannels = br.ReadInt32();
+      numUnknownTableEntries = br.ReadInt32();
+      sizeHeader = br.ReadInt32();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,26 +23,26 @@ using System.Runtime.InteropServices;
 
 namespace RageLib.Common
 {
-    public class RageZip
-    {
-        /*
-         * rageZipInflate *rageZipInflateInit(byte *input, int inputLength)
-         * bool rageZipInflateProcess(rageZipInflate *rzi, byte *output, int outputLength)
-         * void rageZipInflateEnd(rageZipInflate *rzi)
-         */
+  public class RageZip
+  {
+    /*
+     * rageZipInflate *rageZipInflateInit(byte *input, int inputLength)
+     * bool rageZipInflateProcess(rageZipInflate *rzi, byte *output, int outputLength)
+     * void rageZipInflateEnd(rageZipInflate *rzi)
+     */
 
-        [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateInit")]
-        public static extern IntPtr InflateInit(
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1), In] byte[] input,
-            int inputLength);
+    [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateInit")]
+    public static extern IntPtr InflateInit(
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1), In] byte[] input,
+        int inputLength);
 
-        [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateProcess")]
-        public static extern bool InflateProcess(
-            IntPtr handle,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out] byte[] output,
-            int outputLength);
+    [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateProcess")]
+    public static extern bool InflateProcess(
+        IntPtr handle,
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out] byte[] output,
+        int outputLength);
 
-        [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateEnd")]
-        public static extern void InflateEnd(IntPtr handle);
-    }
+    [DllImport("ragezip.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "rageZipInflateEnd")]
+    public static extern void InflateEnd(IntPtr handle);
+  }
 }

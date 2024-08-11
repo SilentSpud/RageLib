@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,47 +23,47 @@ using RageLib.Common;
 
 namespace RageLib.FileSystem.IMG
 {
-    internal class Header : IFileAccess
+  internal class Header : IFileAccess
+  {
+    public const uint MagicId = 0xA94E2A52;
+    public const int SupportedVersion = 3;
+
+    public Header(File file)
     {
-        public const uint MagicId = 0xA94E2A52;
-        public const int SupportedVersion = 3;
-
-        public Header(File file)
-        {
-            File = file;
-        }
-
-        public uint Identifier { get; set; }
-        public int Version { get; set; }
-        public int EntryCount { get; set; }
-        public int TocSize { get; set; }
-        public short TocEntrySize { get; set; }
-        private short Unknown2 { get; set; }
-
-        public File File { get; private set; }
-
-        #region IFileAccess Members
-
-        public void Read(BinaryReader br)
-        {
-            Identifier = br.ReadUInt32();
-            Version = br.ReadInt32();
-            EntryCount = br.ReadInt32();
-            TocSize = br.ReadInt32();
-            TocEntrySize = br.ReadInt16();
-            Unknown2 = br.ReadInt16();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            bw.Write( Identifier );
-            bw.Write( Version );
-            bw.Write( EntryCount );
-            bw.Write( TocSize );
-            bw.Write( TocEntrySize );
-            bw.Write( Unknown2 );
-        }
-
-        #endregion
+      File = file;
     }
+
+    public uint Identifier { get; set; }
+    public int Version { get; set; }
+    public int EntryCount { get; set; }
+    public int TocSize { get; set; }
+    public short TocEntrySize { get; set; }
+    private short Unknown2 { get; set; }
+
+    public File File { get; private set; }
+
+    #region IFileAccess Members
+
+    public void Read(BinaryReader br)
+    {
+      Identifier = br.ReadUInt32();
+      Version = br.ReadInt32();
+      EntryCount = br.ReadInt32();
+      TocSize = br.ReadInt32();
+      TocEntrySize = br.ReadInt16();
+      Unknown2 = br.ReadInt16();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      bw.Write(Identifier);
+      bw.Write(Version);
+      bw.Write(EntryCount);
+      bw.Write(TocSize);
+      bw.Write(TocEntrySize);
+      bw.Write(Unknown2);
+    }
+
+    #endregion
+  }
 }

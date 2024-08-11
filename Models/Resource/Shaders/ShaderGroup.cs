@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -27,52 +27,52 @@ using RageLib.Textures;
 
 namespace RageLib.Models.Resource.Shaders
 {
-    /// grmShaderGroup 
-    class ShaderGroup : DATBase, IFileAccess
+  /// grmShaderGroup 
+  class ShaderGroup : DATBase, IFileAccess
+  {
+    public uint TextureDictionaryOffset { get; private set; }
+    public TextureFile TextureDictionary { get; set; }
+
+    public PtrCollection<ShaderFx> Shaders { get; private set; }
+
+    private SimpleArray<uint> Zeros { get; set; }
+
+    private SimpleCollection<uint> VertexDeclarationUsageFlags { get; set; }
+
+    private SimpleCollection<uint> Data3 { get; set; }
+
+    public ShaderGroup()
     {
-        public uint TextureDictionaryOffset { get; private set; }
-        public TextureFile TextureDictionary { get; set; }
-
-        public PtrCollection<ShaderFx> Shaders { get; private set; }
-
-        private SimpleArray<uint> Zeros { get; set; }
-
-        private SimpleCollection<uint> VertexDeclarationUsageFlags { get; set; }
-
-        private SimpleCollection<uint> Data3 { get; set; }
-
-        public ShaderGroup()
-        {
-        }
-
-        public ShaderGroup(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-
-            TextureDictionaryOffset = ResourceUtil.ReadOffset(br);
-
-            // CPtrCollection<T>
-            Shaders = new PtrCollection<ShaderFx>(br);
-
-            Zeros = new SimpleArray<uint>(br, 12, r => r.ReadUInt32());
-
-            VertexDeclarationUsageFlags = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
-
-            Data3 = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public ShaderGroup(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
+    {
+      base.Read(br);
+
+      TextureDictionaryOffset = ResourceUtil.ReadOffset(br);
+
+      // CPtrCollection<T>
+      Shaders = new PtrCollection<ShaderFx>(br);
+
+      Zeros = new SimpleArray<uint>(br, 12, r => r.ReadUInt32());
+
+      VertexDeclarationUsageFlags = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
+
+      Data3 = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
+    }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new NotImplementedException();
+    }
+
+    #endregion
+  }
 }

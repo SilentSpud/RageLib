@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,17 +22,17 @@ using System;
 
 namespace RageLib.Scripting.Script
 {
-    internal class InstructionBranch : Instruction
+  internal class InstructionBranch : Instruction
+  {
+    protected override void DecodeInternal(byte[] code, int offset)
     {
-        protected override void DecodeInternal(byte[] code, int offset)
-        {
-            IsConditionalBranch = (OpCode == OpCode.JumpFalse || OpCode == OpCode.JumpTrue);
-            BranchOffset = BitConverter.ToInt32(code, offset + 1);
-        }
-
-        protected override string GetInstructionTextInternal()
-        {
-            return string.Format("{0} @{1:x}", OpCode, BranchOffset);
-        }
+      IsConditionalBranch = (OpCode == OpCode.JumpFalse || OpCode == OpCode.JumpTrue);
+      BranchOffset = BitConverter.ToInt32(code, offset + 1);
     }
+
+    protected override string GetInstructionTextInternal()
+    {
+      return string.Format("{0} @{1:x}", OpCode, BranchOffset);
+    }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,16 +22,16 @@ using System.IO;
 
 namespace RageLib.FileSystem.Real
 {
-    class RealContext
+  class RealContext
+  {
+    private readonly DirectoryInfo _directory;
+
+    public DirectoryEntry RootDirectory { get; private set; }
+
+    public RealContext(DirectoryInfo directory)
     {
-        private readonly DirectoryInfo _directory;
-
-        public DirectoryEntry RootDirectory { get; private set; }
-
-        public RealContext(DirectoryInfo directory)
-        {
-            _directory = directory;
-            RootDirectory = new DirectoryEntry(this, _directory);
-        }
+      _directory = directory;
+      RootDirectory = new DirectoryEntry(this, _directory);
     }
+  }
 }

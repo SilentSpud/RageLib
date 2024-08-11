@@ -25,77 +25,77 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Models
 {
-    internal class Geometry : DATBase, IFileAccess
+  internal class Geometry : DATBase, IFileAccess
+  {
+    private uint Unknown1 { get; set; }
+    private uint Unknown2 { get; set; }
+    private uint Unknown3 { get; set; }
+    private uint Unknown4 { get; set; }
+    private uint Unknown5 { get; set; }
+    private uint Unknown6 { get; set; }
+    private uint Unknown7 { get; set; }
+    private uint Unknown8 { get; set; }
+    public uint IndexCount { get; private set; }
+    public uint FaceCount { get; private set; }
+    public ushort VertexCount { get; private set; }
+    public ushort PrimitiveType { get; private set; }   // RAGE_PRIMITIVE_TYPE
+    private uint Unknown9 { get; set; }
+    public ushort VertexStride { get; private set; }
+    private ushort Unknown10 { get; set; }
+    private uint Unknown11 { get; set; }
+    private uint Unknown12 { get; set; }
+    private uint Unknown13 { get; set; }
+
+    public VertexBuffer VertexBuffer { get; set; }
+    public IndexBuffer IndexBuffer { get; set; }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
     {
-        private uint Unknown1 { get; set; }
-        private uint Unknown2 { get; set; }
-        private uint Unknown3 { get; set; }
-        private uint Unknown4 { get; set; }
-        private uint Unknown5 { get; set; }
-        private uint Unknown6 { get; set; }
-        private uint Unknown7 { get; set; }
-        private uint Unknown8 { get; set; }
-        public uint IndexCount { get; private set; }
-        public uint FaceCount { get; private set; }
-        public ushort VertexCount { get; private set; }
-        public ushort PrimitiveType { get; private set; }	// RAGE_PRIMITIVE_TYPE
-        private uint Unknown9 { get; set; }
-        public ushort VertexStride { get; private set; }
-        private ushort Unknown10 { get; set; }
-        private uint Unknown11 { get; set; }
-        private uint Unknown12 { get; set; }
-        private uint Unknown13 { get; set; }
+      base.Read(br);
 
-        public VertexBuffer VertexBuffer { get; set; }
-        public IndexBuffer IndexBuffer { get; set; }
+      Unknown1 = br.ReadUInt32();
+      Unknown2 = br.ReadUInt32();
 
-        #region Implementation of IFileAccess
+      var vertexBuffersOffset = ResourceUtil.ReadOffset(br);
+      Unknown3 = br.ReadUInt32();
+      Unknown4 = br.ReadUInt32();
+      Unknown5 = br.ReadUInt32();
 
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
+      var indexBuffersOffset = ResourceUtil.ReadOffset(br);
+      Unknown6 = br.ReadUInt32();
+      Unknown7 = br.ReadUInt32();
+      Unknown8 = br.ReadUInt32();
 
-            Unknown1 = br.ReadUInt32();
-            Unknown2 = br.ReadUInt32();
+      IndexCount = br.ReadUInt32();
+      FaceCount = br.ReadUInt32();
+      VertexCount = br.ReadUInt16();
+      PrimitiveType = br.ReadUInt16();
 
-            var vertexBuffersOffset = ResourceUtil.ReadOffset(br);
-            Unknown3 = br.ReadUInt32();
-            Unknown4 = br.ReadUInt32();
-            Unknown5 = br.ReadUInt32();
+      Unknown9 = br.ReadUInt32();
 
-            var indexBuffersOffset = ResourceUtil.ReadOffset(br);
-            Unknown6 = br.ReadUInt32();
-            Unknown7 = br.ReadUInt32();
-            Unknown8 = br.ReadUInt32();
+      VertexStride = br.ReadUInt16();
+      Unknown10 = br.ReadUInt16();
 
-            IndexCount = br.ReadUInt32();
-            FaceCount = br.ReadUInt32();
-            VertexCount = br.ReadUInt16();
-            PrimitiveType = br.ReadUInt16();
+      Unknown11 = br.ReadUInt32();
+      Unknown12 = br.ReadUInt32();
+      Unknown13 = br.ReadUInt32();
 
-            Unknown9 = br.ReadUInt32();
+      // Data
 
-            VertexStride = br.ReadUInt16();
-            Unknown10 = br.ReadUInt16();
+      br.BaseStream.Seek(vertexBuffersOffset, SeekOrigin.Begin);
+      VertexBuffer = new VertexBuffer(br);
 
-            Unknown11 = br.ReadUInt32();
-            Unknown12 = br.ReadUInt32();
-            Unknown13 = br.ReadUInt32();
-
-            // Data
-
-            br.BaseStream.Seek(vertexBuffersOffset, SeekOrigin.Begin);
-            VertexBuffer = new VertexBuffer(br);
-
-            br.BaseStream.Seek(indexBuffersOffset, SeekOrigin.Begin);
-            IndexBuffer = new IndexBuffer(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      br.BaseStream.Seek(indexBuffersOffset, SeekOrigin.Begin);
+      IndexBuffer = new IndexBuffer(br);
     }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

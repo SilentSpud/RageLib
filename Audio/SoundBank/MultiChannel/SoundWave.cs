@@ -22,56 +22,56 @@ using RageLib.Audio.SoundBank.Hashes;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal class SoundWave : ISoundWave
+  internal class SoundWave : ISoundWave
+  {
+    private Header _header;
+    private ChannelInfo _channelInfo;
+
+    public SoundWave(Header header, ChannelInfo channelInfo)
     {
-        private Header _header;
-        private ChannelInfo _channelInfo;
-
-        public SoundWave(Header header, ChannelInfo channelInfo)
-        {
-            _header = header;
-            _channelInfo = channelInfo;
-        }
-
-        #region Implementation of ISoundWave
-
-        public string Name
-        {
-            get
-            {
-                return _channelInfo.Name;
-            }
-        }
-
-        public int NumberOfSamples
-        {
-            get { return _channelInfo.numSamples16Bit; }
-        }
-
-        public int SamplesPerSecond
-        {
-            get
-            {
-                return _channelInfo.sampleRate;
-            }
-        }
-
-        public int BlockSize
-        {
-            get
-            {
-                return SoundBankMultiChannel.BlockSize;
-            }
-        }
-
-        public int BlockCount
-        {
-            get
-            {
-                return _header.numBlocks;
-            }
-        }
-
-        #endregion
+      _header = header;
+      _channelInfo = channelInfo;
     }
+
+    #region Implementation of ISoundWave
+
+    public string Name
+    {
+      get
+      {
+        return _channelInfo.Name;
+      }
+    }
+
+    public int NumberOfSamples
+    {
+      get { return _channelInfo.numSamples16Bit; }
+    }
+
+    public int SamplesPerSecond
+    {
+      get
+      {
+        return _channelInfo.sampleRate;
+      }
+    }
+
+    public int BlockSize
+    {
+      get
+      {
+        return SoundBankMultiChannel.BlockSize;
+      }
+    }
+
+    public int BlockCount
+    {
+      get
+      {
+        return _header.numBlocks;
+      }
+    }
+
+    #endregion
+  }
 }

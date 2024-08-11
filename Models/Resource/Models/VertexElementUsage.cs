@@ -20,19 +20,19 @@
 
 namespace RageLib.Models.Resource.Models
 {
-    internal enum VertexElementUsage
-    {
-        Position = 0,
-        PositionT = 1,
-        Normal = 2,
-        Binormal = 3,
-        Tangent = 4,
-        TextureCoordinate = 5,
-        BlendWeight = 6,
-        BlendIndices = 7,
-        Color = 8,
-        Unknown1 = 9,
-        Unknown2 = 10,
-        Unknown3 = 11,
-    }
+  internal enum VertexElementUsage
+  {
+    Position = 0,
+    PositionT = 1,
+    Normal = 2,
+    Binormal = 3,
+    Tangent = 4,
+    TextureCoordinate = 5,
+    BlendWeight = 6,
+    BlendIndices = 7,
+    Color = 8,
+    Unknown1 = 9,
+    Unknown2 = 10,
+    Unknown3 = 11,
+  }
 }

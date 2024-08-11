@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -27,128 +27,128 @@ using RageLib.Textures;
 
 namespace RageLib.Models
 {
-    public class ModelViewController
+  public class ModelViewController
+  {
+    private readonly ModelView _view;
+    private IModelFile _modelFile;
+    private ModelNode _rootModelNode;
+    private TextureFile[] _textureFiles;
+    private string _workingDirectory;
+
+    public ModelViewController(ModelView view)
     {
-        private readonly ModelView _view;
-        private IModelFile _modelFile;
-        private ModelNode _rootModelNode;
-        private TextureFile[] _textureFiles;
-        private string _workingDirectory;
+      _view = view;
 
-        public ModelViewController(ModelView view)
-        {
-            _view = view;
-
-            _view.ExportClicked += View_ExportClicked;
-            _view.Disposed += View_Disposed;
-            _view.RefreshDisplayModel += View_RefreshDisplayModel;
-        }
-
-        private void View_RefreshDisplayModel(object sender, EventArgs e)
-        {
-            List<ModelNode> viewableNodes = new List<ModelNode>();
-            FindViewableNodes( _rootModelNode, viewableNodes );
-
-            if (!_view.SelectedNavigationModel.Selected)
-            {
-                viewableNodes.Add(_view.SelectedNavigationModel);
-            }
-
-            Model3DGroup group = new Model3DGroup();
-            foreach (var node in viewableNodes)
-            {
-                group.Children.Add(node.Model3D);
-            }
-
-            _view.DisplayModel = group;
-        }
-
-        private void FindViewableNodes(ModelNode node, List<ModelNode> viewableNodes )
-        {
-            if (node.Selected)
-            {
-                viewableNodes.Add(node);
-            }
-            else
-            {
-                foreach (var child in node.Children)
-                {
-                    FindViewableNodes(child, viewableNodes);
-                }
-            }
-        }
-
-        public TextureFile[] TextureFiles
-        {
-            get { return _textureFiles; }
-            set { _textureFiles = value; }
-        }
-
-        public IModelFile ModelFile
-        {
-            get { return _modelFile; }
-            set
-            {
-                _modelFile = value;
-                UpdateView();
-            }
-        }
-
-        private void UpdateView()
-        {
-            if (_modelFile != null)
-            {
-                _rootModelNode = _modelFile.GetModel(_textureFiles);
-                _view.NavigationModel = _rootModelNode;
-            }
-            else
-            {
-                _rootModelNode = null;
-                _view.NavigationModel = null;
-                _view.DisplayModel = null;
-            }
-        }
-
-        private void View_ExportClicked(object sender, EventArgs e)
-        {
-            var model = _rootModelNode;
-            if (model != null)
-            {
-                var sfd = new SaveFileDialog
-                {
-                    AddExtension = true,
-                    OverwritePrompt = true,
-                    Title = "Export Model",
-                    Filter = Export.ExportFactory.GenerateFilterString(),
-                    InitialDirectory = _workingDirectory,
-                };
-
-                if (sfd.ShowDialog() == DialogResult.OK && sfd.FilterIndex > 0)
-                {
-                    Export.IExporter exporter = Export.ExportFactory.GetExporter(sfd.FilterIndex - 1);
-                    exporter.Export( model, sfd.FileName );
-
-                    _workingDirectory = new FileInfo(sfd.FileName).Directory.FullName;
-                }
-            }
-        }
-
-        private void View_Disposed(object sender, EventArgs e)
-        {
-            if (TextureFiles != null)
-            {
-                foreach (var file in _textureFiles)
-                {
-                    file.Dispose();
-                }
-                TextureFiles = null;
-            }
-            
-            if (ModelFile != null)
-            {
-                ModelFile.Dispose();
-                ModelFile = null;
-            }
-        }
+      _view.ExportClicked += View_ExportClicked;
+      _view.Disposed += View_Disposed;
+      _view.RefreshDisplayModel += View_RefreshDisplayModel;
     }
+
+    private void View_RefreshDisplayModel(object sender, EventArgs e)
+    {
+      List<ModelNode> viewableNodes = new List<ModelNode>();
+      FindViewableNodes(_rootModelNode, viewableNodes);
+
+      if (!_view.SelectedNavigationModel.Selected)
+      {
+        viewableNodes.Add(_view.SelectedNavigationModel);
+      }
+
+      Model3DGroup group = new Model3DGroup();
+      foreach (var node in viewableNodes)
+      {
+        group.Children.Add(node.Model3D);
+      }
+
+      _view.DisplayModel = group;
+    }
+
+    private void FindViewableNodes(ModelNode node, List<ModelNode> viewableNodes)
+    {
+      if (node.Selected)
+      {
+        viewableNodes.Add(node);
+      }
+      else
+      {
+        foreach (var child in node.Children)
+        {
+          FindViewableNodes(child, viewableNodes);
+        }
+      }
+    }
+
+    public TextureFile[] TextureFiles
+    {
+      get { return _textureFiles; }
+      set { _textureFiles = value; }
+    }
+
+    public IModelFile ModelFile
+    {
+      get { return _modelFile; }
+      set
+      {
+        _modelFile = value;
+        UpdateView();
+      }
+    }
+
+    private void UpdateView()
+    {
+      if (_modelFile != null)
+      {
+        _rootModelNode = _modelFile.GetModel(_textureFiles);
+        _view.NavigationModel = _rootModelNode;
+      }
+      else
+      {
+        _rootModelNode = null;
+        _view.NavigationModel = null;
+        _view.DisplayModel = null;
+      }
+    }
+
+    private void View_ExportClicked(object sender, EventArgs e)
+    {
+      var model = _rootModelNode;
+      if (model != null)
+      {
+        var sfd = new SaveFileDialog
+        {
+          AddExtension = true,
+          OverwritePrompt = true,
+          Title = "Export Model",
+          Filter = Export.ExportFactory.GenerateFilterString(),
+          InitialDirectory = _workingDirectory,
+        };
+
+        if (sfd.ShowDialog() == DialogResult.OK && sfd.FilterIndex > 0)
+        {
+          Export.IExporter exporter = Export.ExportFactory.GetExporter(sfd.FilterIndex - 1);
+          exporter.Export(model, sfd.FileName);
+
+          _workingDirectory = new FileInfo(sfd.FileName).Directory.FullName;
+        }
+      }
+    }
+
+    private void View_Disposed(object sender, EventArgs e)
+    {
+      if (TextureFiles != null)
+      {
+        foreach (var file in _textureFiles)
+        {
+          file.Dispose();
+        }
+        TextureFiles = null;
+      }
+
+      if (ModelFile != null)
+      {
+        ModelFile.Dispose();
+        ModelFile = null;
+      }
+    }
+  }
 }

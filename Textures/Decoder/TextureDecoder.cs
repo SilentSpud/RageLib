@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,55 +25,55 @@ using System.Runtime.InteropServices;
 
 namespace RageLib.Textures.Decoder
 {
-    internal class TextureDecoder
+  internal class TextureDecoder
+  {
+    internal static Image Decode(Texture texture, int level)
     {
-        internal static Image Decode(Texture texture, int level)
-        {
-            var width = texture.GetWidth(level);
-            var height = texture.GetHeight(level);
-            var data = texture.GetTextureData(level);
-            
-            switch(texture.TextureType)
+      var width = texture.GetWidth(level);
+      var height = texture.GetHeight(level);
+      var data = texture.GetTextureData(level);
+
+      switch (texture.TextureType)
+      {
+        case TextureType.DXT1:
+          data = DXTDecoder.DecodeDXT1(data, (int)width, (int)height);
+          break;
+        case TextureType.DXT3:
+          data = DXTDecoder.DecodeDXT3(data, (int)width, (int)height);
+          break;
+        case TextureType.DXT5:
+          data = DXTDecoder.DecodeDXT5(data, (int)width, (int)height);
+          break;
+        case TextureType.A8R8G8B8:
+          // Nothing to do, the data is already in the format we want it to be
+          break;
+        case TextureType.L8:
+          {
+            var newData = new byte[data.Length * 4];
+            for (int i = 0; i < data.Length; i++)
             {
-                case TextureType.DXT1:
-                    data = DXTDecoder.DecodeDXT1(data, (int)width, (int)height);
-                    break;
-                case TextureType.DXT3:
-                    data = DXTDecoder.DecodeDXT3(data, (int)width, (int)height);
-                    break;
-                case TextureType.DXT5:
-                    data = DXTDecoder.DecodeDXT5(data, (int)width, (int)height);
-                    break;
-                case TextureType.A8R8G8B8:
-                    // Nothing to do, the data is already in the format we want it to be
-                    break;
-                case TextureType.L8:
-                    {
-                        var newData = new byte[data.Length*4];
-                        for (int i = 0; i < data.Length; i++)
-                        {
-                            newData[i*4 + 0] = data[i];
-                            newData[i*4 + 1] = data[i];
-                            newData[i*4 + 2] = data[i];
-                            newData[i*4 + 3] = 255;
-                        }
-                        data = newData;
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+              newData[i * 4 + 0] = data[i];
+              newData[i * 4 + 1] = data[i];
+              newData[i * 4 + 2] = data[i];
+              newData[i * 4 + 3] = 255;
             }
+            data = newData;
+          }
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
 
-            var bmp = new Bitmap((int) width, (int) height, PixelFormat.Format32bppArgb);
+      var bmp = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
-            var rect = new Rectangle(0, 0, (int) width, (int) height);
-            var bmpdata = bmp.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+      var rect = new Rectangle(0, 0, (int)width, (int)height);
+      var bmpdata = bmp.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            Marshal.Copy(data, 0, bmpdata.Scan0, (int) width*(int) height*4);
-            
-            bmp.UnlockBits(bmpdata);
+      Marshal.Copy(data, 0, bmpdata.Scan0, (int)width * (int)height * 4);
 
-            return bmp;
-        }
+      bmp.UnlockBits(bmpdata);
+
+      return bmp;
     }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,90 +25,90 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class PtrCollection<T> : IFileAccess, IEnumerable<T> where T : class, IFileAccess, new()
+  public class PtrCollection<T> : IFileAccess, IEnumerable<T> where T : class, IFileAccess, new()
+  {
+    private uint[] _itemOffsets;
+    private List<T> _items;
+
+    public ushort Count { get; set; }
+    public ushort Size { get; set; }
+
+    public PtrCollection()
     {
-        private uint[] _itemOffsets;
-        private List<T> _items;
 
-        public ushort Count { get; set; }
-        public ushort Size { get; set; }
-
-        public PtrCollection()
-        {
-            
-        }
-
-        public PtrCollection(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public T GetByOffset(uint offset)
-        {
-            for(int i=0; i<_itemOffsets.Length; i++)
-            {
-                if (_itemOffsets[i] == offset)
-                {
-                    return _items[i];
-                }
-            }
-            return null;
-        }
-
-        public T this[int index]
-        {
-            get { return _items[index]; }
-            set { _items[index] = value;  }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            var ptrListOffset = ResourceUtil.ReadOffset(br);
-            Count = br.ReadUInt16();
-            Size = br.ReadUInt16();
-
-            _itemOffsets = new uint[Count];
-            _items = new List<T>();
-
-            using (new StreamContext(br))
-            {
-                br.BaseStream.Seek(ptrListOffset, SeekOrigin.Begin);
-
-                for (int i = 0; i < Count; i++)
-                {
-                    _itemOffsets[i] = ResourceUtil.ReadOffset(br);
-                }
-
-                for (int i = 0; i < Count; i++)
-                {
-                    br.BaseStream.Seek(_itemOffsets[i], SeekOrigin.Begin);
-                    var item = new T();
-                    item.Read(br);
-                    _items.Add(item);
-                }
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        #region Implementation of IEnumerable<T>
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return _items.GetEnumerator();
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
     }
+
+    public PtrCollection(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public T GetByOffset(uint offset)
+    {
+      for (int i = 0; i < _itemOffsets.Length; i++)
+      {
+        if (_itemOffsets[i] == offset)
+        {
+          return _items[i];
+        }
+      }
+      return null;
+    }
+
+    public T this[int index]
+    {
+      get { return _items[index]; }
+      set { _items[index] = value; }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      var ptrListOffset = ResourceUtil.ReadOffset(br);
+      Count = br.ReadUInt16();
+      Size = br.ReadUInt16();
+
+      _itemOffsets = new uint[Count];
+      _items = new List<T>();
+
+      using (new StreamContext(br))
+      {
+        br.BaseStream.Seek(ptrListOffset, SeekOrigin.Begin);
+
+        for (int i = 0; i < Count; i++)
+        {
+          _itemOffsets[i] = ResourceUtil.ReadOffset(br);
+        }
+
+        for (int i = 0; i < Count; i++)
+        {
+          br.BaseStream.Seek(_itemOffsets[i], SeekOrigin.Begin);
+          var item = new T();
+          item.Read(br);
+          _items.Add(item);
+        }
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+
+    #region Implementation of IEnumerable<T>
+
+    public IEnumerator<T> GetEnumerator()
+    {
+      return _items.GetEnumerator();
+    }
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    #endregion
+  }
 }

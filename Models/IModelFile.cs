@@ -24,10 +24,10 @@ using RageLib.Textures;
 
 namespace RageLib.Models
 {
-    public interface IModelFile : IDisposable
-    {
-        void Open(string filename);
-        void Open(Stream stream);
-        ModelNode GetModel(TextureFile[] textures);
-    }
+  public interface IModelFile : IDisposable
+  {
+    void Open(string filename);
+    void Open(Stream stream);
+    ModelNode GetModel(TextureFile[] textures);
+  }
 }

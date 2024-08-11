@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,18 +22,18 @@ using System.Reflection;
 
 namespace RageLib.Common.Resources
 {
-    [Obfuscation(StripAfterObfuscation = true, ApplyToMembers = true, Exclude = true)]
-    public enum ResourceType
-    {
-        TextureXBOX = 0x7, // xtd
-        ModelXBOX = 0x6D, // xdr
-        Generic = 0x01, // xhm / xad (Generic files as rsc?)
-        Bounds = 0x20, // xbd, wbd
-        Particles = 0x24, // xpfl
-        Particles2 = 0x1B, // xpfl
+  [Obfuscation(StripAfterObfuscation = true, ApplyToMembers = true, Exclude = true)]
+  public enum ResourceType
+  {
+    TextureXBOX = 0x7, // xtd
+    ModelXBOX = 0x6D, // xdr
+    Generic = 0x01, // xhm / xad (Generic files as rsc?)
+    Bounds = 0x20, // xbd, wbd
+    Particles = 0x24, // xpfl
+    Particles2 = 0x1B, // xpfl
 
-        Texture = 0x8, // wtd
-        Model = 0x6E, // wdr
-        ModelFrag = 0x70, //wft
-    }
+    Texture = 0x8, // wtd
+    Model = 0x6E, // wdr
+    ModelFrag = 0x70, //wft
+  }
 }

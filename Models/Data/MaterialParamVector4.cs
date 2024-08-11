@@ -23,14 +23,14 @@ using RageLib.Models.Resource.Shaders;
 
 namespace RageLib.Models.Data
 {
-    public class MaterialParamVector4 : MaterialParam
-    {
-        public Vector4 Value { get; private set; }
+  public class MaterialParamVector4 : MaterialParam
+  {
+    public Vector4 Value { get; private set; }
 
-        internal MaterialParamVector4(uint hash, ShaderParamVector4 vector)
-            : base(hash)
-        {
-            Value = vector.Data;
-        }
+    internal MaterialParamVector4(uint hash, ShaderParamVector4 vector)
+        : base(hash)
+    {
+      Value = vector.Data;
     }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,28 +22,28 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class UnDocData : IFileAccess
+  public class UnDocData : IFileAccess
+  {
+    public UnDocData()
     {
-        public UnDocData()
-        {
-            
-        }
 
-        public UnDocData(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-        }
-
-        #endregion
     }
+
+    public UnDocData(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+    }
+
+    #endregion
+  }
 }

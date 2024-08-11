@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,43 +22,43 @@ using System.Diagnostics;
 
 namespace RageLib.FileSystem.Common
 {
-    public abstract class FileSystem
+  public abstract class FileSystem
+  {
+    public Directory RootDirectory { get; protected set; }
+
+    public abstract void Open(string filename);
+
+    public abstract void Save();
+
+    public abstract void Rebuild();
+
+    public abstract void Close();
+
+    public abstract bool SupportsRebuild { get; }
+    public abstract bool HasDirectoryStructure { get; }
+
+    internal void DumpFSToDebug()
     {
-        public Directory RootDirectory { get; protected set; }
-
-        public abstract void Open(string filename);
-
-        public abstract void Save();
-
-        public abstract void Rebuild();
-
-        public abstract void Close();
-
-        public abstract bool SupportsRebuild { get; }
-        public abstract bool HasDirectoryStructure { get; }
-
-        internal void DumpFSToDebug()
-        {
-            DumpDirToDebug("", RootDirectory);
-        }
-
-        private static void DumpDirToDebug(string indent, Directory dir)
-        {
-            Debug.WriteLine(indent + dir.Name);
-            indent += "  ";
-            foreach (FSObject item in dir)
-            {
-                if (item.IsDirectory)
-                {
-                    DumpDirToDebug(indent, item as Directory);
-                }
-                else
-                {
-                    var file = item as File;
-                    Debug.WriteLine(indent + item.Name + "   (Size: " + file.Size + ", Compressed: " + file.IsCompressed +
-                                    ")");
-                }
-            }
-        }
+      DumpDirToDebug("", RootDirectory);
     }
+
+    private static void DumpDirToDebug(string indent, Directory dir)
+    {
+      Debug.WriteLine(indent + dir.Name);
+      indent += "  ";
+      foreach (FSObject item in dir)
+      {
+        if (item.IsDirectory)
+        {
+          DumpDirToDebug(indent, item as Directory);
+        }
+        else
+        {
+          var file = item as File;
+          Debug.WriteLine(indent + item.Name + "   (Size: " + file.Size + ", Compressed: " + file.IsCompressed +
+                          ")");
+        }
+      }
+    }
+  }
 }

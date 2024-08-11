@@ -20,9 +20,9 @@
 
 namespace RageLib.Shaders
 {
-    public enum ShaderType
-    {
-        Vertex,
-        Pixel,
-    }
+  public enum ShaderType
+  {
+    Vertex,
+    Pixel,
+  }
 }

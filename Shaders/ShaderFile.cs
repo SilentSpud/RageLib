@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Shaders
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,42 +23,42 @@ using System.IO;
 
 namespace RageLib.Shaders
 {
-    public class ShaderFile
+  public class ShaderFile
+  {
+    internal ShaderFX.File File { get; private set; }
+
+    public List<Shader> VertexShaders { get; private set; }
+    public List<Shader> PixelShaders { get; private set; }
+
+    public void Open(string filename)
     {
-        internal ShaderFX.File File { get; private set; }
-        
-        public List<Shader> VertexShaders { get; private set; }
-        public List<Shader> PixelShaders { get; private set; }
+      File = new ShaderFX.File();
+      File.Open(filename);
 
-        public void Open(string filename)
-        {
-            File = new ShaderFX.File();
-            File.Open(filename);
-
-            ProcessShaders();
-        }
-
-        public void Open(Stream stream)
-        {
-            File = new ShaderFX.File();
-            File.Open(stream);
-
-            ProcessShaders();
-        }
-
-        private void ProcessShaders()
-        {
-            VertexShaders = new List<Shader>();
-            foreach (var shader in File.ShaderFX.VertexShaders)
-            {
-                VertexShaders.Add(new Shader(shader));
-            }
-
-            PixelShaders = new List<Shader>();
-            foreach (var shader in File.ShaderFX.PixelShaders)
-            {
-                PixelShaders.Add(new Shader(shader));
-            }
-        }
+      ProcessShaders();
     }
+
+    public void Open(Stream stream)
+    {
+      File = new ShaderFX.File();
+      File.Open(stream);
+
+      ProcessShaders();
+    }
+
+    private void ProcessShaders()
+    {
+      VertexShaders = new List<Shader>();
+      foreach (var shader in File.ShaderFX.VertexShaders)
+      {
+        VertexShaders.Add(new Shader(shader));
+      }
+
+      PixelShaders = new List<Shader>();
+      foreach (var shader in File.ShaderFX.PixelShaders)
+      {
+        PixelShaders.Add(new Shader(shader));
+      }
+    }
+  }
 }

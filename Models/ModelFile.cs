@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,49 +25,49 @@ using RageLib.Textures;
 
 namespace RageLib.Models
 {
-    public class ModelFile : IModelFile
+  public class ModelFile : IModelFile
+  {
+    internal File<DrawableModel> File { get; private set; }
+
+    public void Open(string filename)
     {
-        internal File<DrawableModel> File { get; private set; }
-
-        public void Open(string filename)
-        {
-            File = new File<DrawableModel>();
-            File.Open(filename);
-        }
-
-        public void Open(Stream stream)
-        {
-            File = new File<DrawableModel>();
-            File.Open(stream);
-        }
-
-        public TextureFile EmbeddedTextureFile
-        {
-            get { return File.Data.ShaderGroup.TextureDictionary; }
-        }
-
-        public ModelNode GetModel(TextureFile[] textures)
-        {
-            return ModelGenerator.GenerateModel(File.Data, textures);
-        }
-
-        public Drawable GetDataModel()
-        {
-            return new Drawable(File.Data);
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            if (File != null)
-            {
-                File.Dispose();
-                File = null;
-            }
-
-        }
-
-        #endregion
+      File = new File<DrawableModel>();
+      File.Open(filename);
     }
+
+    public void Open(Stream stream)
+    {
+      File = new File<DrawableModel>();
+      File.Open(stream);
+    }
+
+    public TextureFile EmbeddedTextureFile
+    {
+      get { return File.Data.ShaderGroup.TextureDictionary; }
+    }
+
+    public ModelNode GetModel(TextureFile[] textures)
+    {
+      return ModelGenerator.GenerateModel(File.Data, textures);
+    }
+
+    public Drawable GetDataModel()
+    {
+      return new Drawable(File.Data);
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      if (File != null)
+      {
+        File.Dispose();
+        File = null;
+      }
+
+    }
+
+    #endregion
+  }
 }

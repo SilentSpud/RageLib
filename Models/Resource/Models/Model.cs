@@ -25,47 +25,47 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Models
 {
-    internal class Model : DATBase, IFileAccess
+  internal class Model : DATBase, IFileAccess
+  {
+    public PtrCollection<Geometry> Geometries { get; private set; }
+    private ushort Unknown1 { get; set; } // the four following really should be bytes
+    private ushort Unknown2 { get; set; }
+    private ushort Unknown3 { get; set; }
+    private ushort Unknown4 { get; set; }
+    public SimpleArray<Vector4> UnknownVectors { get; private set; }
+    public SimpleArray<ushort> ShaderMappings { get; private set; }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
     {
-        public PtrCollection<Geometry> Geometries { get; private set; }
-        private ushort Unknown1 { get; set; } // the four following really should be bytes
-        private ushort Unknown2 { get; set; }
-        private ushort Unknown3 { get; set; }
-        private ushort Unknown4 { get; set; }
-        public SimpleArray<Vector4> UnknownVectors { get; private set; }
-        public SimpleArray<ushort> ShaderMappings { get; private set; }
+      base.Read(br);
 
-        #region Implementation of IFileAccess
+      Geometries = new PtrCollection<Geometry>(br);
 
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
+      var unknownVectorOffsets = ResourceUtil.ReadOffset(br);
+      var materialMappingOffset = ResourceUtil.ReadOffset(br);
 
-            Geometries = new PtrCollection<Geometry>(br);
+      Unknown1 = br.ReadUInt16();
+      Unknown2 = br.ReadUInt16();
 
-            var unknownVectorOffsets = ResourceUtil.ReadOffset(br);
-            var materialMappingOffset = ResourceUtil.ReadOffset(br);
+      Unknown3 = br.ReadUInt16();
+      Unknown4 = br.ReadUInt16();
 
-            Unknown1 = br.ReadUInt16();
-            Unknown2 = br.ReadUInt16();
+      //
 
-            Unknown3 = br.ReadUInt16();
-            Unknown4 = br.ReadUInt16();
+      br.BaseStream.Seek(unknownVectorOffsets, SeekOrigin.Begin);
+      UnknownVectors = new SimpleArray<Vector4>(br, 4, reader => new Vector4(reader));
 
-            //
-
-            br.BaseStream.Seek(unknownVectorOffsets, SeekOrigin.Begin);
-            UnknownVectors = new SimpleArray<Vector4>(br, 4, reader => new Vector4(reader));
-
-            br.BaseStream.Seek(materialMappingOffset, SeekOrigin.Begin);
-            ShaderMappings = new SimpleArray<ushort>(br, Geometries.Count, reader => reader.ReadUInt16());
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      br.BaseStream.Seek(materialMappingOffset, SeekOrigin.Begin);
+      ShaderMappings = new SimpleArray<ushort>(br, Geometries.Count, reader => reader.ReadUInt16());
     }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

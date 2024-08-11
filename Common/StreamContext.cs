@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,29 +23,29 @@ using System.IO;
 
 namespace RageLib.Common
 {
-    public class StreamContext : IDisposable
+  public class StreamContext : IDisposable
+  {
+    private long _position;
+    private Stream _stream;
+
+    public StreamContext(BinaryReader br)
+        : this(br.BaseStream)
     {
-        private long _position;
-        private Stream _stream;
-
-        public StreamContext(BinaryReader br)
-            : this(br.BaseStream)
-        {
-        }
-
-        public StreamContext(Stream stream)
-        {
-            _stream = stream;
-            _position = stream.Position;
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            _stream.Position = _position;
-        }
-
-        #endregion
     }
+
+    public StreamContext(Stream stream)
+    {
+      _stream = stream;
+      _position = stream.Position;
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      _stream.Position = _position;
+    }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,70 +25,70 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Models.Resource
 {
-    class File<T> : IDisposable where T : IFileAccess, IDataReader, IDisposable, new()
+  class File<T> : IDisposable where T : IFileAccess, IDataReader, IDisposable, new()
+  {
+    public T Data { get; private set; }
+
+    public void Open(string filename)
     {
-        public T Data { get; private set; }
-
-        public void Open(string filename)
-        {
-            var fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
-            try
-            {
-                Open(fs);
-            }
-            finally
-            {
-                fs.Close();
-            }
-        }
-
-        public void Open(Stream stream)
-        {
-            var res = new ResourceFile();
-            res.Read(stream);
-
-            if (res.Type != ResourceType.Model && res.Type != ResourceType.ModelFrag)
-            {
-                throw new Exception("Not a supported file type.");
-            }
-
-            var systemMemory = new MemoryStream(res.SystemMemData);
-            var graphicsMemory = new MemoryStream(res.GraphicsMemData);
-
-            Data = new T();
-
-            // Read System Memory
-            
-            var systemMemoryBR = new BinaryReader(systemMemory);
-
-            Data.Read(systemMemoryBR);
-
-            // Read Graphics Memory
-
-            var graphicsMemoryBR = new BinaryReader(graphicsMemory);
-
-            Data.ReadData(graphicsMemoryBR);
-
-            // Read Embedded Resource Files
-
-            var embeddedReader = Data as IEmbeddedResourceReader;
-            if (embeddedReader != null)
-            {
-                embeddedReader.ReadEmbeddedResources(systemMemory, graphicsMemory);
-            }
-
-            systemMemory.Close();
-            graphicsMemory.Close();
-
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            Data.Dispose();
-        }
-
-        #endregion
+      var fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+      try
+      {
+        Open(fs);
+      }
+      finally
+      {
+        fs.Close();
+      }
     }
+
+    public void Open(Stream stream)
+    {
+      var res = new ResourceFile();
+      res.Read(stream);
+
+      if (res.Type != ResourceType.Model && res.Type != ResourceType.ModelFrag)
+      {
+        throw new Exception("Not a supported file type.");
+      }
+
+      var systemMemory = new MemoryStream(res.SystemMemData);
+      var graphicsMemory = new MemoryStream(res.GraphicsMemData);
+
+      Data = new T();
+
+      // Read System Memory
+
+      var systemMemoryBR = new BinaryReader(systemMemory);
+
+      Data.Read(systemMemoryBR);
+
+      // Read Graphics Memory
+
+      var graphicsMemoryBR = new BinaryReader(graphicsMemory);
+
+      Data.ReadData(graphicsMemoryBR);
+
+      // Read Embedded Resource Files
+
+      var embeddedReader = Data as IEmbeddedResourceReader;
+      if (embeddedReader != null)
+      {
+        embeddedReader.ReadEmbeddedResources(systemMemory, graphicsMemory);
+      }
+
+      systemMemory.Close();
+      graphicsMemory.Close();
+
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      Data.Dispose();
+    }
+
+    #endregion
+  }
 }

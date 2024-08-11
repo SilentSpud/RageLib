@@ -25,44 +25,44 @@ using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
 namespace RageLib.Common.Compression
 {
-    internal class CompressionDeflateCodec : ICompressionCodec
+  internal class CompressionDeflateCodec : ICompressionCodec
+  {
+    private const int CopyBufferSize = 32 * 1024;    // 32kb
+
+    public void Compress(Stream source, Stream destination)
     {
-        private const int CopyBufferSize = 32*1024;    // 32kb
+      /*
+      var deflater = new DeflaterOutputStream(destination, new Deflater(Deflater.DEFAULT_COMPRESSION, true));
 
-        public void Compress(Stream source, Stream destination)
-        {
-            /*
-            var deflater = new DeflaterOutputStream(destination, new Deflater(Deflater.DEFAULT_COMPRESSION, true));
+      var dataBuffer = new byte[CopyBufferSize];
+      StreamUtils.Copy(source, deflater, dataBuffer);
+       */
 
-            var dataBuffer = new byte[CopyBufferSize];
-            StreamUtils.Copy(source, deflater, dataBuffer);
-             */
+      var def = new Deflater(Deflater.DEFAULT_COMPRESSION, true);
 
-            var def = new Deflater(Deflater.DEFAULT_COMPRESSION, true);
-            
-            var inputData = new byte[source.Length - source.Position];
-            source.Read(inputData, 0, inputData.Length);
+      var inputData = new byte[source.Length - source.Position];
+      source.Read(inputData, 0, inputData.Length);
 
-            var buffer = new byte[CopyBufferSize];
+      var buffer = new byte[CopyBufferSize];
 
-            def.SetInput( inputData, 0, inputData.Length );
-            def.Finish();
+      def.SetInput(inputData, 0, inputData.Length);
+      def.Finish();
 
-            while(!def.IsFinished)
-            {
-                int outputLen = def.Deflate(buffer, 0, buffer.Length);
-                destination.Write( buffer, 0, outputLen );
-            }
+      while (!def.IsFinished)
+      {
+        int outputLen = def.Deflate(buffer, 0, buffer.Length);
+        destination.Write(buffer, 0, outputLen);
+      }
 
-            def.Reset();
-        }
-
-        public void Decompress(Stream source, Stream destination)
-        {
-            var inflater = new InflaterInputStream(source, new Inflater(true));
-
-            var dataBuffer = new byte[CopyBufferSize];
-            StreamUtils.Copy(inflater, destination, dataBuffer);
-        }
+      def.Reset();
     }
+
+    public void Decompress(Stream source, Stream destination)
+    {
+      var inflater = new InflaterInputStream(source, new Inflater(true));
+
+      var dataBuffer = new byte[CopyBufferSize];
+      StreamUtils.Copy(inflater, destination, dataBuffer);
+    }
+  }
 }

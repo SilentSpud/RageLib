@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - HyperText
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -28,98 +28,98 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.HyperText.Resource
 {
-    class HtmlNode : IFileAccess
+  class HtmlNode : IFileAccess
+  {
+    private uint VTable { get; set; }
+    public HtmlNodeType NodeType { get; set; }
+    private uint ParentNodeOffset { get; set; }
+    public HtmlNode ParentNode { get; private set; }
+    public PtrCollection<HtmlNode> ChildNodes { get; private set; }
+    public HtmlRenderState RenderState { get; set; }
+
+    // For ElementNodes
+    public HtmlTag Tag { get; set; }
+    private uint _fDC;
+    private SimpleCollection<byte> _linkAddress;
+    private int _fE8;
+    private int _fEC;
+
+    // For DataNodes
+    public PtrString Data { get; private set; }
+
+    public HtmlNode()
     {
-        private uint VTable { get; set; }
-        public HtmlNodeType NodeType { get; set; }
-        private uint ParentNodeOffset { get; set; }
-        public HtmlNode ParentNode { get; private set; }
-        public PtrCollection<HtmlNode> ChildNodes { get; private set; }
-        public HtmlRenderState RenderState { get; set; }
-
-        // For ElementNodes
-        public HtmlTag Tag { get; set; }
-        private uint _fDC;
-        private SimpleCollection<byte> _linkAddress;
-        private int _fE8;
-        private int _fEC;
-
-        // For DataNodes
-        public PtrString Data { get; private set; }
-
-        public HtmlNode()
-        {
-        }
-
-        public HtmlNode(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public string LinkAddress
-        {
-            get
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (var b in _linkAddress)
-                {
-                    sb.Append((char) b);
-                }
-                return sb.ToString();
-            }
-        }
-
-        public override string ToString()
-        {
-            if (NodeType == HtmlNodeType.HtmlDataNode)
-            {
-                return Data.Value;
-            }
-            else
-            {
-                return Tag.ToString();
-            }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            VTable = br.ReadUInt32();
-            NodeType = (HtmlNodeType)br.ReadInt32();
-            ParentNodeOffset = ResourceUtil.ReadOffset(br);
-            
-            ChildNodes = new PtrCollection<HtmlNode>(br);
-            foreach (var node in ChildNodes)
-            {
-                node.ParentNode = this;
-            }
-
-            RenderState = new HtmlRenderState(br);
-
-            if (NodeType != HtmlNodeType.HtmlDataNode)
-            {
-                Tag = (HtmlTag)br.ReadInt32();
-                _fDC = br.ReadUInt32();
-                _linkAddress = new SimpleCollection<byte>(br, reader => reader.ReadByte());
-                if (NodeType == HtmlNodeType.HtmlTableElementNode)
-                {
-                    _fE8 = br.ReadInt32();
-                    _fEC = br.ReadInt32();
-                }
-            }
-            else
-            {
-                Data = new PtrString(br);
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
     }
+
+    public HtmlNode(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public string LinkAddress
+    {
+      get
+      {
+        StringBuilder sb = new StringBuilder();
+        foreach (var b in _linkAddress)
+        {
+          sb.Append((char)b);
+        }
+        return sb.ToString();
+      }
+    }
+
+    public override string ToString()
+    {
+      if (NodeType == HtmlNodeType.HtmlDataNode)
+      {
+        return Data.Value;
+      }
+      else
+      {
+        return Tag.ToString();
+      }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      VTable = br.ReadUInt32();
+      NodeType = (HtmlNodeType)br.ReadInt32();
+      ParentNodeOffset = ResourceUtil.ReadOffset(br);
+
+      ChildNodes = new PtrCollection<HtmlNode>(br);
+      foreach (var node in ChildNodes)
+      {
+        node.ParentNode = this;
+      }
+
+      RenderState = new HtmlRenderState(br);
+
+      if (NodeType != HtmlNodeType.HtmlDataNode)
+      {
+        Tag = (HtmlTag)br.ReadInt32();
+        _fDC = br.ReadUInt32();
+        _linkAddress = new SimpleCollection<byte>(br, reader => reader.ReadByte());
+        if (NodeType == HtmlNodeType.HtmlTableElementNode)
+        {
+          _fE8 = br.ReadInt32();
+          _fEC = br.ReadInt32();
+        }
+      }
+      else
+      {
+        Data = new PtrString(br);
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+
+  }
 }

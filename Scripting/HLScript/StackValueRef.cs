@@ -20,20 +20,20 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValueRef : StackValue
+  internal class StackValueRef : StackValue
+  {
+    public StackValueRef(StackValue value)
     {
-        public StackValueRef(StackValue value)
-        {
-            ValueType = StackValueType.Pointer;
-            ProcessedValue = false;
-            Value = value;
-        }
-
-        public StackValue Value { get; set; }
-
-        public override string ToString()
-        {
-            return "&(" + Value + ")";
-        }
+      ValueType = StackValueType.Pointer;
+      ProcessedValue = false;
+      Value = value;
     }
+
+    public StackValue Value { get; set; }
+
+    public override string ToString()
+    {
+      return "&(" + Value + ")";
+    }
+  }
 }

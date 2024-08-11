@@ -24,43 +24,43 @@ using RageLib.Common;
 
 namespace RageLib.Shaders.ShaderFX
 {
-    internal class VertexShader : IFileAccess
+  internal class VertexShader : IFileAccess
+  {
+    public Variables Variables { get; private set; }
+    public int Size { get; private set; }
+    private int CompressedSize { get; set; }
+    public byte[] ShaderData { get; private set; }
+
+    public VertexShader()
     {
-        public Variables Variables { get; private set; }
-        public int Size { get; private set; }
-        private int CompressedSize { get; set; }
-        public byte[] ShaderData { get; private set; }
-
-        public VertexShader()
-        {
-        }
-
-        public VertexShader(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            Variables = new Variables(br);
-            Size = br.ReadInt16();
-            CompressedSize = br.ReadInt16();
-
-            if (Size != CompressedSize)
-            {
-                throw new Exception("Encountered a shader file with a compressed VertexShader");
-            }
-
-            ShaderData = br.ReadBytes(Size);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            
-        }
-
-        #endregion
     }
+
+    public VertexShader(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      Variables = new Variables(br);
+      Size = br.ReadInt16();
+      CompressedSize = br.ReadInt16();
+
+      if (Size != CompressedSize)
+      {
+        throw new Exception("Encountered a shader file with a compressed VertexShader");
+      }
+
+      ShaderData = br.ReadBytes(Size);
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+
+    }
+
+    #endregion
+  }
 }

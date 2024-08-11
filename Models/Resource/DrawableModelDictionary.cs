@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -24,34 +24,34 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource
 {
-    class DrawableModelDictionary : PGDictionary<DrawableModel>, IDataReader, IEmbeddedResourceReader, IDisposable
+  class DrawableModelDictionary : PGDictionary<DrawableModel>, IDataReader, IEmbeddedResourceReader, IDisposable
+  {
+    public void ReadData(BinaryReader br)
     {
-        public void ReadData(BinaryReader br)
-        {
-            foreach (var entry in Entries)
-            {
-                entry.ReadData(br);
-            }
-        }
-
-        public void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory)
-        {
-            foreach (var entry in Entries)
-            {
-                entry.ReadEmbeddedResources(systemMemory, graphicsMemory);
-            }
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            foreach (var entry in Entries)
-            {
-                entry.Dispose();
-            }
-        }
-
-        #endregion
+      foreach (var entry in Entries)
+      {
+        entry.ReadData(br);
+      }
     }
+
+    public void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory)
+    {
+      foreach (var entry in Entries)
+      {
+        entry.ReadEmbeddedResources(systemMemory, graphicsMemory);
+      }
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      foreach (var entry in Entries)
+      {
+        entry.Dispose();
+      }
+    }
+
+    #endregion
+  }
 }

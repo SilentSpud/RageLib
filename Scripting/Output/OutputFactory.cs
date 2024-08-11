@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,46 +20,46 @@
 
 namespace RageLib.Scripting.Output
 {
-    internal class OutputFactory
+  internal class OutputFactory
+  {
+    public static IOutputProvider GetDecompileCFOutputProvider()
     {
-        public static IOutputProvider GetDecompileCFOutputProvider()
-        {
-            return new DecompileCFOutput();
-        }
-
-        public static IOutputProvider GetDecompileFullAnnotateOutputProvider()
-        {
-            return new DecompileFullOutput(true);
-        }
-
-        public static IOutputProvider GetDecompileFullOutputProvider()
-        {
-            return new DecompileFullOutput(false);
-        }
-
-        public static IOutputProvider GetCodePathOutputProvider()
-        {
-            return new CodePathOutput();
-        }
-
-        public static IOutputProvider GetDisassembleOutputProvider()
-        {
-            return new DisassembleOutput();
-        }
-
-        public static IOutputProvider GetVariablesOutputProvider()
-        {
-            return new VariablesOutput();
-        }
-
-        public static IOutputProvider GetScruffDecompileOutputProvider()
-        {
-            return new DecompileScruffOutput();
-        }
-
-        public static IOutputProvider GetScruffHeaderOutputProvider()
-        {
-            return new DecompileScruffHeaderOutput();
-        }
+      return new DecompileCFOutput();
     }
+
+    public static IOutputProvider GetDecompileFullAnnotateOutputProvider()
+    {
+      return new DecompileFullOutput(true);
+    }
+
+    public static IOutputProvider GetDecompileFullOutputProvider()
+    {
+      return new DecompileFullOutput(false);
+    }
+
+    public static IOutputProvider GetCodePathOutputProvider()
+    {
+      return new CodePathOutput();
+    }
+
+    public static IOutputProvider GetDisassembleOutputProvider()
+    {
+      return new DisassembleOutput();
+    }
+
+    public static IOutputProvider GetVariablesOutputProvider()
+    {
+      return new VariablesOutput();
+    }
+
+    public static IOutputProvider GetScruffDecompileOutputProvider()
+    {
+      return new DecompileScruffOutput();
+    }
+
+    public static IOutputProvider GetScruffHeaderOutputProvider()
+    {
+      return new DecompileScruffHeaderOutput();
+    }
+  }
 }

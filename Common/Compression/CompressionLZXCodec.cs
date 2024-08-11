@@ -23,73 +23,73 @@ using System.IO;
 
 namespace RageLib.Common.Compression
 {
-    internal class CompressionLZXCodec : ICompressionCodec
+  internal class CompressionLZXCodec : ICompressionCodec
+  {
+    public void Compress(Stream source, Stream destination)
     {
-        public void Compress(Stream source, Stream destination)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Decompress(Stream source, Stream destination)
-        {
-            var br = new BinaryReader(source);
-
-            if (br.ReadUInt16() != 0xEF12)
-            {
-                throw new Exception("Unexpected input in compressed resource file.");
-            }
-
-            throw new NotImplementedException();
-
-            /*
-            
-            // The following code requires code that is is ommitted due to licensing issues.
-              
-            var length = DataUtil.SwapEndian(br.ReadUInt32());
-
-            var decompressor = new LZXDecompressor();
-
-            decompressor.Initialize(17);
-
-            uint bytesRead = 0;
-            while (bytesRead < length)
-            {
-                uint inChunkSize, outChunkSize;
-
-                inChunkSize = br.ReadByte();
-                if (inChunkSize != 0xFF)
-                {
-                    inChunkSize <<= 8;
-                    inChunkSize |= br.ReadByte();
-                    outChunkSize = 0x8000;
-
-                    bytesRead += 2;
-                }
-                else
-                {
-                    outChunkSize = ((uint) br.ReadByte() << 8) | (br.ReadByte());
-                    inChunkSize = ((uint) br.ReadByte() << 8) | (br.ReadByte());
-
-                    bytesRead += 5;
-                }
-
-                byte[] inData = br.ReadBytes((int) inChunkSize);
-                var outData = new byte[outChunkSize];
-
-                bytesRead += inChunkSize;
-
-                try
-                {
-                    decompressor.Decompress(inData, outData, (int) inChunkSize, (int) outChunkSize);
-                }
-                catch
-                {
-                    throw new Exception("Could not decompress resource.");
-                }
-
-                destination.Write(outData, 0, (int) outChunkSize);
-            }
-             */
-        }
+      throw new NotImplementedException();
     }
+
+    public void Decompress(Stream source, Stream destination)
+    {
+      var br = new BinaryReader(source);
+
+      if (br.ReadUInt16() != 0xEF12)
+      {
+        throw new Exception("Unexpected input in compressed resource file.");
+      }
+
+      throw new NotImplementedException();
+
+      /*
+
+      // The following code requires code that is is ommitted due to licensing issues.
+
+      var length = DataUtil.SwapEndian(br.ReadUInt32());
+
+      var decompressor = new LZXDecompressor();
+
+      decompressor.Initialize(17);
+
+      uint bytesRead = 0;
+      while (bytesRead < length)
+      {
+          uint inChunkSize, outChunkSize;
+
+          inChunkSize = br.ReadByte();
+          if (inChunkSize != 0xFF)
+          {
+              inChunkSize <<= 8;
+              inChunkSize |= br.ReadByte();
+              outChunkSize = 0x8000;
+
+              bytesRead += 2;
+          }
+          else
+          {
+              outChunkSize = ((uint) br.ReadByte() << 8) | (br.ReadByte());
+              inChunkSize = ((uint) br.ReadByte() << 8) | (br.ReadByte());
+
+              bytesRead += 5;
+          }
+
+          byte[] inData = br.ReadBytes((int) inChunkSize);
+          var outData = new byte[outChunkSize];
+
+          bytesRead += inChunkSize;
+
+          try
+          {
+              decompressor.Decompress(inData, outData, (int) inChunkSize, (int) outChunkSize);
+          }
+          catch
+          {
+              throw new Exception("Could not decompress resource.");
+          }
+
+          destination.Write(outData, 0, (int) outChunkSize);
+      }
+       */
+    }
+  }
 }

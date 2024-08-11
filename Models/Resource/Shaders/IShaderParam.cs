@@ -22,7 +22,7 @@ using RageLib.Common;
 
 namespace RageLib.Models.Resource.Shaders
 {
-    internal interface IShaderParam : IFileAccess
-    {
-    }
+  internal interface IShaderParam : IFileAccess
+  {
+  }
 }

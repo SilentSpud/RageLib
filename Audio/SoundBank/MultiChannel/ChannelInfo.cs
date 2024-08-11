@@ -28,57 +28,57 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal struct ChannelInfo : IFileAccess
+  internal struct ChannelInfo : IFileAccess
+  {
+    // data
+    public int unk1Reserved;
+    public int unk2Reserved;
+    public uint hash;
+    public int numSamplesInBytes;
+    public int numSamples16Bit;
+    public int unk4;
+    public ushort sampleRate;
+    public short unk5;
+    public short unk6;
+    public short unk7Reserved;
+    public long offsetAdpcmStateTable;
+
+    public AdpcmInfo adpcmInfo;
+
+    public ChannelInfo(BinaryReader br) : this()
     {
-        // data
-        public int unk1Reserved;
-        public int unk2Reserved;
-        public uint hash;
-        public int numSamplesInBytes;
-        public int numSamples16Bit;
-        public int unk4;
-        public ushort sampleRate;
-        public short unk5;
-        public short unk6;
-        public short unk7Reserved;
-        public long offsetAdpcmStateTable;
-
-        public AdpcmInfo adpcmInfo;
-
-        public ChannelInfo(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        public string Name
-        {
-            get { return HashResolver.Resolve(hash); }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            unk1Reserved = br.ReadInt32();
-            unk2Reserved = br.ReadInt32();
-            hash = br.ReadUInt32();
-            numSamplesInBytes = br.ReadInt32();
-            numSamples16Bit = br.ReadInt32();
-            unk4 = br.ReadInt32();
-            sampleRate = br.ReadUInt16();
-
-            unk5 = br.ReadInt16();
-            unk6 = br.ReadInt16();
-            unk7Reserved = br.ReadInt16();
-
-            offsetAdpcmStateTable = br.ReadInt64();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    public string Name
+    {
+      get { return HashResolver.Resolve(hash); }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      unk1Reserved = br.ReadInt32();
+      unk2Reserved = br.ReadInt32();
+      hash = br.ReadUInt32();
+      numSamplesInBytes = br.ReadInt32();
+      numSamples16Bit = br.ReadInt32();
+      unk4 = br.ReadInt32();
+      sampleRate = br.ReadUInt16();
+
+      unk5 = br.ReadInt16();
+      unk6 = br.ReadInt16();
+      unk7Reserved = br.ReadInt16();
+
+      offsetAdpcmStateTable = br.ReadInt64();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

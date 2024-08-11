@@ -19,42 +19,42 @@
 \**********************************************************************/
 
 using System.IO;
-using File=RageLib.Scripting.Script.File;
+using File = RageLib.Scripting.Script.File;
 
 namespace RageLib.Scripting.Output
 {
-    internal class DecompileScruffHeaderOutput : IOutputProvider
+  internal class DecompileScruffHeaderOutput : IOutputProvider
+  {
+    #region IOutputProvider Members
+
+    public void Process(File file, TextWriter writer)
     {
-        #region IOutputProvider Members
+      writer.WriteLine(string.Format("ScriptFlags = 0x{0:x}", file.Header.ScriptFlags));
+      writer.WriteLine(string.Format("GlobalsSignature = 0x{0:x}", file.Header.GlobalsSignature));
+      writer.WriteLine();
 
-        public void Process(File file, TextWriter writer)
+      if (file.Header.GlobalVarCount > 0)
+      {
+        writer.WriteLine(string.Format("GlobalsCount = {0}", file.Header.GlobalVarCount));
+        writer.WriteLine();
+        uint[] globals = file.GlobalVars;
+        for (int i = 0; i < globals.Length; i++)
         {
-            writer.WriteLine(string.Format("ScriptFlags = 0x{0:x}", file.Header.ScriptFlags));
-            writer.WriteLine( string.Format("GlobalsSignature = 0x{0:x}", file.Header.GlobalsSignature) );
-            writer.WriteLine();
-
-            if (file.Header.GlobalVarCount > 0)
-            {
-                writer.WriteLine(string.Format("GlobalsCount = {0}", file.Header.GlobalVarCount));
-                writer.WriteLine();
-                uint[] globals = file.GlobalVars;
-                for(int i=0; i<globals.Length; i++)
-                {
-                    writer.WriteLine(string.Format("G[{0}] = {1}", i, globals[i]));
-                }
-                writer.WriteLine();
-            }
-
-            writer.WriteLine(string.Format("LocalsCount = {0}", file.Header.LocalVarCount));
-            writer.WriteLine();
-            uint[] locals = file.LocalVars;
-            for (int i = 0; i < locals.Length; i++)
-            {
-                writer.WriteLine(string.Format("L[{0}] = {1}", i, locals[i]));
-            }
-            writer.WriteLine();
+          writer.WriteLine(string.Format("G[{0}] = {1}", i, globals[i]));
         }
+        writer.WriteLine();
+      }
 
-        #endregion
+      writer.WriteLine(string.Format("LocalsCount = {0}", file.Header.LocalVarCount));
+      writer.WriteLine();
+      uint[] locals = file.LocalVars;
+      for (int i = 0; i < locals.Length; i++)
+      {
+        writer.WriteLine(string.Format("L[{0}] = {1}", i, locals[i]));
+      }
+      writer.WriteLine();
     }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -20,11 +20,11 @@
 
 namespace RageLib.Models.Export
 {
-    public interface IExporter
-    {
-        string Name { get; }
-        string Extension { get; }
+  public interface IExporter
+  {
+    string Name { get; }
+    string Extension { get; }
 
-        void Export(ModelNode node, string filename);
-    }
+    void Export(ModelNode node, string filename);
+  }
 }

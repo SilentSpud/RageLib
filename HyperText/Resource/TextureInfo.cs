@@ -24,50 +24,50 @@ using RageLib.Common.Resources;
 
 namespace RageLib.HyperText.Resource
 {
-    internal class TextureInfo : IFileAccess
+  internal class TextureInfo : IFileAccess
+  {
+    private uint VTable { get; set; }
+    private uint Unknown1 { get; set; }
+    private ushort Unknown2 { get; set; }
+    private ushort Unknown3 { get; set; }
+    private uint Unknown4 { get; set; }
+    private uint Unknown5 { get; set; }
+    private uint TextureNameOffset { get; set; }
+    private uint Unknown7 { get; set; }
+
+    public string TextureName { get; private set; }
+
+    public TextureInfo()
     {
-        private uint VTable { get; set; }
-        private uint Unknown1 { get; set; }
-        private ushort Unknown2 { get; set; }
-        private ushort Unknown3 { get; set; }
-        private uint Unknown4 { get; set; }
-        private uint Unknown5 { get; set; }
-        private uint TextureNameOffset { get; set; }
-        private uint Unknown7 { get; set; }
-
-        public string TextureName { get; private set; }
-
-        public TextureInfo()
-        {
-        }
-
-        public TextureInfo(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            VTable = br.ReadUInt32();
-            Unknown1 = br.ReadUInt32();
-            Unknown2 = br.ReadUInt16();
-            Unknown3 = br.ReadUInt16();
-            Unknown4 = br.ReadUInt32();
-            Unknown5 = br.ReadUInt32();
-            TextureNameOffset = ResourceUtil.ReadOffset(br);
-            Unknown7 = br.ReadUInt32();
-
-            br.BaseStream.Seek(TextureNameOffset, SeekOrigin.Begin);
-            TextureName = ResourceUtil.ReadNullTerminatedString(br);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public TextureInfo(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      VTable = br.ReadUInt32();
+      Unknown1 = br.ReadUInt32();
+      Unknown2 = br.ReadUInt16();
+      Unknown3 = br.ReadUInt16();
+      Unknown4 = br.ReadUInt32();
+      Unknown5 = br.ReadUInt32();
+      TextureNameOffset = ResourceUtil.ReadOffset(br);
+      Unknown7 = br.ReadUInt32();
+
+      br.BaseStream.Seek(TextureNameOffset, SeekOrigin.Begin);
+      TextureName = ResourceUtil.ReadNullTerminatedString(br);
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

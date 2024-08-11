@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,37 +20,37 @@
 
 using System.IO;
 using RageLib.Scripting.Script;
-using File=RageLib.Scripting.Script.File;
+using File = RageLib.Scripting.Script.File;
 
 namespace RageLib.Scripting.Output
 {
-    internal class DisassembleOutput : IOutputProvider
+  internal class DisassembleOutput : IOutputProvider
+  {
+    #region IOutputProvider Members
+
+    public void Process(File file, TextWriter writer)
     {
-        #region IOutputProvider Members
+      var decoder = new Decoder(file);
 
-        public void Process(File file, TextWriter writer)
-        {
-            var decoder = new Decoder(file);
+      int length = file.Code.Length;
+      int offset = 0;
+      while (offset < length)
+      {
+        Instruction instruction = decoder.Decode(offset);
+        writer.WriteLine(instruction.ToString());
+        //instruction.ToString();
 
-            int length = file.Code.Length;
-            int offset = 0;
-            while (offset < length)
-            {
-                Instruction instruction = decoder.Decode(offset);
-                writer.WriteLine(instruction.ToString());
-                //instruction.ToString();
+        offset += instruction.InstructionLength;
+      }
 
-                offset += instruction.InstructionLength;
-            }
-
-            /*
-            foreach (uint item in Scruff.Script.Natives.UnknownNatives)
-            {
-                writer.WriteLine(string.Format("0x{0:x}", item));
-            }
-             * */
-        }
-
-        #endregion
+      /*
+      foreach (uint item in Scruff.Script.Natives.UnknownNatives)
+      {
+          writer.WriteLine(string.Format("0x{0:x}", item));
+      }
+       * */
     }
+
+    #endregion
+  }
 }

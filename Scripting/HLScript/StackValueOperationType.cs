@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,45 +20,45 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal enum StackValueOperationType
-    {
-        Unknown,
+  internal enum StackValueOperationType
+  {
+    Unknown,
 
-        Add,
-        Sub,
-        Mul,
-        Div,
-        Mod,
-        Neg,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Mod,
+    Neg,
 
-        And,
-        Or,
-        Xor,
+    And,
+    Or,
+    Xor,
 
-        CmpEq,
-        CmpNe,
-        CmpGt,
-        CmpGe,
-        CmpLt,
-        CmpLe,
+    CmpEq,
+    CmpNe,
+    CmpGt,
+    CmpGe,
+    CmpLt,
+    CmpLe,
 
-        IsZero,
-        ToF,
-        FromF,
+    IsZero,
+    ToF,
+    FromF,
 
-        StrCpy,
-        StrCat,
-        StrCatI,
-        IntToStr,
-        StrVarCpy,
+    StrCpy,
+    StrCat,
+    StrCatI,
+    IntToStr,
+    StrVarCpy,
 
-        Call,
-        Pop,
+    Call,
+    Pop,
 
-        Return,
+    Return,
 
-        SetProtect,
-        GetProtect,
-        RefProtect,
-    }
+    SetProtect,
+    GetProtect,
+    RefProtect,
+  }
 }

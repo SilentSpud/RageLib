@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,8 +22,8 @@ using System.IO;
 
 namespace RageLib.Models
 {
-    interface IDataReader
-    {
-        void ReadData(BinaryReader br);
-    }
+  interface IDataReader
+  {
+    void ReadData(BinaryReader br);
+  }
 }

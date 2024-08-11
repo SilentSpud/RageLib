@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - HyperText
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -20,11 +20,11 @@
 
 namespace RageLib.HyperText.Resource
 {
-    enum HtmlNodeType
-    {
-        HtmlElementNode = 0,
-        HtmlDataNode = 1,
-        HtmlTableNode = 2,
-        HtmlTableElementNode = 3
-    }
+  enum HtmlNodeType
+  {
+    HtmlElementNode = 0,
+    HtmlDataNode = 1,
+    HtmlTableNode = 2,
+    HtmlTableElementNode = 3
+  }
 }

@@ -25,66 +25,66 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Models
 {
-    internal class VertexBuffer : DATBase, IFileAccess
+  internal class VertexBuffer : DATBase, IFileAccess
+  {
+    public ushort VertexCount { get; private set; }
+    private ushort Unknown1 { get; set; }               // byte bLocked, byte align
+    public uint DataOffset { get; private set; }        // pLockedData
+    public uint StrideSize { get; private set; }
+    private uint Unknown2 { get; set; }
+    private uint DataOffset2 { get; set; }              // piVertexBuffer
+
+    public byte[] RawData { get; private set; }
+
+    public VertexDeclaration VertexDeclaration { get; private set; }
+
+    public VertexBuffer()
     {
-        public ushort VertexCount { get; private set; }
-        private ushort Unknown1 { get; set; }               // byte bLocked, byte align
-        public uint DataOffset { get; private set; }        // pLockedData
-        public uint StrideSize { get; private set; }
-        private uint Unknown2 { get; set; }
-        private uint DataOffset2 { get; set; }              // piVertexBuffer
-
-        public byte[] RawData { get; private set; }
-
-        public VertexDeclaration VertexDeclaration { get; private set; }
-
-        public VertexBuffer()
-        {
-        }
-
-        public VertexBuffer(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public void ReadData(BinaryReader br)
-        {
-            br.BaseStream.Seek(DataOffset, SeekOrigin.Begin);
-            RawData = br.ReadBytes((int) (VertexCount*StrideSize));
-        }
-
-        #region Implementation of IFileAccess
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-
-            VertexCount = br.ReadUInt16();
-            Unknown1 = br.ReadUInt16();
-
-            DataOffset = ResourceUtil.ReadDataOffset(br);
-
-            StrideSize = br.ReadUInt32();
-
-            var vertexDeclOffset = ResourceUtil.ReadOffset(br);
-
-            Unknown2 = br.ReadUInt32();
-
-            DataOffset2 = ResourceUtil.ReadDataOffset(br);
-
-            var p2Offset = ResourceUtil.ReadOffset(br); // null
-
-            //
-
-            br.BaseStream.Seek(vertexDeclOffset, SeekOrigin.Begin);
-            VertexDeclaration = new VertexDeclaration(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public VertexBuffer(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public void ReadData(BinaryReader br)
+    {
+      br.BaseStream.Seek(DataOffset, SeekOrigin.Begin);
+      RawData = br.ReadBytes((int)(VertexCount * StrideSize));
+    }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
+    {
+      base.Read(br);
+
+      VertexCount = br.ReadUInt16();
+      Unknown1 = br.ReadUInt16();
+
+      DataOffset = ResourceUtil.ReadDataOffset(br);
+
+      StrideSize = br.ReadUInt32();
+
+      var vertexDeclOffset = ResourceUtil.ReadOffset(br);
+
+      Unknown2 = br.ReadUInt32();
+
+      DataOffset2 = ResourceUtil.ReadDataOffset(br);
+
+      var p2Offset = ResourceUtil.ReadOffset(br); // null
+
+      //
+
+      br.BaseStream.Seek(vertexDeclOffset, SeekOrigin.Begin);
+      VertexDeclaration = new VertexDeclaration(br);
+    }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

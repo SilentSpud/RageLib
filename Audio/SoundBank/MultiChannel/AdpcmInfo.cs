@@ -27,50 +27,50 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal struct AdpcmInfo : IFileAccess
+  internal struct AdpcmInfo : IFileAccess
+  {
+    // adpcm states and info...
+    public int numSamples16Bit;
+    public short[] unk3;
+    public int numStates;
+    public DviAdpcmDecoder.AdpcmState[] states;
+
+    public AdpcmInfo(BinaryReader br) : this()
     {
-        // adpcm states and info...
-        public int numSamples16Bit;
-        public short[] unk3;
-        public int numStates;
-        public DviAdpcmDecoder.AdpcmState[] states;
-
-        public AdpcmInfo(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            numSamples16Bit = br.ReadInt32();
-            unk3 = new short[]
-                       {
-                           br.ReadInt16(),
-                           br.ReadInt16(),
-                           br.ReadInt16(),
-                           br.ReadInt16(),
-                       };
-                
-            numStates = br.ReadInt32();
-
-            if (numStates > 0)
-            {
-                states = new DviAdpcmDecoder.AdpcmState[numStates];
-                for (int i = 0; i < numStates; i++)
-                {
-                    states[i].valprev = br.ReadInt16();
-                    states[i].index = br.ReadByte();
-                }
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      numSamples16Bit = br.ReadInt32();
+      unk3 = new short[]
+                 {
+                           br.ReadInt16(),
+                           br.ReadInt16(),
+                           br.ReadInt16(),
+                           br.ReadInt16(),
+                 };
+
+      numStates = br.ReadInt32();
+
+      if (numStates > 0)
+      {
+        states = new DviAdpcmDecoder.AdpcmState[numStates];
+        for (int i = 0; i < numStates; i++)
+        {
+          states[i].valprev = br.ReadInt16();
+          states[i].index = br.ReadByte();
+        }
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,10 +20,10 @@
 
 namespace RageLib.Models.Model3DViewer
 {
-    public enum RenderMode
-    {
-        Solid,
-        Wireframe,
-        SolidNormals,
-    }
+  public enum RenderMode
+  {
+    Solid,
+    Wireframe,
+    SolidNormals,
+  }
 }

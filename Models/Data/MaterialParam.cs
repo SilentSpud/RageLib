@@ -22,30 +22,30 @@ using RageLib.Models.Resource.Shaders;
 
 namespace RageLib.Models.Data
 {
-    public class MaterialParam
+  public class MaterialParam
+  {
+    public uint NameHash { get; private set; }
+
+    public MaterialParam(uint nameHash)
     {
-        public uint NameHash { get; private set; }
-
-        public MaterialParam(uint nameHash)
-        {
-            NameHash = nameHash;
-        }
-
-        internal static MaterialParam Create(uint nameHash, IShaderParam obj)
-        {
-            if (obj is ShaderParamMatrix)
-            {
-                return new MaterialParamMatrix44(nameHash, obj as ShaderParamMatrix);
-            }
-            if (obj is ShaderParamVector4)
-            {
-                return new MaterialParamVector4(nameHash, obj as ShaderParamVector4);
-            }
-            if (obj is ShaderParamTexture)
-            {
-                return new MaterialParamTexture(nameHash, obj as ShaderParamTexture);
-            }
-            return null;
-        }
+      NameHash = nameHash;
     }
+
+    internal static MaterialParam Create(uint nameHash, IShaderParam obj)
+    {
+      if (obj is ShaderParamMatrix)
+      {
+        return new MaterialParamMatrix44(nameHash, obj as ShaderParamMatrix);
+      }
+      if (obj is ShaderParamVector4)
+      {
+        return new MaterialParamVector4(nameHash, obj as ShaderParamVector4);
+      }
+      if (obj is ShaderParamTexture)
+      {
+        return new MaterialParamTexture(nameHash, obj as ShaderParamTexture);
+      }
+      return null;
+    }
+  }
 }

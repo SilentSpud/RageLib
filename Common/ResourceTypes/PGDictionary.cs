@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,38 +23,38 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    // pgDictionary<T>
-    public class PGDictionary<T> : PGBase, IFileAccess where T: class, IFileAccess, new()
+  // pgDictionary<T>
+  public class PGDictionary<T> : PGBase, IFileAccess where T : class, IFileAccess, new()
+  {
+    private uint ParentDictionary { get; set; } // always 0 in file
+
+    public uint UsageCount { get; private set; } // always 1 in file
+
+    public SimpleCollection<uint> NameHashes { get; private set; }
+
+    public PtrCollection<T> Entries { get; private set; }
+
+    #region IFileAccess Members
+
+    public new void Read(BinaryReader br)
     {
-        private uint ParentDictionary { get; set; } // always 0 in file
+      base.Read(br);
 
-        public uint UsageCount { get; private set; } // always 1 in file
+      ParentDictionary = br.ReadUInt32();
+      UsageCount = br.ReadUInt32();
 
-        public SimpleCollection<uint> NameHashes { get; private set; }
+      // CSimpleCollection<DWORD>
+      NameHashes = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
 
-        public PtrCollection<T> Entries { get; private set; }
-
-        #region IFileAccess Members
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-            
-            ParentDictionary = br.ReadUInt32();
-            UsageCount = br.ReadUInt32();
-
-            // CSimpleCollection<DWORD>
-            NameHashes = new SimpleCollection<uint>(br, reader => reader.ReadUInt32());
-
-            // CPtrCollection<T>
-            Entries = new PtrCollection<T>(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+      // CPtrCollection<T>
+      Entries = new PtrCollection<T>(br);
     }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new NotImplementedException();
+    }
+
+    #endregion
+  }
 }

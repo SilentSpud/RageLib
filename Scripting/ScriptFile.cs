@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,94 +22,94 @@ using System;
 using System.IO;
 using System.Text;
 using RageLib.Scripting.Output;
-using File=RageLib.Scripting.Script.File;
+using File = RageLib.Scripting.Script.File;
 
 namespace RageLib.Scripting
 {
-    public class ScriptFile
+  public class ScriptFile
+  {
+    private File _file;
+
+    public void Open(string filename)
     {
-        private File _file;
-
-        public void Open(string filename)
-        {
-            _file = new File();
-            if (!_file.Open(filename))
-            {
-                throw new Exception("Could not load script file.");
-            }
-        }
-
-        public void Open(Stream stream)
-        {
-            _file = new File();
-            if (!_file.Open(stream))
-            {
-                throw new Exception("Could not load script file.");
-            }
-        }
-
-        public string GetCode(CodeFormat format)
-        {
-            var sb = new StringBuilder();
-            var sw = new StringWriter(sb);
-
-            GetCode(format, sw);
-
-            sw.Close();
-
-            return sb.ToString();
-        }
-
-        public void GetCode(CodeFormat format, TextWriter writer)
-        {
-            IOutputProvider output;
-            switch (format)
-            {
-                case CodeFormat.Disassemble:
-                    output = OutputFactory.GetDisassembleOutputProvider();
-                    break;
-                case CodeFormat.ControlFlowDecompile:
-                    output = OutputFactory.GetDecompileCFOutputProvider();
-                    break;
-                case CodeFormat.FullDecompile:
-                    output = OutputFactory.GetDecompileFullOutputProvider();
-                    break;
-                case CodeFormat.FullDecompileAnnotate:
-                    output = OutputFactory.GetDecompileFullAnnotateOutputProvider();
-                    break;
-                case CodeFormat.CodePath:
-                    output = OutputFactory.GetCodePathOutputProvider();
-                    break;
-                case CodeFormat.Variables:
-                    output = OutputFactory.GetVariablesOutputProvider();
-                    break;
-                case CodeFormat.ScruffDecompile:
-                    output = OutputFactory.GetScruffDecompileOutputProvider();
-                    break;
-                case CodeFormat.ScruffHeader:
-                    output = OutputFactory.GetScruffHeaderOutputProvider();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("format");
-            }
-
-            output.Process(_file, writer);
-        }
-
-        public uint[] LocalVars
-        {
-            get
-            {
-                return _file.LocalVars;
-            }
-        }
-
-        public uint[] GlobalVars
-        {
-            get
-            {
-                return _file.GlobalVars;
-            }
-        }
+      _file = new File();
+      if (!_file.Open(filename))
+      {
+        throw new Exception("Could not load script file.");
+      }
     }
+
+    public void Open(Stream stream)
+    {
+      _file = new File();
+      if (!_file.Open(stream))
+      {
+        throw new Exception("Could not load script file.");
+      }
+    }
+
+    public string GetCode(CodeFormat format)
+    {
+      var sb = new StringBuilder();
+      var sw = new StringWriter(sb);
+
+      GetCode(format, sw);
+
+      sw.Close();
+
+      return sb.ToString();
+    }
+
+    public void GetCode(CodeFormat format, TextWriter writer)
+    {
+      IOutputProvider output;
+      switch (format)
+      {
+        case CodeFormat.Disassemble:
+          output = OutputFactory.GetDisassembleOutputProvider();
+          break;
+        case CodeFormat.ControlFlowDecompile:
+          output = OutputFactory.GetDecompileCFOutputProvider();
+          break;
+        case CodeFormat.FullDecompile:
+          output = OutputFactory.GetDecompileFullOutputProvider();
+          break;
+        case CodeFormat.FullDecompileAnnotate:
+          output = OutputFactory.GetDecompileFullAnnotateOutputProvider();
+          break;
+        case CodeFormat.CodePath:
+          output = OutputFactory.GetCodePathOutputProvider();
+          break;
+        case CodeFormat.Variables:
+          output = OutputFactory.GetVariablesOutputProvider();
+          break;
+        case CodeFormat.ScruffDecompile:
+          output = OutputFactory.GetScruffDecompileOutputProvider();
+          break;
+        case CodeFormat.ScruffHeader:
+          output = OutputFactory.GetScruffHeaderOutputProvider();
+          break;
+        default:
+          throw new ArgumentOutOfRangeException("format");
+      }
+
+      output.Process(_file, writer);
+    }
+
+    public uint[] LocalVars
+    {
+      get
+      {
+        return _file.LocalVars;
+      }
+    }
+
+    public uint[] GlobalVars
+    {
+      get
+      {
+        return _file.GlobalVars;
+      }
+    }
+  }
 }

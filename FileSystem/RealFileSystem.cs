@@ -22,100 +22,100 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using RageLib.FileSystem.Real;
-using Directory=RageLib.FileSystem.Common.Directory;
-using File=RageLib.FileSystem.Common.File;
+using Directory = RageLib.FileSystem.Common.Directory;
+using File = RageLib.FileSystem.Common.File;
 
 namespace RageLib.FileSystem
 {
-    public class RealFileSystem : Common.FileSystem
+  public class RealFileSystem : Common.FileSystem
+  {
+    private RealContext _context;
+
+    // TODO: this has to be refactored to be part of Real.FileEntry
+    private readonly Dictionary<string, byte[]> _customData = new Dictionary<string, byte[]>();
+    private string _realDirectory;
+
+    public override void Open(string filename)
     {
-        private RealContext _context;
+      _realDirectory = filename;
+      _context = new RealContext(new DirectoryInfo(filename));
 
-        // TODO: this has to be refactored to be part of Real.FileEntry
-        private readonly Dictionary<string, byte[]> _customData = new Dictionary<string, byte[]>();
-        private string _realDirectory;
-
-        public override void Open(string filename)
-        {
-            _realDirectory = filename;
-            _context = new RealContext(new DirectoryInfo(filename));
-
-            BuildFS();
-        }
-
-        public override void Save()
-        {
-            foreach (var pair in _customData)
-            {
-                System.IO.File.WriteAllBytes(pair.Key, pair.Value);
-            }
-            _customData.Clear();
-        }
-
-        public override void Rebuild()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Close()
-        {
-        }
-
-        public override bool SupportsRebuild
-        {
-            get { return false; }
-        }
-
-        public override bool HasDirectoryStructure
-        {
-            get { return true; }
-        }
-
-        public string RealDirectory
-        {
-            get { return _realDirectory; }
-        }
-
-        private void BuildFSDirectory(DirectoryEntry dirEntry, Directory fsDirectory)
-        {
-            fsDirectory.Name = dirEntry.Name;
-
-            for (var i = 0; i < dirEntry.DirectoryCount; i++ )
-            {
-                var dir = new Directory();
-                BuildFSDirectory(dirEntry.GetDirectory(i), dir);
-                dir.ParentDirectory = fsDirectory;
-                fsDirectory.AddObject(dir);
-            }
-
-            for (var i = 0; i < dirEntry.FileCount; i++ )
-            {
-                var fileEntry = dirEntry.GetFile(i);
-
-                File file;
-                file = new File( 
-                                ()=> (_customData.ContainsKey(fileEntry.FullName) ? _customData[fileEntry.FullName] : fileEntry.GetData()),     
-                                data => _customData[fileEntry.FullName] = data,
-                                () => _customData.ContainsKey(fileEntry.FullName)
-                            );
-
-                file.CompressedSize = fileEntry.Size;
-                file.IsCompressed = false;
-                file.Name = fileEntry.Name;
-                file.Size = fileEntry.Size;
-                file.IsResource = fileEntry.IsResourceFile;
-                file.ResourceType = fileEntry.ResourceType;
-                file.ParentDirectory = fsDirectory;
-
-                fsDirectory.AddObject(file);                
-            }
-        }
-
-        private void BuildFS()
-        {
-            RootDirectory = new Directory();
-
-            BuildFSDirectory(_context.RootDirectory, RootDirectory);
-        }
+      BuildFS();
     }
+
+    public override void Save()
+    {
+      foreach (var pair in _customData)
+      {
+        System.IO.File.WriteAllBytes(pair.Key, pair.Value);
+      }
+      _customData.Clear();
+    }
+
+    public override void Rebuild()
+    {
+      throw new NotImplementedException();
+    }
+
+    public override void Close()
+    {
+    }
+
+    public override bool SupportsRebuild
+    {
+      get { return false; }
+    }
+
+    public override bool HasDirectoryStructure
+    {
+      get { return true; }
+    }
+
+    public string RealDirectory
+    {
+      get { return _realDirectory; }
+    }
+
+    private void BuildFSDirectory(DirectoryEntry dirEntry, Directory fsDirectory)
+    {
+      fsDirectory.Name = dirEntry.Name;
+
+      for (var i = 0; i < dirEntry.DirectoryCount; i++)
+      {
+        var dir = new Directory();
+        BuildFSDirectory(dirEntry.GetDirectory(i), dir);
+        dir.ParentDirectory = fsDirectory;
+        fsDirectory.AddObject(dir);
+      }
+
+      for (var i = 0; i < dirEntry.FileCount; i++)
+      {
+        var fileEntry = dirEntry.GetFile(i);
+
+        File file;
+        file = new File(
+                        () => (_customData.ContainsKey(fileEntry.FullName) ? _customData[fileEntry.FullName] : fileEntry.GetData()),
+                        data => _customData[fileEntry.FullName] = data,
+                        () => _customData.ContainsKey(fileEntry.FullName)
+                    );
+
+        file.CompressedSize = fileEntry.Size;
+        file.IsCompressed = false;
+        file.Name = fileEntry.Name;
+        file.Size = fileEntry.Size;
+        file.IsResource = fileEntry.IsResourceFile;
+        file.ResourceType = fileEntry.ResourceType;
+        file.ParentDirectory = fsDirectory;
+
+        fsDirectory.AddObject(file);
+      }
+    }
+
+    private void BuildFS()
+    {
+      RootDirectory = new Directory();
+
+      BuildFSDirectory(_context.RootDirectory, RootDirectory);
+    }
+  }
 }

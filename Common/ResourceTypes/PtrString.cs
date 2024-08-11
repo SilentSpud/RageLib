@@ -23,57 +23,57 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class PtrString : IFileAccess
+  public class PtrString : IFileAccess
+  {
+    private uint _offset;
+    private string _value;
+
+    public PtrString()
     {
-        private uint _offset;
-        private string _value;
-
-        public PtrString()
-        {
-        }
-
-        public PtrString(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public uint Offset
-        {
-            get { return _offset; }
-        }
-
-        public string Value
-        {
-            get { return _value; }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            _offset = ResourceUtil.ReadOffset(br);
-
-            using (new StreamContext(br))
-            {
-                br.BaseStream.Seek(_offset, SeekOrigin.Begin);
-                _value = ResourceUtil.ReadNullTerminatedString(br);
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        #region Overrides of Object
-
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        #endregion
     }
+
+    public PtrString(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public uint Offset
+    {
+      get { return _offset; }
+    }
+
+    public string Value
+    {
+      get { return _value; }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      _offset = ResourceUtil.ReadOffset(br);
+
+      using (new StreamContext(br))
+      {
+        br.BaseStream.Seek(_offset, SeekOrigin.Begin);
+        _value = ResourceUtil.ReadNullTerminatedString(br);
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+
+    #region Overrides of Object
+
+    public override string ToString()
+    {
+      return Value;
+    }
+
+    #endregion
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,19 +20,19 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValueAssign : StackValueDeref
+  internal class StackValueAssign : StackValueDeref
+  {
+    public StackValueAssign(StackValuePointerBase pointer, StackValue assignment)
+        : base(pointer)
     {
-        public StackValueAssign(StackValuePointerBase pointer, StackValue assignment)
-            : base(pointer)
-        {
-            AssignValue = assignment;
-        }
-
-        public StackValue AssignValue { get; set; }
-
-        public override string ToString()
-        {
-            return base.ToString() + " = " + AssignValue;
-        }
+      AssignValue = assignment;
     }
+
+    public StackValue AssignValue { get; set; }
+
+    public override string ToString()
+    {
+      return base.ToString() + " = " + AssignValue;
+    }
+  }
 }

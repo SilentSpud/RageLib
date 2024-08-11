@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,18 +20,18 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal abstract class StackValuePointerBase : StackValue
+  internal abstract class StackValuePointerBase : StackValue
+  {
+    protected StackValuePointerBase()
     {
-        protected StackValuePointerBase()
-        {
-            ValueType = StackValueType.Pointer;
-        }
-
-        public abstract string GetDisplayText();
-
-        public override string ToString()
-        {
-            return "&(" + GetDisplayText() + ")";
-        }
+      ValueType = StackValueType.Pointer;
     }
+
+    public abstract string GetDisplayText();
+
+    public override string ToString()
+    {
+      return "&(" + GetDisplayText() + ")";
+    }
+  }
 }

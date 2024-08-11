@@ -23,48 +23,48 @@ using RageLib.Audio.SoundBank;
 
 namespace RageLib.Audio
 {
-    public class AudioWave
+  public class AudioWave
+  {
+    internal int Index { get; set; }
+    internal ISoundWave SoundWave { get; set; }
+
+    public TimeSpan Length
     {
-        internal int Index { get; set; }
-        internal ISoundWave SoundWave { get; set; }
-
-        public TimeSpan Length
-        {
-            get
-            {
-                var numberOfSeconds = (int) Math.Ceiling((float) NumberOfSamples/SamplesPerSecond);
-                return new TimeSpan(0, 0, numberOfSeconds);
-            }
-        }
-
-        public int NumberOfSamples
-        {
-            get { return SoundWave.NumberOfSamples; }
-        }
-
-        public int SamplesPerSecond
-        {
-            get { return SoundWave.SamplesPerSecond; }
-        }
-
-        public int BlockCount
-        {
-            get { return SoundWave.BlockCount; }
-        }
-
-        public int BlockSize
-        {
-            get { return SoundWave.BlockSize; }
-        }
-
-        public AudioWave(int index)
-        {
-            Index = index;
-        }
-
-        public override string ToString()
-        {
-            return SoundWave.Name;
-        }
+      get
+      {
+        var numberOfSeconds = (int)Math.Ceiling((float)NumberOfSamples / SamplesPerSecond);
+        return new TimeSpan(0, 0, numberOfSeconds);
+      }
     }
+
+    public int NumberOfSamples
+    {
+      get { return SoundWave.NumberOfSamples; }
+    }
+
+    public int SamplesPerSecond
+    {
+      get { return SoundWave.SamplesPerSecond; }
+    }
+
+    public int BlockCount
+    {
+      get { return SoundWave.BlockCount; }
+    }
+
+    public int BlockSize
+    {
+      get { return SoundWave.BlockSize; }
+    }
+
+    public AudioWave(int index)
+    {
+      Index = index;
+    }
+
+    public override string ToString()
+    {
+      return SoundWave.Name;
+    }
+  }
 }

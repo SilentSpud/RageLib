@@ -27,36 +27,36 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.Mono
 {
-    internal struct Header : IFileAccess
+  internal struct Header : IFileAccess
+  {
+    public long offsetWaveInfo;
+    public long offsetUnknownTable;
+    public int numBlocks;
+    public int numUnknownTableEntries;
+    public int headerSize;
+
+    public Header(BinaryReader br) : this()
     {
-        public long offsetWaveInfo;
-        public long offsetUnknownTable;
-        public int numBlocks;
-        public int numUnknownTableEntries;
-        public int headerSize;
-
-        public Header(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            offsetWaveInfo = br.ReadInt64();
-            offsetUnknownTable = br.ReadInt64();
-            
-            numBlocks = br.ReadInt32();
-            numUnknownTableEntries = br.ReadInt32();
-            headerSize = br.ReadInt32();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      offsetWaveInfo = br.ReadInt64();
+      offsetUnknownTable = br.ReadInt64();
+
+      numBlocks = br.ReadInt32();
+      numUnknownTableEntries = br.ReadInt32();
+      headerSize = br.ReadInt32();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

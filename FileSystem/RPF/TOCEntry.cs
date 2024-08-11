@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,29 +23,29 @@ using RageLib.Common;
 
 namespace RageLib.FileSystem.RPF
 {
-    internal abstract class TOCEntry : IFileAccess
+  internal abstract class TOCEntry : IFileAccess
+  {
+    public int NameOffset { get; set; }
+    public TOC TOC { get; set; }
+
+    public abstract bool IsDirectory { get; }
+
+    #region IFileAccess Members
+
+    public abstract void Read(BinaryReader br);
+    public abstract void Write(BinaryWriter bw);
+
+    #endregion
+
+    internal static bool ReadAsDirectoryEntry(BinaryReader br)
     {
-        public int NameOffset { get; set; }
-        public TOC TOC { get; set; }
+      bool dir;
 
-        public abstract bool IsDirectory { get; }
+      br.BaseStream.Seek(8, SeekOrigin.Current);
+      dir = br.ReadInt32() < 0;
+      br.BaseStream.Seek(-12, SeekOrigin.Current);
 
-        #region IFileAccess Members
-
-        public abstract void Read(BinaryReader br);
-        public abstract void Write(BinaryWriter bw);
-
-        #endregion
-
-        internal static bool ReadAsDirectoryEntry(BinaryReader br)
-        {
-            bool dir;
-
-            br.BaseStream.Seek(8, SeekOrigin.Current);
-            dir = br.ReadInt32() < 0;
-            br.BaseStream.Seek(-12, SeekOrigin.Current);
-
-            return dir;
-        }
+      return dir;
     }
+  }
 }

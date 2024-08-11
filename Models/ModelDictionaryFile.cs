@@ -25,48 +25,48 @@ using RageLib.Textures;
 
 namespace RageLib.Models
 {
-    public class ModelDictionaryFile : IModelFile
+  public class ModelDictionaryFile : IModelFile
+  {
+    internal File<DrawableModelDictionary> File { get; private set; }
+
+    public void Open(string filename)
     {
-        internal File<DrawableModelDictionary> File { get; private set; }
-
-        public void Open(string filename)
-        {
-            File = new File<DrawableModelDictionary>();
-            File.Open(filename);
-        }
-
-        public void Open(Stream stream)
-        {
-            File = new File<DrawableModelDictionary>();
-            File.Open(stream);
-        }
-
-        public ModelNode GetModel(TextureFile[] textures)
-        {
-            return ModelGenerator.GenerateModel(File.Data, textures);
-        }
-
-        public int ModelsInDictionary
-        {
-            get { return File.Data.Entries.Count; }
-        }
-
-        public Drawable GetDataModel(int modelIndex)
-        {
-            return new Drawable(File.Data.Entries[modelIndex]);
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            if (File != null)
-            {
-                File.Dispose();
-                File = null;
-            }
-        }
-
-        #endregion
+      File = new File<DrawableModelDictionary>();
+      File.Open(filename);
     }
+
+    public void Open(Stream stream)
+    {
+      File = new File<DrawableModelDictionary>();
+      File.Open(stream);
+    }
+
+    public ModelNode GetModel(TextureFile[] textures)
+    {
+      return ModelGenerator.GenerateModel(File.Data, textures);
+    }
+
+    public int ModelsInDictionary
+    {
+      get { return File.Data.Entries.Count; }
+    }
+
+    public Drawable GetDataModel(int modelIndex)
+    {
+      return new Drawable(File.Data.Entries[modelIndex]);
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      if (File != null)
+      {
+        File.Dispose();
+        File = null;
+      }
+    }
+
+    #endregion
+  }
 }

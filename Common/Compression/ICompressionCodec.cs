@@ -22,9 +22,9 @@ using System.IO;
 
 namespace RageLib.Common.Compression
 {
-    internal interface ICompressionCodec
-    {
-        void Compress(Stream source, Stream destination);
-        void Decompress(Stream source, Stream destination);
-    }
+  internal interface ICompressionCodec
+  {
+    void Compress(Stream source, Stream destination);
+    void Decompress(Stream source, Stream destination);
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,55 +23,55 @@ using RageLib.Scripting.Script;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class HLInstruction
+  internal class HLInstruction
+  {
+    public HLInstruction(Instruction instruction)
     {
-        public HLInstruction(Instruction instruction)
-        {
-            Instruction = instruction;
+      Instruction = instruction;
 
-            if (instruction is InstructionBranch || instruction is InstructionSwitch)
-            {
-                BranchCodesPaths = new Dictionary<object, CodePath>();
-            }
-        }
-
-        public CodePath ParentCodePath { get; set; }
-
-        public Instruction Instruction { get; set; }
-
-        public HLInstruction PreviousInstruction { get; set; }
-        public HLInstruction NextInstruction { get; set; }
-
-        public Dictionary<object, CodePath> BranchCodesPaths { get; private set; }
-
-        public bool ExitFunction { get; set; }
-        public bool UnconditionalBranch { get; set; }
-
-        public CodePath LoopCodePath { get; set; }
-        public HLInstruction BranchLoopInstruction { get; set; }
-
-        public bool IsConditionalBranch { get; set; }
-        public bool DefaultConditional { get; set; }
-
-        public bool IsSwitchBranch { get; set; }
-
-        public Function BranchFunction { get; set; }
-
-        public StackValue ProcessedStackValue { get; set; }
-
-        public HLInstruction GetNextInstruction()
-        {
-            HLInstruction instruction = NextInstruction;
-            if (instruction != null && instruction.UnconditionalBranch)
-            {
-                instruction = instruction.NextInstruction;
-            }
-            return instruction;
-        }
-
-        public override string ToString()
-        {
-            return Instruction.ToString();
-        }
+      if (instruction is InstructionBranch || instruction is InstructionSwitch)
+      {
+        BranchCodesPaths = new Dictionary<object, CodePath>();
+      }
     }
+
+    public CodePath ParentCodePath { get; set; }
+
+    public Instruction Instruction { get; set; }
+
+    public HLInstruction PreviousInstruction { get; set; }
+    public HLInstruction NextInstruction { get; set; }
+
+    public Dictionary<object, CodePath> BranchCodesPaths { get; private set; }
+
+    public bool ExitFunction { get; set; }
+    public bool UnconditionalBranch { get; set; }
+
+    public CodePath LoopCodePath { get; set; }
+    public HLInstruction BranchLoopInstruction { get; set; }
+
+    public bool IsConditionalBranch { get; set; }
+    public bool DefaultConditional { get; set; }
+
+    public bool IsSwitchBranch { get; set; }
+
+    public Function BranchFunction { get; set; }
+
+    public StackValue ProcessedStackValue { get; set; }
+
+    public HLInstruction GetNextInstruction()
+    {
+      HLInstruction instruction = NextInstruction;
+      if (instruction != null && instruction.UnconditionalBranch)
+      {
+        instruction = instruction.NextInstruction;
+      }
+      return instruction;
+    }
+
+    public override string ToString()
+    {
+      return Instruction.ToString();
+    }
+  }
 }

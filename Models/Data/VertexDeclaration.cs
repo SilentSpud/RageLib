@@ -23,55 +23,55 @@ using System.Collections.Generic;
 
 namespace RageLib.Models.Data
 {
-    public class VertexDeclaration
+  public class VertexDeclaration
+  {
+    public VertexElement[] Elements { get; private set; }
+
+    internal VertexDeclaration(Resource.Models.VertexDeclaration declaration)
     {
-        public VertexElement[] Elements { get; private set; }
+      if (declaration.AlterateDecoder == 1)
+      {
+        throw new Exception("Don't know how to handle alterate decoder vertex declaration");
+      }
 
-        internal VertexDeclaration(Resource.Models.VertexDeclaration declaration)
+      // Lets convert the RAGE VertexElement declarations to a more DirectX like one...
+
+      var rageElements = declaration.DecodeAsVertexElements();
+      var elements = new List<VertexElement>();
+
+      int streamIndex = rageElements[0].StreamIndex;
+      int offsetInStream = 0;
+
+      int[] typeMapping = { 0, 15, 0, 16, 0, 1, 2, 3, 5, 4, 14, 0, 0, 0, 0, 0 };
+      int[] usageMapping = { 0, 9, 3, 7, 6, 5, 1, 2, 10, 0, 0, 0 };
+
+      foreach (var rageEl in rageElements)
+      {
+        if (rageEl.StreamIndex != streamIndex)
         {
-            if (declaration.AlterateDecoder == 1)
-            {
-                throw new Exception("Don't know how to handle alterate decoder vertex declaration");
-            }
-
-            // Lets convert the RAGE VertexElement declarations to a more DirectX like one...
-
-            var rageElements = declaration.DecodeAsVertexElements();
-            var elements = new List<VertexElement>();
-
-            int streamIndex = rageElements[0].StreamIndex;
-            int offsetInStream = 0;
-
-            int[] typeMapping = {0, 15, 0, 16, 0, 1, 2, 3, 5, 4, 14, 0, 0, 0, 0, 0};
-            int[] usageMapping = {0, 9, 3, 7, 6, 5, 1, 2, 10, 0, 0, 0};
-
-            foreach (var rageEl in rageElements)
-            {
-                if (rageEl.StreamIndex != streamIndex)
-                {
-                    streamIndex = rageEl.StreamIndex;
-                    offsetInStream = 0;
-                }
-
-                var el = new VertexElement()
-                             {
-                                 Stream = streamIndex,
-                                 Type = (VertexElementType) typeMapping[(int) rageEl.Type],
-                                 Usage = (VertexElementUsage) usageMapping[(int) rageEl.Usage],
-                                 Size = rageEl.Size,
-                                 Offset = offsetInStream,
-                                 Method = VertexElementMethod.Default,
-                                 UsageIndex = rageEl.UsageIndex,
-                             };
-                
-                offsetInStream += rageEl.Size;
-
-                elements.Add(el);
-            }
-
-            elements.Add(VertexElement.End);
-
-            Elements = elements.ToArray();
+          streamIndex = rageEl.StreamIndex;
+          offsetInStream = 0;
         }
+
+        var el = new VertexElement()
+        {
+          Stream = streamIndex,
+          Type = (VertexElementType)typeMapping[(int)rageEl.Type],
+          Usage = (VertexElementUsage)usageMapping[(int)rageEl.Usage],
+          Size = rageEl.Size,
+          Offset = offsetInStream,
+          Method = VertexElementMethod.Default,
+          UsageIndex = rageEl.UsageIndex,
+        };
+
+        offsetInStream += rageEl.Size;
+
+        elements.Add(el);
+      }
+
+      elements.Add(VertexElement.End);
+
+      Elements = elements.ToArray();
     }
+  }
 }

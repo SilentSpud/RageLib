@@ -24,36 +24,36 @@ using RageLib.Common;
 
 namespace RageLib.Shaders.ShaderFX
 {
-    internal class Variables : IFileAccess
+  internal class Variables : IFileAccess
+  {
+    public List<VariableDefinition> Definitions { get; private set; }
+
+    public Variables()
     {
-        public List<VariableDefinition> Definitions { get; private set; }
-
-        public Variables()
-        {
-        }
-
-        public Variables(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            int variableCount = br.ReadByte();
-            Definitions = new List<VariableDefinition>(variableCount);
-            for(int i=0; i<variableCount; i++)
-            {
-                Definitions.Add(new VariableDefinition(br));
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public Variables(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      int variableCount = br.ReadByte();
+      Definitions = new List<VariableDefinition>(variableCount);
+      for (int i = 0; i < variableCount; i++)
+      {
+        Definitions.Add(new VariableDefinition(br));
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

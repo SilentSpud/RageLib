@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,72 +22,72 @@ using System.Diagnostics;
 
 namespace RageLib.Scripting.Script
 {
-    internal class Decoder
+  internal class Decoder
+  {
+    public Decoder(File file)
     {
-        public Decoder(File file)
-        {
-            File = file;
-        }
-
-        public File File { get; set; }
-
-        public Instruction Decode(int offset)
-        {
-            Instruction instruction = null;
-
-            var opcode = (OpCode) File.Code[offset];
-
-            switch (opcode)
-            {
-                case OpCode.PushS:
-                    instruction = new InstructionPush(typeof (short));
-                    break;
-                case OpCode.Push:
-                    instruction = new InstructionPush(typeof (uint));
-                    break;
-                case OpCode.PushF:
-                    instruction = new InstructionPush(typeof (float));
-                    break;
-                case OpCode.PushString:
-                    instruction = new InstructionPush(typeof (string));
-                    break;
-                case OpCode.Jump:
-                case OpCode.JumpFalse:
-                case OpCode.JumpTrue:
-                case OpCode.Call:
-                    instruction = new InstructionBranch();
-                    break;
-                case OpCode.CallNative:
-                    instruction = new InstructionNative();
-                    break;
-                case OpCode.FnBegin:
-                    instruction = new InstructionFnBegin();
-                    break;
-                case OpCode.FnEnd:
-                    instruction = new InstructionFnEnd();
-                    break;
-                case OpCode.Switch:
-                    instruction = new InstructionSwitch();
-                    break;
-                default:
-                    if ((int) opcode >= 80)
-                    {
-                        instruction = new InstructionPush(null);
-                    }
-                    else if ((int) opcode <= 78)
-                    {
-                        instruction = new Instruction();
-                    }
-                    else
-                    {
-                        Debug.Assert(false);
-                    }
-                    break;
-            }
-
-            instruction.Decode(File.Code, offset);
-
-            return instruction;
-        }
+      File = file;
     }
+
+    public File File { get; set; }
+
+    public Instruction Decode(int offset)
+    {
+      Instruction instruction = null;
+
+      var opcode = (OpCode)File.Code[offset];
+
+      switch (opcode)
+      {
+        case OpCode.PushS:
+          instruction = new InstructionPush(typeof(short));
+          break;
+        case OpCode.Push:
+          instruction = new InstructionPush(typeof(uint));
+          break;
+        case OpCode.PushF:
+          instruction = new InstructionPush(typeof(float));
+          break;
+        case OpCode.PushString:
+          instruction = new InstructionPush(typeof(string));
+          break;
+        case OpCode.Jump:
+        case OpCode.JumpFalse:
+        case OpCode.JumpTrue:
+        case OpCode.Call:
+          instruction = new InstructionBranch();
+          break;
+        case OpCode.CallNative:
+          instruction = new InstructionNative();
+          break;
+        case OpCode.FnBegin:
+          instruction = new InstructionFnBegin();
+          break;
+        case OpCode.FnEnd:
+          instruction = new InstructionFnEnd();
+          break;
+        case OpCode.Switch:
+          instruction = new InstructionSwitch();
+          break;
+        default:
+          if ((int)opcode >= 80)
+          {
+            instruction = new InstructionPush(null);
+          }
+          else if ((int)opcode <= 78)
+          {
+            instruction = new Instruction();
+          }
+          else
+          {
+            Debug.Assert(false);
+          }
+          break;
+      }
+
+      instruction.Decode(File.Code, offset);
+
+      return instruction;
+    }
+  }
 }

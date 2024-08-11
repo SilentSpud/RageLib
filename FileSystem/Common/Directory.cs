@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,52 +23,52 @@ using System.Collections.Generic;
 
 namespace RageLib.FileSystem.Common
 {
-    public class Directory : FSObject, IEnumerable<FSObject>
+  public class Directory : FSObject, IEnumerable<FSObject>
+  {
+    private readonly List<FSObject> _fsObjects = new List<FSObject>();
+    private readonly Dictionary<string, FSObject> _fsObjectsByName = new Dictionary<string, FSObject>();
+
+    public override bool IsDirectory
     {
-        private readonly List<FSObject> _fsObjects = new List<FSObject>();
-        private readonly Dictionary<string, FSObject> _fsObjectsByName = new Dictionary<string, FSObject>();
-
-        public override bool IsDirectory
-        {
-            get { return true; }
-        }
-
-        public FSObject this[int index]
-        {
-            get { return _fsObjects[index]; }
-        }
-
-        public FSObject FindByName(string name)
-        {
-            FSObject obj;
-            _fsObjectsByName.TryGetValue(name.ToLower(), out obj);
-            return obj;
-        }
-
-        #region IEnumerable<FSObject> Members
-
-        public IEnumerator<FSObject> GetEnumerator()
-        {
-            return _fsObjects.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _fsObjects.GetEnumerator();
-        }
-
-        #endregion
-
-        public void AddObject(FSObject obj)
-        {
-            _fsObjects.Add(obj);
-            _fsObjectsByName.Add(obj.Name.ToLower(), obj);
-        }
-
-        public void DeleteObject(FSObject obj)
-        {
-            _fsObjectsByName.Remove(obj.Name.ToLower());
-            _fsObjects.Remove(obj);
-        }
+      get { return true; }
     }
+
+    public FSObject this[int index]
+    {
+      get { return _fsObjects[index]; }
+    }
+
+    public FSObject FindByName(string name)
+    {
+      FSObject obj;
+      _fsObjectsByName.TryGetValue(name.ToLower(), out obj);
+      return obj;
+    }
+
+    #region IEnumerable<FSObject> Members
+
+    public IEnumerator<FSObject> GetEnumerator()
+    {
+      return _fsObjects.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return _fsObjects.GetEnumerator();
+    }
+
+    #endregion
+
+    public void AddObject(FSObject obj)
+    {
+      _fsObjects.Add(obj);
+      _fsObjectsByName.Add(obj.Name.ToLower(), obj);
+    }
+
+    public void DeleteObject(FSObject obj)
+    {
+      _fsObjectsByName.Remove(obj.Name.ToLower());
+      _fsObjects.Remove(obj);
+    }
+  }
 }

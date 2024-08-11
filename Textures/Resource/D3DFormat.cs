@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,12 +20,12 @@
 
 namespace RageLib.Textures.Resource
 {
-    internal enum D3DFormat
-    {
-        DXT1 = 0x31545844,
-        DXT3 = 0x33545844,
-        DXT5 = 0x35545844,
-        A8R8G8B8 = 0x15,
-        L8 = 0x32,
-    }
+  internal enum D3DFormat
+  {
+    DXT1 = 0x31545844,
+    DXT3 = 0x33545844,
+    DXT5 = 0x35545844,
+    A8R8G8B8 = 0x15,
+    L8 = 0x32,
+  }
 }

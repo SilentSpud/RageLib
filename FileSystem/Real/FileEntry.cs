@@ -24,87 +24,87 @@ using RageLib.Common.Resources;
 
 namespace RageLib.FileSystem.Real
 {
-    class FileEntry : RealEntry
-    {
-        private readonly FileInfo _file;
+  class FileEntry : RealEntry
+  {
+    private readonly FileInfo _file;
 
-        public ResourceType ResourceType { get; private set; }
+    public ResourceType ResourceType { get; private set; }
 
-        public bool IsResourceFile { get; private set; }
+    public bool IsResourceFile { get; private set; }
 
-        private List<string> _resourceFiles = new List<string>()
+    private List<string> _resourceFiles = new List<string>()
                                                   {
                                                       ".wtd", ".wdr", ".wdd", ".wft",
-                                                      ".wpfl", ".whm", ".wad", ".wbd", 
+                                                      ".wpfl", ".whm", ".wad", ".wbd",
                                                       ".wbn", ".wbs"
                                                   };
 
 
-        public FileEntry(RealContext context, FileInfo file)
+    public FileEntry(RealContext context, FileInfo file)
+    {
+      Context = context;
+      _file = file;
+
+      string ext = file.Extension;
+
+      if (_resourceFiles.Contains(ext))
+      {
+
+        FileStream fs = _file.OpenRead();
+        try
         {
-            Context = context;
-            _file = file;
+          IsResourceFile = ResourceUtil.IsResource(fs);
 
-            string ext = file.Extension;
-
-            if (_resourceFiles.Contains(ext))
-            {
-
-                FileStream fs = _file.OpenRead();
-                try
-                {
-                    IsResourceFile = ResourceUtil.IsResource(fs);
-
-                    if (IsResourceFile)
-                    {
-                        fs.Position = 0;
-                        ResourceType resType;
-                        uint flags;
-                        ResourceUtil.GetResourceData(fs, out flags, out resType);
-                        ResourceType = resType;
-                    }
-                }
-                catch
-                {
-                    ResourceType = 0;
-                    IsResourceFile = false;
-                }
-                finally
-                {
-                    fs.Close();
-                }
-
-            }
+          if (IsResourceFile)
+          {
+            fs.Position = 0;
+            ResourceType resType;
+            uint flags;
+            ResourceUtil.GetResourceData(fs, out flags, out resType);
+            ResourceType = resType;
+          }
+        }
+        catch
+        {
+          ResourceType = 0;
+          IsResourceFile = false;
+        }
+        finally
+        {
+          fs.Close();
         }
 
-        public override bool IsDirectory
-        {
-            get { return false; }
-        }
-
-        public override string Name
-        {
-            get { return _file.Name; }
-        }
-
-        public string FullName
-        {
-            get { return _file.FullName; }
-        }
-
-        public int Size
-        {
-            get { return (int)_file.Length; }
-        }
-
-        public byte[] GetData()
-        {
-            return File.ReadAllBytes(_file.FullName);
-        }
-
-        public void SetData(byte[] data)
-        {
-            File.WriteAllBytes(_file.FullName, data);
-        }
+      }
     }
+
+    public override bool IsDirectory
+    {
+      get { return false; }
+    }
+
+    public override string Name
+    {
+      get { return _file.Name; }
+    }
+
+    public string FullName
+    {
+      get { return _file.FullName; }
+    }
+
+    public int Size
+    {
+      get { return (int)_file.Length; }
+    }
+
+    public byte[] GetData()
+    {
+      return File.ReadAllBytes(_file.FullName);
+    }
+
+    public void SetData(byte[] data)
+    {
+      File.WriteAllBytes(_file.FullName, data);
+    }
+  }
 }

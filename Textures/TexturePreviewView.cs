@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,39 +23,39 @@ using System.Windows.Forms;
 
 namespace RageLib.Textures
 {
-    public partial class TexturePreviewView : UserControl
+  public partial class TexturePreviewView : UserControl
+  {
+    public TexturePreviewView()
     {
-        public TexturePreviewView()
-        {
-            InitializeComponent();
-        }
-
-        public int TextureCount
-        {
-            set
-            {
-                tslTexturesInfo.Text = value + " Texture" + (value == 1 ? "" : "s");
-            }
-        }
-
-        public TextureView TextureView
-        {
-            get
-            {
-                return textureView;
-            }
-        }
-
-        public event EventHandler SaveClicked
-        {
-            add { tsbSave.Click += value; }
-            remove { tsbSave.Click -= value; }
-        }
-
-        public event EventHandler SaveAllClicked
-        {
-            add { tsbSaveAll.Click += value; }
-            remove { tsbSaveAll.Click -= value; }
-        }
+      InitializeComponent();
     }
+
+    public int TextureCount
+    {
+      set
+      {
+        tslTexturesInfo.Text = value + " Texture" + (value == 1 ? "" : "s");
+      }
+    }
+
+    public TextureView TextureView
+    {
+      get
+      {
+        return textureView;
+      }
+    }
+
+    public event EventHandler SaveClicked
+    {
+      add { tsbSave.Click += value; }
+      remove { tsbSave.Click -= value; }
+    }
+
+    public event EventHandler SaveAllClicked
+    {
+      add { tsbSaveAll.Click += value; }
+      remove { tsbSaveAll.Click -= value; }
+    }
+  }
 }

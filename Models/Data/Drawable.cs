@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,40 +23,40 @@ using RageLib.Models.Resource;
 
 namespace RageLib.Models.Data
 {
-    public class Drawable
+  public class Drawable
+  {
+    public List<Model> Models { get; private set; }
+    public List<Material> Materials { get; private set; }
+    public Skeleton Skeleton { get; private set; }
+    public Textures.TextureFile AttachedTexture { get; private set; }
+
+    internal Drawable(DrawableModel drawableModel)
     {
-        public List<Model> Models { get; private set; }
-        public List<Material> Materials { get; private set; }
-        public Skeleton Skeleton { get; private set; }
-        public Textures.TextureFile AttachedTexture { get; private set; }
-
-        internal Drawable(DrawableModel drawableModel)
+      if (drawableModel.ShaderGroup != null)
+      {
+        Materials = new List<Material>(drawableModel.ShaderGroup.Shaders.Count);
+        foreach (var info in drawableModel.ShaderGroup.Shaders)
         {
-            if (drawableModel.ShaderGroup != null)
-            {
-                Materials = new List<Material>(drawableModel.ShaderGroup.Shaders.Count);
-                foreach (var info in drawableModel.ShaderGroup.Shaders)
-                {
-                    Materials.Add(new Material(info));
-                }
-            }
-            else
-            {
-                Materials = new List<Material>();
-            }
-
-            if (drawableModel.Skeleton != null)
-            {
-                Skeleton = new Skeleton(drawableModel.Skeleton);
-            }
-
-            Models = new List<Model>(drawableModel.ModelCollection.Length);
-            foreach (var info in drawableModel.ModelCollection)
-            {
-                Models.Add(new Model(info));
-            }
-
-            AttachedTexture = drawableModel.ShaderGroup.TextureDictionary;
+          Materials.Add(new Material(info));
         }
+      }
+      else
+      {
+        Materials = new List<Material>();
+      }
+
+      if (drawableModel.Skeleton != null)
+      {
+        Skeleton = new Skeleton(drawableModel.Skeleton);
+      }
+
+      Models = new List<Model>(drawableModel.ModelCollection.Length);
+      foreach (var info in drawableModel.ModelCollection)
+      {
+        Models.Add(new Model(info));
+      }
+
+      AttachedTexture = drawableModel.ShaderGroup.TextureDictionary;
     }
+  }
 }

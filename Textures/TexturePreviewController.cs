@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,97 +25,97 @@ using System.Windows.Forms;
 
 namespace RageLib.Textures
 {
-    public class TexturePreviewController
+  public class TexturePreviewController
+  {
+    private readonly TexturePreviewView _view;
+    private readonly TextureViewController _textureViewController;
+    private string _lastSaveDirectory;
+
+    public TexturePreviewController(TexturePreviewView view)
     {
-        private readonly TexturePreviewView _view;
-        private readonly TextureViewController _textureViewController;
-        private string _lastSaveDirectory;
-        
-        public TexturePreviewController(TexturePreviewView view)
-        {
-            _view = view;
-            _view.SaveClicked += View_SaveClicked;
-            _view.SaveAllClicked += View_SaveAllClicked;
-            _view.Disposed += View_Disposed;
+      _view = view;
+      _view.SaveClicked += View_SaveClicked;
+      _view.SaveAllClicked += View_SaveAllClicked;
+      _view.Disposed += View_Disposed;
 
-            _textureViewController = new TextureViewController(view.TextureView);
-        }
-
-        public TextureFile TextureFile
-        {
-            get { return _textureViewController.TextureFile; }
-            set
-            {
-                _textureViewController.TextureFile = value;
-                _view.TextureCount = value == null ? 0 : value.Count;
-            }
-        }
-
-        private void View_SaveClicked(object sender, EventArgs e)
-        {
-            var texture = _view.TextureView.SelectedTexture;
-            if (texture != null)
-            {
-                var sfd = new SaveFileDialog
-                {
-                    AddExtension = true,
-                    OverwritePrompt = true,
-                    Title = "Save Texture",
-                    Filter = "Portable Network Graphics (*.png)|*.png|JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg",
-                    InitialDirectory = _lastSaveDirectory,
-                    FileName = texture.TitleName + ".png"
-                };
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    var image = texture.Decode();
-
-                    var format = ImageFormat.Png;
-                    if (sfd.FileName.EndsWith(".jpg") || sfd.FileName.EndsWith(".jpeg"))
-                    {
-                        format = ImageFormat.Jpeg;
-                    }
-
-                    image.Save(sfd.FileName, format);
-
-                    _lastSaveDirectory = new FileInfo(sfd.FileName).Directory.FullName;
-
-                    MessageBox.Show("Texture saved.", "Save Texture", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-
-        private void View_SaveAllClicked(object sender, EventArgs e)
-        {
-            var fbd = new FolderBrowserDialog
-            {
-                Description = "Select path to save textures to...",
-                SelectedPath = _lastSaveDirectory,
-                ShowNewFolderButton = true
-            };
-
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var texture in _textureViewController.TextureFile)
-                {
-                    var image = texture.Decode();
-                    image.Save(Path.Combine(fbd.SelectedPath, texture.TitleName + ".png"), ImageFormat.Png);
-                }
-
-                MessageBox.Show("Textures saved.", "Save All Textures", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void View_Disposed(object sender, EventArgs e)
-        {
-            // We handle this here instead of in the caller because the caller
-            // doesn't know anything about the involved files...
-            if (TextureFile != null)
-            {
-                TextureFile.Dispose();
-                TextureFile = null;
-            }
-        }
-
+      _textureViewController = new TextureViewController(view.TextureView);
     }
+
+    public TextureFile TextureFile
+    {
+      get { return _textureViewController.TextureFile; }
+      set
+      {
+        _textureViewController.TextureFile = value;
+        _view.TextureCount = value == null ? 0 : value.Count;
+      }
+    }
+
+    private void View_SaveClicked(object sender, EventArgs e)
+    {
+      var texture = _view.TextureView.SelectedTexture;
+      if (texture != null)
+      {
+        var sfd = new SaveFileDialog
+        {
+          AddExtension = true,
+          OverwritePrompt = true,
+          Title = "Save Texture",
+          Filter = "Portable Network Graphics (*.png)|*.png|JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg",
+          InitialDirectory = _lastSaveDirectory,
+          FileName = texture.TitleName + ".png"
+        };
+
+        if (sfd.ShowDialog() == DialogResult.OK)
+        {
+          var image = texture.Decode();
+
+          var format = ImageFormat.Png;
+          if (sfd.FileName.EndsWith(".jpg") || sfd.FileName.EndsWith(".jpeg"))
+          {
+            format = ImageFormat.Jpeg;
+          }
+
+          image.Save(sfd.FileName, format);
+
+          _lastSaveDirectory = new FileInfo(sfd.FileName).Directory.FullName;
+
+          MessageBox.Show("Texture saved.", "Save Texture", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+      }
+    }
+
+    private void View_SaveAllClicked(object sender, EventArgs e)
+    {
+      var fbd = new FolderBrowserDialog
+      {
+        Description = "Select path to save textures to...",
+        SelectedPath = _lastSaveDirectory,
+        ShowNewFolderButton = true
+      };
+
+      if (fbd.ShowDialog() == DialogResult.OK)
+      {
+        foreach (var texture in _textureViewController.TextureFile)
+        {
+          var image = texture.Decode();
+          image.Save(Path.Combine(fbd.SelectedPath, texture.TitleName + ".png"), ImageFormat.Png);
+        }
+
+        MessageBox.Show("Textures saved.", "Save All Textures", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
+    }
+
+    private void View_Disposed(object sender, EventArgs e)
+    {
+      // We handle this here instead of in the caller because the caller
+      // doesn't know anything about the involved files...
+      if (TextureFile != null)
+      {
+        TextureFile.Dispose();
+        TextureFile = null;
+      }
+    }
+
+  }
 }

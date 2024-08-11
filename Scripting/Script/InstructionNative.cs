@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,30 +22,30 @@ using System;
 
 namespace RageLib.Scripting.Script
 {
-    internal class InstructionNative : Instruction
+  internal class InstructionNative : Instruction
+  {
+    protected override void DecodeInternal(byte[] code, int offset)
     {
-        protected override void DecodeInternal(byte[] code, int offset)
-        {
-            OperandCount = 3;
-            Operands[0] = code[offset + 1];
-            Operands[1] = code[offset + 2];
+      OperandCount = 3;
+      Operands[0] = code[offset + 1];
+      Operands[1] = code[offset + 2];
 
-            uint nativeHash = BitConverter.ToUInt32(code, offset + 3);
-            string nativeStr = Natives.Get(nativeHash);
+      uint nativeHash = BitConverter.ToUInt32(code, offset + 3);
+      string nativeStr = Natives.Get(nativeHash);
 
-            Operands[2] = nativeStr;
+      Operands[2] = nativeStr;
 
-            HasStackUsageInfo = true;
-            StackIn = (byte) Operands[0];
-            StackOut = (byte) Operands[1];
-            StackLeftOver = 0;
-        }
-
-        protected override string GetOperandName(int index)
-        {
-            if (index == 0) return "in";
-            if (index == 1) return "out";
-            return null;
-        }
+      HasStackUsageInfo = true;
+      StackIn = (byte)Operands[0];
+      StackOut = (byte)Operands[1];
+      StackLeftOver = 0;
     }
+
+    protected override string GetOperandName(int index)
+    {
+      if (index == 0) return "in";
+      if (index == 1) return "out";
+      return null;
+    }
+  }
 }

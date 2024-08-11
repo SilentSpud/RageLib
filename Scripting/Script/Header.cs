@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,49 +23,49 @@ using RageLib.Common;
 
 namespace RageLib.Scripting.Script
 {
-    internal class Header : IFileAccess
+  internal class Header : IFileAccess
+  {
+    public uint Magic = 0x0d524353;
+    public uint MagicEncrypted = 0x0e726373;
+    public uint MagicEncryptedCompressed = 0x0e726353;
+
+    public Header(File file)
     {
-        public uint Magic = 0x0d524353;
-        public uint MagicEncrypted = 0x0e726373;
-        public uint MagicEncryptedCompressed = 0x0e726353;
-
-        public Header(File file)
-        {
-            File = file;
-        }
-
-        public uint Identifier { get; set; }
-        public int CodeSize { get; set; }
-        public int LocalVarCount { get; set; }
-        public int GlobalVarCount { get; set; }
-        public int ScriptFlags { get; set; } // 
-        public int GlobalsSignature { get; set; } // some hash definitely.. always seems to be 0x7DD1E61C for normal files
-                                          // 0x31B42CB2 for navgen_main.sco
-        public int CompressedSize { get; set; }
-
-        public File File { get; set; }
-
-        #region IFileAccess Members
-
-        public void Read(BinaryReader br)
-        {
-            Identifier = br.ReadUInt32();
-            CodeSize = br.ReadInt32();
-            LocalVarCount = br.ReadInt32();
-            GlobalVarCount = br.ReadInt32();
-            ScriptFlags = br.ReadInt32();
-            GlobalsSignature = br.ReadInt32();
-
-            if (Identifier == MagicEncryptedCompressed)
-            {
-                CompressedSize = br.ReadInt32();
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-        }
-
-        #endregion
+      File = file;
     }
+
+    public uint Identifier { get; set; }
+    public int CodeSize { get; set; }
+    public int LocalVarCount { get; set; }
+    public int GlobalVarCount { get; set; }
+    public int ScriptFlags { get; set; } // 
+    public int GlobalsSignature { get; set; } // some hash definitely.. always seems to be 0x7DD1E61C for normal files
+                                              // 0x31B42CB2 for navgen_main.sco
+    public int CompressedSize { get; set; }
+
+    public File File { get; set; }
+
+    #region IFileAccess Members
+
+    public void Read(BinaryReader br)
+    {
+      Identifier = br.ReadUInt32();
+      CodeSize = br.ReadInt32();
+      LocalVarCount = br.ReadInt32();
+      GlobalVarCount = br.ReadInt32();
+      ScriptFlags = br.ReadInt32();
+      GlobalsSignature = br.ReadInt32();
+
+      if (Identifier == MagicEncryptedCompressed)
+      {
+        CompressedSize = br.ReadInt32();
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+    }
+
+    #endregion
+  }
 }

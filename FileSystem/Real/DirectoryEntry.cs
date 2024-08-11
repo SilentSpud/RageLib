@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,55 +22,55 @@ using System.IO;
 
 namespace RageLib.FileSystem.Real
 {
-    class DirectoryEntry : RealEntry
+  class DirectoryEntry : RealEntry
+  {
+    private readonly DirectoryInfo _directory;
+    private readonly DirectoryInfo[] _subdirs;
+    private readonly FileInfo[] _files;
+
+    public DirectoryEntry(RealContext context, DirectoryInfo directory)
     {
-        private readonly DirectoryInfo _directory;
-        private readonly DirectoryInfo[] _subdirs;
-        private readonly FileInfo[] _files;
+      Context = context;
+      _directory = directory;
 
-        public DirectoryEntry(RealContext context, DirectoryInfo directory)
-        {
-            Context = context;
-            _directory = directory;
-
-            _subdirs = directory.GetDirectories();
-            _files = directory.GetFiles();
-        }
-
-        public override bool IsDirectory
-        {
-            get { return true; }
-        }
-
-        public override string Name
-        {
-            get { return _directory.Name; }
-        }
-
-        public int DirectoryCount
-        {
-            get
-            {
-                return _subdirs.Length;
-            }
-        }
-
-        public DirectoryEntry GetDirectory(int index)
-        {
-            return new DirectoryEntry(Context, _subdirs[index]);
-        }
-
-        public int FileCount
-        {
-            get
-            {
-                return _files.Length;
-            }
-        }
-
-        public FileEntry GetFile(int index)
-        {
-            return new FileEntry(Context, _files[index]);
-        }
+      _subdirs = directory.GetDirectories();
+      _files = directory.GetFiles();
     }
+
+    public override bool IsDirectory
+    {
+      get { return true; }
+    }
+
+    public override string Name
+    {
+      get { return _directory.Name; }
+    }
+
+    public int DirectoryCount
+    {
+      get
+      {
+        return _subdirs.Length;
+      }
+    }
+
+    public DirectoryEntry GetDirectory(int index)
+    {
+      return new DirectoryEntry(Context, _subdirs[index]);
+    }
+
+    public int FileCount
+    {
+      get
+      {
+        return _files.Length;
+      }
+    }
+
+    public FileEntry GetFile(int index)
+    {
+      return new FileEntry(Context, _files[index]);
+    }
+  }
 }

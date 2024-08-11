@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -21,40 +21,40 @@
 using System.IO;
 using RageLib.Scripting.HLScript;
 using RageLib.Scripting.Script;
-using File=RageLib.Scripting.Script.File;
+using File = RageLib.Scripting.Script.File;
 
 namespace RageLib.Scripting.Output
 {
-    internal class CodePathOutput : IOutputProvider
+  internal class CodePathOutput : IOutputProvider
+  {
+    #region IOutputProvider Members
+
+    public void Process(File file, TextWriter writer)
     {
-        #region IOutputProvider Members
+      var decoder = new Decoder(file);
+      var program = new ScriptProgram(decoder);
+      var analyzer = new ControlFlowAnalyzer(program);
+      analyzer.Analyze();
 
-        public void Process(File file, TextWriter writer)
+      // Dump the code paths
+      foreach (Function function in program.Functions)
+      {
+        writer.WriteLine("function " + function.Name);
+        foreach (CodePath path in function.CodePaths)
         {
-            var decoder = new Decoder(file);
-            var program = new ScriptProgram(decoder);
-            var analyzer = new ControlFlowAnalyzer(program);
-            analyzer.Analyze();
-
-            // Dump the code paths
-            foreach (Function function in program.Functions)
-            {
-                writer.WriteLine("function " + function.Name);
-                foreach (CodePath path in function.CodePaths)
-                {
-                    writer.WriteLine("    " + path.Name + ":");
-                    writer.WriteLine(string.Format("        0x{0:x} --> 0x{1:x}", path.StartOffset, path.EndOffset));
-                    if (path.ParentCodePath != null)
-                    {
-                        writer.WriteLine("        parent: {0}, exit: 0x{1:x}, reentry: 0x{2:x}",
-                                         path.ParentCodePath.Name, path.ParentExitInstruction.Instruction.Offset,
-                                         path.ParentEntryTargetInstruction.Instruction.Offset);
-                    }
-                }
-                writer.WriteLine();
-            }
+          writer.WriteLine("    " + path.Name + ":");
+          writer.WriteLine(string.Format("        0x{0:x} --> 0x{1:x}", path.StartOffset, path.EndOffset));
+          if (path.ParentCodePath != null)
+          {
+            writer.WriteLine("        parent: {0}, exit: 0x{1:x}, reentry: 0x{2:x}",
+                             path.ParentCodePath.Name, path.ParentExitInstruction.Instruction.Offset,
+                             path.ParentEntryTargetInstruction.Instruction.Offset);
+          }
         }
-
-        #endregion
+        writer.WriteLine();
+      }
     }
+
+    #endregion
+  }
 }

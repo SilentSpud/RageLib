@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,23 +22,23 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    // datBase
-    public class DATBase : IFileAccess
+  // datBase
+  public class DATBase : IFileAccess
+  {
+    public KnownVTable VTable { get; set; }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
     {
-        public KnownVTable VTable { get; set; }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            VTable = (KnownVTable) br.ReadInt32();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            bw.Write((int) VTable);
-        }
-
-        #endregion
+      VTable = (KnownVTable)br.ReadInt32();
     }
+
+    public void Write(BinaryWriter bw)
+    {
+      bw.Write((int)VTable);
+    }
+
+    #endregion
+  }
 }

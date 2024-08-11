@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Shaders
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,32 +23,32 @@ using RageLib.Shaders.ShaderFX;
 
 namespace RageLib.Shaders
 {
-    public class Shader
+  public class Shader
+  {
+    public ShaderType Type { get; private set; }
+    public List<string> Variables { get; private set; }
+    public byte[] Data { get; private set; }
+
+    internal Shader(VertexShader shader)
     {
-        public ShaderType Type { get; private set; }
-        public List<string> Variables { get; private set; }
-        public byte[] Data { get; private set; }
-
-        internal Shader(VertexShader shader)
-        {
-            Type = ShaderType.Vertex;
-            Variables = new List<string>( shader.Variables.Definitions.Count );
-            foreach (var definition in shader.Variables.Definitions)
-            {
-                Variables.Add(definition.VariableName);
-            }
-            Data = shader.ShaderData;
-        }
-
-        internal Shader(PixelShader shader)
-        {
-            Type = ShaderType.Pixel;
-            Variables = new List<string>(shader.Variables.Definitions.Count);
-            foreach (var definition in shader.Variables.Definitions)
-            {
-                Variables.Add(definition.VariableName);
-            }
-            Data = shader.ShaderData;
-        }
+      Type = ShaderType.Vertex;
+      Variables = new List<string>(shader.Variables.Definitions.Count);
+      foreach (var definition in shader.Variables.Definitions)
+      {
+        Variables.Add(definition.VariableName);
+      }
+      Data = shader.ShaderData;
     }
+
+    internal Shader(PixelShader shader)
+    {
+      Type = ShaderType.Pixel;
+      Variables = new List<string>(shader.Variables.Definitions.Count);
+      foreach (var definition in shader.Variables.Definitions)
+      {
+        Variables.Add(definition.VariableName);
+      }
+      Data = shader.ShaderData;
+    }
+  }
 }

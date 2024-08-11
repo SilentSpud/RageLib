@@ -20,13 +20,13 @@
 
 namespace RageLib.Models.Data
 {
-    public enum PrimitiveType
-    {
-        PointList,
-        LineList,
-        LineStrip,
-        TriangleList,
-        TriangleStrip,
-        TriangleFan,
-    }
+  public enum PrimitiveType
+  {
+    PointList,
+    LineList,
+    LineStrip,
+    TriangleList,
+    TriangleStrip,
+    TriangleFan,
+  }
 }

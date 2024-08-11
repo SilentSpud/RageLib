@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -26,57 +26,57 @@ using RageLib.Common.Resources;
 
 namespace RageLib.HyperText.Resource
 {
-    class File
+  class File
+  {
+    public HtmlDocument Data { get; private set; }
+
+    public void Open(string filename)
     {
-        public HtmlDocument Data { get; private set; }
-
-        public void Open(string filename)
-        {
-            var fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
-            try
-            {
-                Open(fs);
-            }
-            finally
-            {
-                fs.Close();
-            }
-        }
-
-        public void Open(Stream stream)
-        {
-            var res = new ResourceFile();
-            res.Read(stream);
-
-            if (res.Type != ResourceType.Generic)
-            {
-                throw new Exception("Not a supported file type.");
-            }
-
-            var systemMemory = new MemoryStream(res.SystemMemData);
-            var graphicsMemory = new MemoryStream(res.GraphicsMemData);
-
-            Data = new HtmlDocument();
-
-            // Read System Memory
-            
-            var systemMemoryBR = new BinaryReader(systemMemory);
-
-            Data.Read(systemMemoryBR);
-
-            // Read Graphics Memory
-
-            var graphicsMemoryBR = new BinaryReader(graphicsMemory);
-
-            Data.ReadData(graphicsMemoryBR);
-
-            // Read Embedded Resource Files
-
-            Data.ReadEmbeddedResources(systemMemory, graphicsMemory);
-
-            systemMemory.Close();
-            graphicsMemory.Close();
-
-        }
+      var fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+      try
+      {
+        Open(fs);
+      }
+      finally
+      {
+        fs.Close();
+      }
     }
+
+    public void Open(Stream stream)
+    {
+      var res = new ResourceFile();
+      res.Read(stream);
+
+      if (res.Type != ResourceType.Generic)
+      {
+        throw new Exception("Not a supported file type.");
+      }
+
+      var systemMemory = new MemoryStream(res.SystemMemData);
+      var graphicsMemory = new MemoryStream(res.GraphicsMemData);
+
+      Data = new HtmlDocument();
+
+      // Read System Memory
+
+      var systemMemoryBR = new BinaryReader(systemMemory);
+
+      Data.Read(systemMemoryBR);
+
+      // Read Graphics Memory
+
+      var graphicsMemoryBR = new BinaryReader(graphicsMemory);
+
+      Data.ReadData(graphicsMemoryBR);
+
+      // Read Embedded Resource Files
+
+      Data.ReadEmbeddedResources(systemMemory, graphicsMemory);
+
+      systemMemory.Close();
+      graphicsMemory.Close();
+
+    }
+  }
 }

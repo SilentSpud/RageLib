@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Shaders
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -25,45 +25,45 @@ using RageLib.Common;
 
 namespace RageLib.Shaders.ShaderFX
 {
-    internal class CompiledShaderFX : IFileAccess
+  internal class CompiledShaderFX : IFileAccess
+  {
+    private const int ValidMagic = 0x61786772;
+
+    public List<VertexShader> VertexShaders { get; private set; }
+    public List<PixelShader> PixelShaders { get; private set; }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
     {
-        private const int ValidMagic = 0x61786772;
+      if (br.ReadInt32() != ValidMagic)
+      {
+        throw new Exception("Not a valid shader file");
+      }
 
-        public List<VertexShader> VertexShaders { get; private set; }
-        public List<PixelShader> PixelShaders { get; private set; }
+      int vsCount = br.ReadByte();
+      VertexShaders = new List<VertexShader>(vsCount);
+      for (int i = 0; i < vsCount; i++)
+      {
+        VertexShaders.Add(new VertexShader(br));
+      }
 
-        #region Implementation of IFileAccess
+      int psCount = br.ReadByte();
+      PixelShaders = new List<PixelShader>(psCount);
+      for (int i = 0; i < psCount; i++)
+      {
+        PixelShaders.Add(new PixelShader(br));
+      }
 
-        public void Read(BinaryReader br)
-        {
-            if (br.ReadInt32() != ValidMagic)
-            {
-                throw new Exception("Not a valid shader file");
-            }
-
-            int vsCount = br.ReadByte();
-            VertexShaders = new List<VertexShader>(vsCount);
-            for(int i=0; i<vsCount; i++)
-            {
-                VertexShaders.Add( new VertexShader(br) );
-            }
-            
-            int psCount = br.ReadByte();
-            PixelShaders = new List<PixelShader>(psCount);
-            for (int i = 0; i < psCount; i++)
-            {
-                PixelShaders.Add(new PixelShader(br));
-            }
-
-            // More stuff here that isn't be read right now... but however are documented.
-            // 3 more logical sections to come.
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            
-        }
-
-        #endregion
+      // More stuff here that isn't be read right now... but however are documented.
+      // 3 more logical sections to come.
     }
+
+    public void Write(BinaryWriter bw)
+    {
+
+    }
+
+    #endregion
+  }
 }

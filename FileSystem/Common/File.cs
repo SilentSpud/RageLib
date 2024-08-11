@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,60 +22,60 @@ using RageLib.Common.Resources;
 
 namespace RageLib.FileSystem.Common
 {
-    public class File : FSObject
+  public class File : FSObject
+  {
+    #region Delegates
+
+    public delegate byte[] DataLoadDelegate();
+    public delegate void DataStoreDelegate(byte[] data);
+    public delegate bool DataIsCustomDelegate();
+
+    #endregion
+
+    private readonly DataLoadDelegate _dataLoad;
+    private readonly DataStoreDelegate _dataStore;
+    private readonly DataIsCustomDelegate _dataCustom;
+
+    public File(DataLoadDelegate dataLoad)
     {
-        #region Delegates
-
-        public delegate byte[] DataLoadDelegate();
-        public delegate void DataStoreDelegate(byte[] data);
-        public delegate bool DataIsCustomDelegate();
-
-        #endregion
-
-        private readonly DataLoadDelegate _dataLoad;
-        private readonly DataStoreDelegate _dataStore;
-        private readonly DataIsCustomDelegate _dataCustom;
-
-        public File(DataLoadDelegate dataLoad)
-        {
-            _dataLoad = dataLoad;
-            _dataStore = delegate { };
-            _dataCustom = (() => false);
-        }
-
-        public File(DataLoadDelegate dataLoad, DataStoreDelegate dataStore, DataIsCustomDelegate dataCustom)
-        {
-            _dataLoad = dataLoad;
-            _dataStore = dataStore;
-            _dataCustom = dataCustom;
-        }
-
-        public override bool IsDirectory
-        {
-            get { return false; }
-        }
-
-        public bool IsCompressed { get; set; }
-        public int CompressedSize { get; set; }
-
-        public int Size { get; set; }
-
-        public bool IsResource { get; set; }
-        public ResourceType ResourceType { get; set; }
-
-        public bool IsCustomData
-        {
-            get { return _dataCustom(); }
-        }
-
-        public byte[] GetData()
-        {
-            return _dataLoad();
-        }
-
-        public void SetData(byte[] data)
-        {
-            _dataStore(data);                
-        }
+      _dataLoad = dataLoad;
+      _dataStore = delegate { };
+      _dataCustom = (() => false);
     }
+
+    public File(DataLoadDelegate dataLoad, DataStoreDelegate dataStore, DataIsCustomDelegate dataCustom)
+    {
+      _dataLoad = dataLoad;
+      _dataStore = dataStore;
+      _dataCustom = dataCustom;
+    }
+
+    public override bool IsDirectory
+    {
+      get { return false; }
+    }
+
+    public bool IsCompressed { get; set; }
+    public int CompressedSize { get; set; }
+
+    public int Size { get; set; }
+
+    public bool IsResource { get; set; }
+    public ResourceType ResourceType { get; set; }
+
+    public bool IsCustomData
+    {
+      get { return _dataCustom(); }
+    }
+
+    public byte[] GetData()
+    {
+      return _dataLoad();
+    }
+
+    public void SetData(byte[] data)
+    {
+      _dataStore(data);
+    }
+  }
 }

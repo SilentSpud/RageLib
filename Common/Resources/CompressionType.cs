@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,9 +20,9 @@
 
 namespace RageLib.Common.Resources
 {
-    public enum CompressionType
-    {
-        LZX = 0xF505,
-        Deflate = 0xDA78,
-    }
+  public enum CompressionType
+  {
+    LZX = 0xF505,
+    Deflate = 0xDA78,
+  }
 }

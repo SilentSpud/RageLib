@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -24,142 +24,142 @@ using System.Windows.Forms;
 
 namespace RageLib.Audio
 {
-    public partial class AudioView : UserControl
+  public partial class AudioView : UserControl
+  {
+    private static bool _AutoPlay;
+    private static bool _PlayLooped;
+    private int _sortColumn = -1;
+
+    public AudioView()
     {
-        private static bool _AutoPlay;
-        private static bool _PlayLooped;
-        private int _sortColumn = -1;
+      InitializeComponent();
 
-        public AudioView()
-        {
-            InitializeComponent();
+      chkAutoPlay.Checked = _AutoPlay;
+      chkPlayLooped.Checked = _PlayLooped;
 
-            chkAutoPlay.Checked = _AutoPlay;
-            chkPlayLooped.Checked = _PlayLooped;
-
-            chkAutoPlay.CheckedChanged += delegate { _AutoPlay = chkAutoPlay.Checked; };
-            chkPlayLooped.CheckedChanged += delegate { _PlayLooped = chkPlayLooped.Checked; };
-        }
-
-        public event EventHandler PlayClicked
-        {
-            add { btnPlay.Click += value; }
-            remove { btnPlay.Click -= value; }
-        }
-
-        public event EventHandler StopClicked
-        {
-            add { btnStop.Click += value; }
-            remove { btnStop.Click -= value; }
-        }
-
-        public event EventHandler ExportWAVClicked
-        {
-            add { tsbExportWave.Click += value; }
-            remove { tsbExportWave.Click -= value; }
-        }
-
-        public event EventHandler ExportMultichannelWAVClicked
-        {
-            add { tsbExportMultiChannel.Click += value; }
-            remove { tsbExportMultiChannel.Click -= value; }
-        }
-
-        public event EventHandler SelectedWaveChanged
-        {
-            add { listAudioBlocks.SelectedIndexChanged += value; }
-            remove { listAudioBlocks.SelectedIndexChanged -= value; }
-        }
-
-        public bool AutoPlay
-        {
-            get { return chkAutoPlay.Checked; }
-            set { chkAutoPlay.Checked = value; }
-        }
-
-        public bool PlayLooped
-        {
-            get { return chkPlayLooped.Checked; }
-            set { chkPlayLooped.Checked = value; }
-        }
-
-        public bool SupportsMultichannelExport
-        {
-            set
-            {
-                tsbExportMultiChannel.Enabled = value;
-            }
-        }
-
-        public void ClearWaves()
-        {
-            listAudioBlocks.SelectedItems.Clear();
-            listAudioBlocks.Items.Clear();
-        }
-
-        public void AddWave(AudioWave audioWave)
-        {
-            ListViewItem lvi = new ListViewItem(audioWave.ToString());
-            lvi.Name = audioWave.ToString();
-            lvi.Tag = audioWave;
-
-            TimeSpan playTime = audioWave.Length;
-            ListViewItem.ListViewSubItem lvisub = new ListViewItem.ListViewSubItem();
-            lvisub.Tag = playTime;
-            lvisub.Text = playTime.ToString();
-            lvi.SubItems.Add(lvisub);
-
-            lvisub = new ListViewItem.ListViewSubItem();
-            lvisub.Tag = audioWave.SamplesPerSecond;
-            lvisub.Text = audioWave.SamplesPerSecond + " Hz";
-            lvi.SubItems.Add(lvisub);
-
-            listAudioBlocks.Items.Add(lvi);
-        }
-
-        public AudioWave SelectedWave
-        {
-            get
-            {
-                if (listAudioBlocks.SelectedItems.Count == 1)
-                {
-                    return listAudioBlocks.SelectedItems[0].Tag as AudioWave;
-                }
-                return null;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    ListViewItem[] items = listAudioBlocks.Items.Find(value.ToString(), false);
-                    if (items != null && items.Length == 1)
-                    {
-                        items[0].Selected = true;
-                    }
-                }
-                else
-                {
-                    listAudioBlocks.SelectedItems.Clear();
-                }
-            }
-        }
-
-        private void listAudioBlocks_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            if (e.Column != _sortColumn)
-            {
-                _sortColumn = e.Column;
-                listAudioBlocks.Sorting = SortOrder.Ascending;
-            }
-            else
-            {
-                listAudioBlocks.Sorting = listAudioBlocks.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
-            }
-
-            listAudioBlocks.ListViewItemSorter = new ListViewItemComparer(e.Column, listAudioBlocks.Sorting == SortOrder.Descending);
-
-            listAudioBlocks.Sort();
-        }
+      chkAutoPlay.CheckedChanged += delegate { _AutoPlay = chkAutoPlay.Checked; };
+      chkPlayLooped.CheckedChanged += delegate { _PlayLooped = chkPlayLooped.Checked; };
     }
+
+    public event EventHandler PlayClicked
+    {
+      add { btnPlay.Click += value; }
+      remove { btnPlay.Click -= value; }
+    }
+
+    public event EventHandler StopClicked
+    {
+      add { btnStop.Click += value; }
+      remove { btnStop.Click -= value; }
+    }
+
+    public event EventHandler ExportWAVClicked
+    {
+      add { tsbExportWave.Click += value; }
+      remove { tsbExportWave.Click -= value; }
+    }
+
+    public event EventHandler ExportMultichannelWAVClicked
+    {
+      add { tsbExportMultiChannel.Click += value; }
+      remove { tsbExportMultiChannel.Click -= value; }
+    }
+
+    public event EventHandler SelectedWaveChanged
+    {
+      add { listAudioBlocks.SelectedIndexChanged += value; }
+      remove { listAudioBlocks.SelectedIndexChanged -= value; }
+    }
+
+    public bool AutoPlay
+    {
+      get { return chkAutoPlay.Checked; }
+      set { chkAutoPlay.Checked = value; }
+    }
+
+    public bool PlayLooped
+    {
+      get { return chkPlayLooped.Checked; }
+      set { chkPlayLooped.Checked = value; }
+    }
+
+    public bool SupportsMultichannelExport
+    {
+      set
+      {
+        tsbExportMultiChannel.Enabled = value;
+      }
+    }
+
+    public void ClearWaves()
+    {
+      listAudioBlocks.SelectedItems.Clear();
+      listAudioBlocks.Items.Clear();
+    }
+
+    public void AddWave(AudioWave audioWave)
+    {
+      ListViewItem lvi = new ListViewItem(audioWave.ToString());
+      lvi.Name = audioWave.ToString();
+      lvi.Tag = audioWave;
+
+      TimeSpan playTime = audioWave.Length;
+      ListViewItem.ListViewSubItem lvisub = new ListViewItem.ListViewSubItem();
+      lvisub.Tag = playTime;
+      lvisub.Text = playTime.ToString();
+      lvi.SubItems.Add(lvisub);
+
+      lvisub = new ListViewItem.ListViewSubItem();
+      lvisub.Tag = audioWave.SamplesPerSecond;
+      lvisub.Text = audioWave.SamplesPerSecond + " Hz";
+      lvi.SubItems.Add(lvisub);
+
+      listAudioBlocks.Items.Add(lvi);
+    }
+
+    public AudioWave SelectedWave
+    {
+      get
+      {
+        if (listAudioBlocks.SelectedItems.Count == 1)
+        {
+          return listAudioBlocks.SelectedItems[0].Tag as AudioWave;
+        }
+        return null;
+      }
+
+      set
+      {
+        if (value != null)
+        {
+          ListViewItem[] items = listAudioBlocks.Items.Find(value.ToString(), false);
+          if (items != null && items.Length == 1)
+          {
+            items[0].Selected = true;
+          }
+        }
+        else
+        {
+          listAudioBlocks.SelectedItems.Clear();
+        }
+      }
+    }
+
+    private void listAudioBlocks_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+      if (e.Column != _sortColumn)
+      {
+        _sortColumn = e.Column;
+        listAudioBlocks.Sorting = SortOrder.Ascending;
+      }
+      else
+      {
+        listAudioBlocks.Sorting = listAudioBlocks.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+      }
+
+      listAudioBlocks.ListViewItemSorter = new ListViewItemComparer(e.Column, listAudioBlocks.Sorting == SortOrder.Descending);
+
+      listAudioBlocks.Sort();
+    }
+  }
 }

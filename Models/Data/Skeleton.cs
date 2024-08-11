@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -22,36 +22,36 @@ using System.Collections.Generic;
 
 namespace RageLib.Models.Data
 {
-    public class Skeleton
+  public class Skeleton
+  {
+    public Bone RootBone { get; private set; }
+
+    private Dictionary<int, Bone> _bonesByIndex;
+
+    internal Skeleton(Resource.Skeletons.Skeleton skeleton)
     {
-        public Bone RootBone { get; private set; }
-
-        private Dictionary<int, Bone> _bonesByIndex;
-
-        internal Skeleton(Resource.Skeletons.Skeleton skeleton)
-        {
-            _bonesByIndex = new Dictionary<int, Bone>();
-            RootBone = BuildBone(skeleton.Bones[0], null);
-        }
-
-        public Bone this[int index]
-        {
-            get { return _bonesByIndex[index]; }
-        }
-
-        private Bone BuildBone(Resource.Skeletons.Bone bone, Bone parent)
-        {
-            var dataBone = new Bone(bone, parent);
-            _bonesByIndex.Add(dataBone.Index, dataBone);
-
-            var childBone = bone.FirstChild;
-            while(childBone != null)
-            {
-                dataBone.Children.Add( BuildBone(childBone, dataBone) );
-                childBone = childBone.NextSibling;
-            }
-
-            return dataBone;
-        }
+      _bonesByIndex = new Dictionary<int, Bone>();
+      RootBone = BuildBone(skeleton.Bones[0], null);
     }
+
+    public Bone this[int index]
+    {
+      get { return _bonesByIndex[index]; }
+    }
+
+    private Bone BuildBone(Resource.Skeletons.Bone bone, Bone parent)
+    {
+      var dataBone = new Bone(bone, parent);
+      _bonesByIndex.Add(dataBone.Index, dataBone);
+
+      var childBone = bone.FirstChild;
+      while (childBone != null)
+      {
+        dataBone.Children.Add(BuildBone(childBone, dataBone));
+        childBone = childBone.NextSibling;
+      }
+
+      return dataBone;
+    }
+  }
 }

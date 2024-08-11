@@ -22,21 +22,21 @@ using System;
 
 namespace RageLib.Models.Resource.Shaders
 {
-    internal static class ParamObjectFactory
+  internal static class ParamObjectFactory
+  {
+    public static IShaderParam Create(ParamType type)
     {
-        public static IShaderParam Create(ParamType type)
-        {
-            switch(type)
-            {
-                case ParamType.Texture:
-                    return new ShaderParamTexture();
-                case ParamType.Vector4:
-                    return new ShaderParamVector4();
-                case ParamType.Matrix:
-                    return new ShaderParamMatrix();
-                default:
-                    throw new ArgumentOutOfRangeException("type");
-            }
-        }
+      switch (type)
+      {
+        case ParamType.Texture:
+          return new ShaderParamTexture();
+        case ParamType.Vector4:
+          return new ShaderParamVector4();
+        case ParamType.Matrix:
+          return new ShaderParamMatrix();
+        default:
+          throw new ArgumentOutOfRangeException("type");
+      }
     }
+  }
 }

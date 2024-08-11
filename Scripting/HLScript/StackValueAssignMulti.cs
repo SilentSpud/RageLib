@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,32 +23,32 @@ using System.Text;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValueAssignMulti : StackValue
+  internal class StackValueAssignMulti : StackValue
+  {
+    public StackValueAssignMulti(StackValue assignment)
     {
-        public StackValueAssignMulti(StackValue assignment)
-        {
-            AssignValue = assignment;
-            AssignPointers = new List<StackValuePointerBase>();
-        }
-
-        public List<StackValuePointerBase> AssignPointers { get; private set; }
-        public StackValue AssignValue { get; set; }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            for (int i = 0; i < AssignPointers.Count; i++)
-            {
-                if (i != 0)
-                {
-                    sb.Append(", ");
-                }
-                sb.Append(new StackValueDeref(AssignPointers[i]).ToString());
-            }
-            sb.Append(" = ");
-            sb.Append(AssignValue);
-
-            return sb.ToString();
-        }
+      AssignValue = assignment;
+      AssignPointers = new List<StackValuePointerBase>();
     }
+
+    public List<StackValuePointerBase> AssignPointers { get; private set; }
+    public StackValue AssignValue { get; set; }
+
+    public override string ToString()
+    {
+      var sb = new StringBuilder();
+      for (int i = 0; i < AssignPointers.Count; i++)
+      {
+        if (i != 0)
+        {
+          sb.Append(", ");
+        }
+        sb.Append(new StackValueDeref(AssignPointers[i]).ToString());
+      }
+      sb.Append(" = ");
+      sb.Append(AssignValue);
+
+      return sb.ToString();
+    }
+  }
 }

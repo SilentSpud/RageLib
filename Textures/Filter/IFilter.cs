@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,8 +22,8 @@ using System.Drawing;
 
 namespace RageLib.Textures.Filter
 {
-    interface IFilter
-    {
-        void Apply(Image image);
-    }
+  interface IFilter
+  {
+    void Apply(Image image);
+  }
 }

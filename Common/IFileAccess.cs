@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,9 +22,9 @@ using System.IO;
 
 namespace RageLib.Common
 {
-    public interface IFileAccess
-    {
-        void Read(BinaryReader br);
-        void Write(BinaryWriter bw);
-    }
+  public interface IFileAccess
+  {
+    void Read(BinaryReader br);
+    void Write(BinaryWriter bw);
+  }
 }

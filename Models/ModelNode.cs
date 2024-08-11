@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,35 +23,36 @@ using System.Windows.Media.Media3D;
 
 namespace RageLib.Models
 {
-    public class ModelNode
+  public class ModelNode
+  {
+    public List<ModelNode> Children { get; set; }
+    public string Name { get; set; }
+    internal Model3D Model3D { get; set; }
+    public object DataModel { get; set; }
+    public bool NoCount { get; set; }
+    public bool Selected { get; set; }
+
+    public bool IsAnyNodeSelected()
     {
-        public List<ModelNode> Children { get; set; }
-        public string Name { get; set; }
-        internal Model3D Model3D { get; set; }
-        public object DataModel { get; set; }
-        public bool NoCount { get; set; }
-        public bool Selected { get; set; }
+      if (Selected)
+      {
+        return true;
+      }
 
-        public bool IsAnyNodeSelected()
+      foreach (var node in Children)
+      {
+        if (node.IsAnyNodeSelected())
         {
-            if (Selected)
-            {
-                return true;
-            }
-
-            foreach (var node in Children)
-            {
-                if (node.IsAnyNodeSelected())
-                {
-                    return true;}
-            }
-
-            return false;
+          return true;
         }
-        
-        public ModelNode()
-        {
-            Children = new List<ModelNode>();
-        }
+      }
+
+      return false;
     }
+
+    public ModelNode()
+    {
+      Children = new List<ModelNode>();
+    }
+  }
 }

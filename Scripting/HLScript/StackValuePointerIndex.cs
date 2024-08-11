@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,26 +22,26 @@ using System.Text;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValuePointerIndex : StackValuePointerBase
+  internal class StackValuePointerIndex : StackValuePointerBase
+  {
+    public StackValuePointerIndex(StackValuePointerBase pointer, int index)
     {
-        public StackValuePointerIndex(StackValuePointerBase pointer, int index)
-        {
-            Pointer = pointer;
-            Index = index;
-        }
-
-        public StackValuePointerBase Pointer { get; set; }
-        public int Index { get; set; }
-
-        public override string GetDisplayText()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(Pointer.GetDisplayText());
-            sb.Append(".v");
-            sb.Append(Index);
-
-            return sb.ToString();
-        }
+      Pointer = pointer;
+      Index = index;
     }
+
+    public StackValuePointerBase Pointer { get; set; }
+    public int Index { get; set; }
+
+    public override string GetDisplayText()
+    {
+      var sb = new StringBuilder();
+
+      sb.Append(Pointer.GetDisplayText());
+      sb.Append(".v");
+      sb.Append(Index);
+
+      return sb.ToString();
+    }
+  }
 }

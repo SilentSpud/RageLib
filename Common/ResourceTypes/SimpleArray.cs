@@ -24,64 +24,64 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class SimpleArray<T> : IFileAccess, IEnumerable<T>
+  public class SimpleArray<T> : IFileAccess, IEnumerable<T>
+  {
+    public delegate T ReadDataDelegate(BinaryReader br);
+
+    protected ReadDataDelegate ReadData;
+
+    protected List<T> Values;
+    public int Count { get; private set; }
+
+    public SimpleArray(int count, ReadDataDelegate delg)
     {
-        public delegate T ReadDataDelegate(BinaryReader br);
-
-        protected ReadDataDelegate ReadData;
-
-        protected List<T> Values;
-        public int Count { get; private set; }
-
-        public SimpleArray(int count, ReadDataDelegate delg)
-        {
-            Count = count;
-            ReadData = delg;
-        }
-
-        public SimpleArray(BinaryReader br, int count, ReadDataDelegate delg)
-            : this(count, delg)
-        {
-            Read(br);
-        }
-
-        public T this[int index]
-        {
-            get { return Values[index];  }
-            set { Values[index] = value; }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            Values = new List<T>(Count);
-
-            for (int i = 0; i < Count; i++)
-            {
-                Values.Add( ReadData(br) );
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            
-        }
-
-        #endregion
-
-        #region Implementation of IEnumerable
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
+      Count = count;
+      ReadData = delg;
     }
+
+    public SimpleArray(BinaryReader br, int count, ReadDataDelegate delg)
+        : this(count, delg)
+    {
+      Read(br);
+    }
+
+    public T this[int index]
+    {
+      get { return Values[index]; }
+      set { Values[index] = value; }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      Values = new List<T>(Count);
+
+      for (int i = 0; i < Count; i++)
+      {
+        Values.Add(ReadData(br));
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+
+    }
+
+    #endregion
+
+    #region Implementation of IEnumerable
+
+    public IEnumerator<T> GetEnumerator()
+    {
+      return Values.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    #endregion
+  }
 }

@@ -23,31 +23,31 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public struct Vector2 : IFileAccess
+  public struct Vector2 : IFileAccess
+  {
+    public float X { get; set; }
+    public float Y { get; set; }
+
+    public Vector2(float x, float y) : this()
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-
-        public Vector2(float x, float y) : this()
-        {
-            X = x;
-            Y = y;
-        }
-
-        public Vector2(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        public void Read(BinaryReader br)
-        {
-            X = br.ReadSingle();
-            Y = br.ReadSingle();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new NotImplementedException();
-        }
+      X = x;
+      Y = y;
     }
+
+    public Vector2(BinaryReader br) : this()
+    {
+      Read(br);
+    }
+
+    public void Read(BinaryReader br)
+    {
+      X = br.ReadSingle();
+      Y = br.ReadSingle();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new NotImplementedException();
+    }
+  }
 }

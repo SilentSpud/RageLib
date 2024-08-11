@@ -20,14 +20,14 @@
 
 namespace RageLib.Models.Data
 {
-    public enum VertexElementMethod
-    {
-        Default = 0,
-        PartialU = 1,
-        PartialV = 2,
-        CrossUV = 3,
-        UV = 4,
-        Lookup = 5,
-        LookupPresampled = 6,
-    }
+  public enum VertexElementMethod
+  {
+    Default = 0,
+    PartialU = 1,
+    PartialV = 2,
+    CrossUV = 3,
+    UV = 4,
+    Lookup = 5,
+    LookupPresampled = 6,
+  }
 }

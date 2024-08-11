@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -22,18 +22,18 @@ using System;
 
 namespace RageLib.Audio.SoundBank
 {
-    class SoundBankException : Exception
+  class SoundBankException : Exception
+  {
+    public SoundBankException()
     {
-        public SoundBankException()
-        {
-        }
-
-        public SoundBankException(string message) : base(message)
-        {
-        }
-
-        public SoundBankException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
     }
+
+    public SoundBankException(string message) : base(message)
+    {
+    }
+
+    public SoundBankException(string message, Exception innerException) : base(message, innerException)
+    {
+    }
+  }
 }

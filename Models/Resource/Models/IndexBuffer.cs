@@ -25,46 +25,46 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Models
 {
-    internal class IndexBuffer : DATBase, IFileAccess
+  internal class IndexBuffer : DATBase, IFileAccess
+  {
+    public uint IndexCount { get; private set; }
+    public uint DataOffset { get; private set; }
+
+    public byte[] RawData { get; private set; }
+
+    public IndexBuffer()
     {
-        public uint IndexCount { get; private set; }
-        public uint DataOffset { get; private set; }
-
-        public byte[] RawData { get; private set; }
-
-        public IndexBuffer()
-        {
-        }
-
-        public IndexBuffer(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        public void ReadData(BinaryReader br)
-        {
-            br.BaseStream.Seek(DataOffset, SeekOrigin.Begin);
-            RawData = br.ReadBytes((int)(IndexCount * 2));
-        }
-
-        #region Implementation of IFileAccess
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-
-            IndexCount = br.ReadUInt32();
-
-            DataOffset = ResourceUtil.ReadDataOffset(br);
-
-            var p1Offset = ResourceUtil.ReadOffset(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public IndexBuffer(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    public void ReadData(BinaryReader br)
+    {
+      br.BaseStream.Seek(DataOffset, SeekOrigin.Begin);
+      RawData = br.ReadBytes((int)(IndexCount * 2));
+    }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
+    {
+      base.Read(br);
+
+      IndexCount = br.ReadUInt32();
+
+      DataOffset = ResourceUtil.ReadDataOffset(br);
+
+      var p1Offset = ResourceUtil.ReadOffset(br);
+    }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

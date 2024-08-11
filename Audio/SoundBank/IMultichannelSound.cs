@@ -23,12 +23,12 @@ using RageLib.Audio.WaveFile;
 
 namespace RageLib.Audio.SoundBank
 {
-    interface IMultichannelSound
-    {
-        void ExportMultichannelAsPCM(Stream soundBankStream, Stream outStream);
-        int CommonSamplesPerSecond { get; }
-        string CommonFilename { get; }
-        ChannelMask ChannelMask { get; }
-        bool SupportsMultichannelExport { get; }
-    }
+  interface IMultichannelSound
+  {
+    void ExportMultichannelAsPCM(Stream soundBankStream, Stream outStream);
+    int CommonSamplesPerSecond { get; }
+    string CommonFilename { get; }
+    ChannelMask ChannelMask { get; }
+    bool SupportsMultichannelExport { get; }
+  }
 }

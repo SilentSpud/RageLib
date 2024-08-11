@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -24,72 +24,72 @@ using System.Drawing.Imaging;
 
 namespace RageLib.Textures.Filter
 {
-    class ChannelFilter : IFilter
+  class ChannelFilter : IFilter
+  {
+    private ImageChannel _channel;
+
+    public ChannelFilter(ImageChannel channel)
     {
-        private ImageChannel _channel;
-
-        public ChannelFilter(ImageChannel channel)
-        {
-            _channel = channel;
-        }
-
-        public void Apply(Image image)
-        {
-            if (_channel != ImageChannel.All)
-            {
-                uint mask;
-                int shift;
-
-                switch (_channel)
-                {
-                    case ImageChannel.Red:
-                        mask = 0x00FF0000;
-                        shift = 16;
-                        break;
-                    case ImageChannel.Green:
-                        mask = 0x0000FF00;
-                        shift = 8;
-                        break;
-                    case ImageChannel.Blue:
-                        mask = 0x000000FF;
-                        shift = 0;
-                        break;
-                    case ImageChannel.Alpha:
-                        mask = 0xFF000000;
-                        shift = 24;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                var bmp = image as Bitmap;
-
-                if (bmp != null)
-                {
-                    var rect = new Rectangle(0, 0, image.Width, image.Height);
-                    var bmpdata = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-
-                    unsafe
-                    {
-                        var p = (byte*)bmpdata.Scan0;
-                        for(var y = 0; y < bmp.Height; y++)
-                        {
-                            for(var x = 0; x < bmp.Width; x++)
-                            {
-                                var offset = y*bmpdata.Stride + x*4;
-                                var data = (byte)(((*(int*) (p + offset)) & mask) >> shift);
-                                p[offset + 0] = data;
-                                p[offset + 1] = data;
-                                p[offset + 2] = data;
-                                p[offset + 3] = 255;
-                            }
-                        }
-                    }
-
-                    bmp.UnlockBits(bmpdata);
-                }
-
-            }
-        }
+      _channel = channel;
     }
+
+    public void Apply(Image image)
+    {
+      if (_channel != ImageChannel.All)
+      {
+        uint mask;
+        int shift;
+
+        switch (_channel)
+        {
+          case ImageChannel.Red:
+            mask = 0x00FF0000;
+            shift = 16;
+            break;
+          case ImageChannel.Green:
+            mask = 0x0000FF00;
+            shift = 8;
+            break;
+          case ImageChannel.Blue:
+            mask = 0x000000FF;
+            shift = 0;
+            break;
+          case ImageChannel.Alpha:
+            mask = 0xFF000000;
+            shift = 24;
+            break;
+          default:
+            throw new ArgumentOutOfRangeException();
+        }
+
+        var bmp = image as Bitmap;
+
+        if (bmp != null)
+        {
+          var rect = new Rectangle(0, 0, image.Width, image.Height);
+          var bmpdata = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+
+          unsafe
+          {
+            var p = (byte*)bmpdata.Scan0;
+            for (var y = 0; y < bmp.Height; y++)
+            {
+              for (var x = 0; x < bmp.Width; x++)
+              {
+                var offset = y * bmpdata.Stride + x * 4;
+                var data = (byte)(((*(int*)(p + offset)) & mask) >> shift);
+                p[offset + 0] = data;
+                p[offset + 1] = data;
+                p[offset + 2] = data;
+                p[offset + 3] = 255;
+              }
+            }
+          }
+
+          bmp.UnlockBits(bmpdata);
+        }
+
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,11 +22,11 @@ using System.Reflection;
 
 namespace RageLib.FileSystem.RPF
 {
-    internal enum MagicId
-    {
-        //Version0 = 0x30465052,
-        //Version1 = 0x31465052,
-        Version2 = 0x32465052,
-        Version3 = 0x33465052,
-    }
+  internal enum MagicId
+  {
+    //Version0 = 0x30465052,
+    //Version1 = 0x31465052,
+    Version2 = 0x32465052,
+    Version3 = 0x33465052,
+  }
 }

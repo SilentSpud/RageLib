@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,17 +20,17 @@
 
 namespace RageLib.Scripting.Script
 {
-    internal class StackUsageInfo
+  internal class StackUsageInfo
+  {
+    public StackUsageInfo(int stackIn, int stackOut, int stackLeftOver)
     {
-        public StackUsageInfo(int stackIn, int stackOut, int stackLeftOver)
-        {
-            In = stackIn;
-            Out = stackOut;
-            LeftOver = stackLeftOver;
-        }
-
-        public int In { get; set; }
-        public int Out { get; set; }
-        public int LeftOver { get; set; }
+      In = stackIn;
+      Out = stackOut;
+      LeftOver = stackLeftOver;
     }
+
+    public int In { get; set; }
+    public int Out { get; set; }
+    public int LeftOver { get; set; }
+  }
 }

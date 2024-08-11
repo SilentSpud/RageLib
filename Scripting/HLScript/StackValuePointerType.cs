@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,13 +20,13 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal enum StackValuePointerType
-    {
-        Local,
-        Global,
-        Null,
-        Stack,
-        Temporary,
-        Processed,
-    }
+  internal enum StackValuePointerType
+  {
+    Local,
+    Global,
+    Null,
+    Stack,
+    Temporary,
+    Processed,
+  }
 }

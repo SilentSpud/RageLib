@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,40 +22,40 @@ using System;
 
 namespace RageLib.Scripting.Script
 {
-    static class LiteralFormatter
+  static class LiteralFormatter
+  {
+    public static string FormatInteger(int value)
     {
-        public static string FormatInteger(int value)
-        {
-            if (value > 0xFFFFFF || value < -0xFFFFFF)
-            {
-                return string.Format("0x{0:x}", value);
-            }
-            else
-            {
-                return value.ToString();
-            }
-        }
-
-        public static string FormatFloat(float value)
-        {
-            var tempF = (float) value;
-            if (Math.Round(tempF) == tempF)
-            {
-                return tempF + ".0f";
-            }
-            else
-            {
-                return tempF + "f";
-            }
-        }
-
-        public static string FormatString(string value)
-        {
-            string temp = value;
-            temp = temp.Replace("\\", "\\\\");
-            temp = temp.Replace("\n", "\\n");
-            temp = temp.Replace("\"", "\\\"");
-            return "\"" + temp + "\"";
-        }
+      if (value > 0xFFFFFF || value < -0xFFFFFF)
+      {
+        return string.Format("0x{0:x}", value);
+      }
+      else
+      {
+        return value.ToString();
+      }
     }
+
+    public static string FormatFloat(float value)
+    {
+      var tempF = (float)value;
+      if (Math.Round(tempF) == tempF)
+      {
+        return tempF + ".0f";
+      }
+      else
+      {
+        return tempF + "f";
+      }
+    }
+
+    public static string FormatString(string value)
+    {
+      string temp = value;
+      temp = temp.Replace("\\", "\\\\");
+      temp = temp.Replace("\n", "\\n");
+      temp = temp.Replace("\"", "\\\"");
+      return "\"" + temp + "\"";
+    }
+  }
 }

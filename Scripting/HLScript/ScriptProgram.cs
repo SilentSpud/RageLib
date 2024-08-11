@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,16 +23,16 @@ using RageLib.Scripting.Script;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class ScriptProgram
+  internal class ScriptProgram
+  {
+    public ScriptProgram(Decoder decoder)
     {
-        public ScriptProgram(Decoder decoder)
-        {
-            Functions = new List<Function>();
-            Decoder = decoder;
-        }
-
-        public List<Function> Functions { get; private set; }
-
-        public Decoder Decoder { get; private set; }
+      Functions = new List<Function>();
+      Decoder = decoder;
     }
+
+    public List<Function> Functions { get; private set; }
+
+    public Decoder Decoder { get; private set; }
+  }
 }

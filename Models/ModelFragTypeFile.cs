@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -25,48 +25,48 @@ using RageLib.Textures;
 
 namespace RageLib.Models
 {
-    public class ModelFragTypeFile : IModelFile
+  public class ModelFragTypeFile : IModelFile
+  {
+    internal File<FragTypeModel> File { get; private set; }
+
+    public void Open(string filename)
     {
-        internal File<FragTypeModel> File { get; private set; }
-
-        public void Open(string filename)
-        {
-            File = new File<FragTypeModel>();
-            File.Open(filename);
-        }
-
-        public void Open(Stream stream)
-        {
-            File = new File<FragTypeModel>();
-            File.Open(stream);
-        }
-
-        public TextureFile EmbeddedTextureFile
-        {
-            get { return File.Data.Drawable.ShaderGroup.TextureDictionary; }
-        }
-
-        public ModelNode GetModel(TextureFile[] textures)
-        {
-            return ModelGenerator.GenerateModel(File.Data, textures);
-        }
-
-        public Drawable GetDataModel()
-        {
-            return new Drawable(File.Data.Drawable);
-        }
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            if (File != null)
-            {
-                File.Dispose();
-                File = null;
-            }
-        }
-
-        #endregion
+      File = new File<FragTypeModel>();
+      File.Open(filename);
     }
+
+    public void Open(Stream stream)
+    {
+      File = new File<FragTypeModel>();
+      File.Open(stream);
+    }
+
+    public TextureFile EmbeddedTextureFile
+    {
+      get { return File.Data.Drawable.ShaderGroup.TextureDictionary; }
+    }
+
+    public ModelNode GetModel(TextureFile[] textures)
+    {
+      return ModelGenerator.GenerateModel(File.Data, textures);
+    }
+
+    public Drawable GetDataModel()
+    {
+      return new Drawable(File.Data.Drawable);
+    }
+
+    #region Implementation of IDisposable
+
+    public void Dispose()
+    {
+      if (File != null)
+      {
+        File.Dispose();
+        File = null;
+      }
+    }
+
+    #endregion
+  }
 }

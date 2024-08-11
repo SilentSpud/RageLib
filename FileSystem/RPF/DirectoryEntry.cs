@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,38 +22,38 @@ using System.IO;
 
 namespace RageLib.FileSystem.RPF
 {
-    internal class DirectoryEntry : TOCEntry
+  internal class DirectoryEntry : TOCEntry
+  {
+    public DirectoryEntry(TOC toc)
     {
-        public DirectoryEntry(TOC toc)
-        {
-            TOC = toc;
-        }
-
-        public int Flags { get; set; }
-        public int ContentEntryIndex { get; set; }
-        public int ContentEntryCount { get; set; }
-
-        public override bool IsDirectory
-        {
-            get { return true; }
-        }
-
-        public override void Read(BinaryReader br)
-        {
-            NameOffset = br.ReadInt32();
-            Flags = br.ReadInt32();
-            ContentEntryIndex = (int) (br.ReadUInt32() & 0x7fffffff);
-            ContentEntryCount = br.ReadInt32() & 0x0fffffff;
-        }
-
-        public override void Write(BinaryWriter bw)
-        {
-            bw.Write(NameOffset);
-            bw.Write(Flags);
-
-            uint temp = (uint)ContentEntryIndex | 0x80000000;
-            bw.Write(temp);
-            bw.Write(ContentEntryCount);
-        }
+      TOC = toc;
     }
+
+    public int Flags { get; set; }
+    public int ContentEntryIndex { get; set; }
+    public int ContentEntryCount { get; set; }
+
+    public override bool IsDirectory
+    {
+      get { return true; }
+    }
+
+    public override void Read(BinaryReader br)
+    {
+      NameOffset = br.ReadInt32();
+      Flags = br.ReadInt32();
+      ContentEntryIndex = (int)(br.ReadUInt32() & 0x7fffffff);
+      ContentEntryCount = br.ReadInt32() & 0x0fffffff;
+    }
+
+    public override void Write(BinaryWriter bw)
+    {
+      bw.Write(NameOffset);
+      bw.Write(Flags);
+
+      uint temp = (uint)ContentEntryIndex | 0x80000000;
+      bw.Write(temp);
+      bw.Write(ContentEntryCount);
+    }
+  }
 }

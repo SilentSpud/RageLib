@@ -20,25 +20,25 @@
 
 namespace RageLib.Models.Data
 {
-    public enum VertexElementType
-    {
-        Float1 = 0,
-        Float2 = 1,
-        Float3 = 2,
-        Float4 = 3,
-        Color = 4,
-        UByte4 = 5,
-        Short2 = 6,
-        Short4 = 7,
-        UByte4N = 8,
-        Short2N = 9,
-        Short4N = 10,
-        UShort2N = 11,
-        UShort4N = 12,
-        UDec3 = 13,
-        Dec3N = 14,
-        Float16_2 = 15,
-        Float16_4 = 16,
-        Unused = 17,
-    }
+  public enum VertexElementType
+  {
+    Float1 = 0,
+    Float2 = 1,
+    Float3 = 2,
+    Float4 = 3,
+    Color = 4,
+    UByte4 = 5,
+    Short2 = 6,
+    Short4 = 7,
+    UByte4N = 8,
+    Short2N = 9,
+    Short4N = 10,
+    UShort2N = 11,
+    UShort4N = 12,
+    UDec3 = 13,
+    Dec3N = 14,
+    Float16_2 = 15,
+    Float16_4 = 16,
+    Unused = 17,
+  }
 }

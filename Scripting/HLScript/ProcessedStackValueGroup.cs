@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,15 +22,15 @@ using System.Collections.Generic;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class ProcessedStackValueGroup : StackValue
+  internal class ProcessedStackValueGroup : StackValue
+  {
+    public ProcessedStackValueGroup()
     {
-        public ProcessedStackValueGroup()
-        {
-            Values = new List<StackValue>();
-            ValueType = StackValueType.Unknown;
-            ProcessedValue = true;
-        }
-
-        public List<StackValue> Values { get; private set; }
+      Values = new List<StackValue>();
+      ValueType = StackValueType.Unknown;
+      ProcessedValue = true;
     }
+
+    public List<StackValue> Values { get; private set; }
+  }
 }

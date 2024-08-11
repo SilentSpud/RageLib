@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,75 +25,75 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class SimpleCollection<T> : IFileAccess, IEnumerable<T>
+  public class SimpleCollection<T> : IFileAccess, IEnumerable<T>
+  {
+    public delegate T ReadDataDelegate(BinaryReader br);
+
+    protected ReadDataDelegate ReadData;
+
+    protected List<T> Values;
+
+    public ushort Count { get; set; }
+    public ushort Size { get; set; }
+
+    public SimpleCollection(ReadDataDelegate delg)
     {
-        public delegate T ReadDataDelegate(BinaryReader br);
-
-        protected ReadDataDelegate ReadData;
-
-        protected List<T> Values;
-
-        public ushort Count { get; set; }
-        public ushort Size { get; set; }
-
-        public SimpleCollection(ReadDataDelegate delg)
-        {
-            ReadData = delg;
-        }
-
-        public SimpleCollection(BinaryReader br, ReadDataDelegate delg)
-        {
-            ReadData = delg;
-            Read(br);
-        }
-
-        public T this[int index]
-        {
-            get { return Values[index];  }
-            set { Values[index] = value; }
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            var offset = ResourceUtil.ReadOffset(br);
-
-            Count = br.ReadUInt16();
-            Size = br.ReadUInt16();
-
-            Values = new List<T>(Count);
-
-            using (new StreamContext(br))
-            {
-                br.BaseStream.Seek(offset, SeekOrigin.Begin);
-
-                for (int i = 0; i < Count; i++)
-                {
-                    Values.Add(ReadData(br));
-                }
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            
-        }
-
-        #endregion
-
-        #region Implementation of IEnumerable
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
+      ReadData = delg;
     }
+
+    public SimpleCollection(BinaryReader br, ReadDataDelegate delg)
+    {
+      ReadData = delg;
+      Read(br);
+    }
+
+    public T this[int index]
+    {
+      get { return Values[index]; }
+      set { Values[index] = value; }
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      var offset = ResourceUtil.ReadOffset(br);
+
+      Count = br.ReadUInt16();
+      Size = br.ReadUInt16();
+
+      Values = new List<T>(Count);
+
+      using (new StreamContext(br))
+      {
+        br.BaseStream.Seek(offset, SeekOrigin.Begin);
+
+        for (int i = 0; i < Count; i++)
+        {
+          Values.Add(ReadData(br));
+        }
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+
+    }
+
+    #endregion
+
+    #region Implementation of IEnumerable
+
+    public IEnumerator<T> GetEnumerator()
+    {
+      return Values.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    #endregion
+  }
 }

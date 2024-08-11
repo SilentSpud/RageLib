@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - HyperText
  Copyright (C) 2008-2009  Arushan/Aru <oneforaru at gmail.com>
@@ -26,56 +26,56 @@ using RageLib.Textures;
 
 namespace RageLib.HyperText.Resource
 {
-    class HtmlDocument : IFileAccess
+  class HtmlDocument : IFileAccess
+  {
+    public HtmlNode RootElement { get; private set; }
+
+    private uint BodyOffset { get; set; }
+    private uint Unknown1Offset { get; set; }
+
+    public uint TextureDictionaryOffset { get; set; }
+    public TextureFile TextureDictionary { get; set; }
+
+    private PtrCollection<UnDocData> Unknown2 { get; set; }
+    private PtrCollection<HtmlNode> ChildNodes { get; set; }
+    private PtrCollection<UnDocData> Unknown3 { get; set; }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
     {
-        public HtmlNode RootElement { get; private set; }
+      RootElement = new PtrValue<HtmlNode>(br).Value;
 
-        private uint BodyOffset { get; set; }
-        private uint Unknown1Offset { get; set; }
-        
-        public uint TextureDictionaryOffset { get; set; }
-        public TextureFile TextureDictionary { get; set; }
+      BodyOffset = ResourceUtil.ReadOffset(br);
+      Unknown1Offset = ResourceUtil.ReadOffset(br);
+      TextureDictionaryOffset = ResourceUtil.ReadOffset(br);
 
-        private PtrCollection<UnDocData> Unknown2 { get; set; }
-        private PtrCollection<HtmlNode> ChildNodes { get; set; }
-        private PtrCollection<UnDocData> Unknown3 { get; set; }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            RootElement = new PtrValue<HtmlNode>(br).Value;
-
-            BodyOffset = ResourceUtil.ReadOffset(br);
-            Unknown1Offset = ResourceUtil.ReadOffset(br);
-            TextureDictionaryOffset = ResourceUtil.ReadOffset(br);
-
-            Unknown2 = new PtrCollection<UnDocData>(br);
-            ChildNodes = new PtrCollection<HtmlNode>(br);
-            Unknown3 = new PtrCollection<UnDocData>(br);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        public void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory)
-        {
-            if (TextureDictionaryOffset != 0)
-            {
-                systemMemory.Seek(TextureDictionaryOffset, SeekOrigin.Begin);
-
-                TextureDictionary = new TextureFile();
-                TextureDictionary.Open(systemMemory, graphicsMemory);
-            }
-        }
-
-        public void ReadData(BinaryReader br)
-        {
-            
-        }
+      Unknown2 = new PtrCollection<UnDocData>(br);
+      ChildNodes = new PtrCollection<HtmlNode>(br);
+      Unknown3 = new PtrCollection<UnDocData>(br);
     }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+
+    public void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory)
+    {
+      if (TextureDictionaryOffset != 0)
+      {
+        systemMemory.Seek(TextureDictionaryOffset, SeekOrigin.Begin);
+
+        TextureDictionary = new TextureFile();
+        TextureDictionary.Open(systemMemory, graphicsMemory);
+      }
+    }
+
+    public void ReadData(BinaryReader br)
+    {
+
+    }
+  }
 }

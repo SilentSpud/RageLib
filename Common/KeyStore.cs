@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,38 +20,38 @@
 
 namespace RageLib.Common
 {
-    public static class KeyStore
+  public static class KeyStore
+  {
+    public delegate byte[] KeyLoader();
+
+    private static byte[] _aesKey;
+    private static KeyLoader _keyLoader;
+
+    static KeyStore()
     {
-        public delegate byte[] KeyLoader();
-
-        private static byte[] _aesKey;
-        private static KeyLoader _keyLoader;
-
-        static KeyStore()
-        {
-            // Default Key Loader
-            SetKeyLoader( () =>
-                              {
-                                  var util = new KeyUtilGTAIV();
-                                  return util.FindKey(util.FindGameDirectory());
-                              } );
-        }
-
-        public static void SetKeyLoader(KeyLoader loader)
-        {
-            _keyLoader = loader;
-        }
-
-        public static byte[] AESKey
-        {
-            get
-            {
-                if (_aesKey == null)
-                {
-                    _aesKey = _keyLoader();
-                }
-                return _aesKey;
-            }
-        }
+      // Default Key Loader
+      SetKeyLoader(() =>
+                        {
+                          var util = new KeyUtilGTAIV();
+                          return util.FindKey(util.FindGameDirectory());
+                        });
     }
+
+    public static void SetKeyLoader(KeyLoader loader)
+    {
+      _keyLoader = loader;
+    }
+
+    public static byte[] AESKey
+    {
+      get
+      {
+        if (_aesKey == null)
+        {
+          _aesKey = _keyLoader();
+        }
+        return _aesKey;
+      }
+    }
+  }
 }

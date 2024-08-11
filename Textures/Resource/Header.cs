@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -25,52 +25,52 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Textures.Resource
 {
-    internal class Header : IFileAccess
+  internal class Header : IFileAccess
+  {
+    public uint VTable { get; private set; }
+
+    private uint BlockMapOffset { get; set; }
+
+    private uint ParentDictionary { get; set; } // always 0 in file
+
+    public uint UsageCount { get; private set; } // always 1 in file
+
+    public short TextureCount { get; private set; } // actually NameHash.Count
+
+    public uint TextureListOffset { get; private set; }
+
+    public uint HashTableOffset { get; private set; }
+
+    #region IFileAccess Members
+
+    public void Read(BinaryReader br)
     {
-        public uint VTable { get; private set; }
+      // Full Structure of rage::pgDictionary
 
-        private uint BlockMapOffset { get; set; }
+      // rage::datBase
+      VTable = br.ReadUInt32();
 
-        private uint ParentDictionary { get; set; } // always 0 in file
+      // rage::pgBase
+      BlockMapOffset = ResourceUtil.ReadOffset(br);
+      ParentDictionary = br.ReadUInt32();
+      UsageCount = br.ReadUInt32();
 
-        public uint UsageCount { get; private set; } // always 1 in file
+      // CSimpleCollection<DWORD>
+      HashTableOffset = ResourceUtil.ReadOffset(br);
+      TextureCount = br.ReadInt16();
+      br.ReadInt16();
 
-        public short TextureCount { get; private set; } // actually NameHash.Count
-
-        public uint TextureListOffset { get; private set; }
-
-        public uint HashTableOffset { get; private set; }
-
-        #region IFileAccess Members
-
-        public void Read(BinaryReader br)
-        {
-            // Full Structure of rage::pgDictionary
-
-            // rage::datBase
-            VTable = br.ReadUInt32();
-
-            // rage::pgBase
-            BlockMapOffset = ResourceUtil.ReadOffset(br);
-            ParentDictionary = br.ReadUInt32();
-            UsageCount = br.ReadUInt32();
-
-            // CSimpleCollection<DWORD>
-            HashTableOffset = ResourceUtil.ReadOffset(br);
-            TextureCount = br.ReadInt16();
-            br.ReadInt16();
-
-            // CPtrCollection<T>
-            TextureListOffset = ResourceUtil.ReadOffset(br);
-            br.ReadInt16();
-            br.ReadInt16();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+      // CPtrCollection<T>
+      TextureListOffset = ResourceUtil.ReadOffset(br);
+      br.ReadInt16();
+      br.ReadInt16();
     }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new NotImplementedException();
+    }
+
+    #endregion
+  }
 }

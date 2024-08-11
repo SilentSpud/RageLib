@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -24,50 +24,50 @@ using System.Text;
 
 namespace RageLib.Scripting.Script
 {
-    internal class InstructionSwitch : Instruction
+  internal class InstructionSwitch : Instruction
+  {
+    public Dictionary<int, int> SwitchTable { get; private set; }
+
+    protected override void DecodeInternal(byte[] code, int offset)
     {
-        public Dictionary<int, int> SwitchTable { get; private set; }
+      SwitchTable = new Dictionary<int, int>();
 
-        protected override void DecodeInternal(byte[] code, int offset)
-        {
-            SwitchTable = new Dictionary<int, int>();
+      int switchCount = code[offset + 1];
 
-            int switchCount = code[offset + 1];
+      for (int i = 0; i < switchCount; i++)
+      {
+        int index = BitConverter.ToInt32(code, offset + 2 + i * 8);
+        int jump = BitConverter.ToInt32(code, offset + 2 + i * 8 + 4);
 
-            for (int i = 0; i < switchCount; i++)
-            {
-                int index = BitConverter.ToInt32(code, offset + 2 + i*8);
-                int jump = BitConverter.ToInt32(code, offset + 2 + i*8 + 4);
-
-                SwitchTable.Add(index, jump);
-            }
-        }
-
-        protected override string GetInstructionTextInternal()
-        {
-            var str = new StringBuilder();
-
-            str.Append(OpCode.ToString());
-            str.Append(" ");
-
-            bool first = true;
-            foreach (var item in SwitchTable)
-            {
-                if (first)
-                {
-                    first = false;
-                }
-                else
-                {
-                    str.Append(", ");
-                }
-
-                str.Append(LiteralFormatter.FormatInteger(item.Key));
-                str.Append("->@");
-                str.Append(string.Format("{0:x}", item.Value));
-            }
-
-            return str.ToString();
-        }
+        SwitchTable.Add(index, jump);
+      }
     }
+
+    protected override string GetInstructionTextInternal()
+    {
+      var str = new StringBuilder();
+
+      str.Append(OpCode.ToString());
+      str.Append(" ");
+
+      bool first = true;
+      foreach (var item in SwitchTable)
+      {
+        if (first)
+        {
+          first = false;
+        }
+        else
+        {
+          str.Append(", ");
+        }
+
+        str.Append(LiteralFormatter.FormatInteger(item.Key));
+        str.Append("->@");
+        str.Append(string.Format("{0:x}", item.Value));
+      }
+
+      return str.ToString();
+    }
+  }
 }

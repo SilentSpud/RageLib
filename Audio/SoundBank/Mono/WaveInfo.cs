@@ -28,110 +28,110 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.Mono
 {
-    internal struct WaveInfo : IFileAccess, ISoundWave
+  internal struct WaveInfo : IFileAccess, ISoundWave
+  {
+    public long offset;
+    public uint hash;
+    public int numSamplesInBytes;
+    public int numSamples16Bit;
+    public int unk5;
+    public ushort samplerate;
+    public ushort unk6;
+    public int unk7;
+    public long offsetToStates;
+    public uint numSamples16Bit2;
+    public uint unk11;
+    public uint unk12;
+    public int numStates;
+
+    public DviAdpcmDecoder.AdpcmState[] states;
+
+    public int numSamplesInBytes_computed;
+    public bool is_compressed;
+
+    public WaveInfoHeader Header { get; set; }
+
+    public string Name
     {
-        public long offset;
-        public uint hash;
-        public int numSamplesInBytes;
-        public int numSamples16Bit;
-        public int unk5;
-        public ushort samplerate;
-        public ushort unk6;
-        public int unk7;
-        public long offsetToStates;
-        public uint numSamples16Bit2;
-        public uint unk11;
-        public uint unk12;
-        public int numStates;
-
-        public DviAdpcmDecoder.AdpcmState[] states;
-
-        public int numSamplesInBytes_computed;
-        public bool is_compressed;
-
-        public WaveInfoHeader Header { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                return HashResolver.Resolve(hash);
-            }
-        }
-
-        public int NumberOfSamples
-        {
-            get { return numSamples16Bit; }
-        }
-
-        public int SamplesPerSecond
-        {
-            get { return samplerate; }
-        }
-
-        public int BlockSize
-        {
-            get { return 2048; }
-        }
-
-        public int BlockCount
-        {
-            get { return numSamplesInBytes_computed/BlockSize; }
-        }
-
-        public WaveInfo(WaveInfoHeader header) : this()
-        {
-            Header = header;
-        }
-
-        public WaveInfo(WaveInfoHeader header, BinaryReader br) : this()
-        {
-            Header = header;
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            offset = br.ReadInt64();
-            hash = br.ReadUInt32();
-            numSamplesInBytes = br.ReadInt32();
-            numSamplesInBytes_computed = SoundBankMono.GetPaddedSize(numSamplesInBytes);
-            numSamples16Bit = br.ReadInt32();
-            unk5 = br.ReadInt32();
-            samplerate = br.ReadUInt16();
-            unk6 = br.ReadUInt16();
-                
-            if (Header.size > 32)
-            {
-                unk7 = br.ReadInt32();
-                offsetToStates = br.ReadInt64();
-                numSamples16Bit2 = br.ReadUInt32();
-                unk11 = br.ReadUInt32();
-                unk12 = br.ReadUInt32();
-                numStates = br.ReadInt32();
-                if (numStates > 0)
-                {
-                    is_compressed = true;
-                    states = new DviAdpcmDecoder.AdpcmState[numStates];
-                    for (int j = 0; j < numStates; j++)
-                    {
-                        DviAdpcmDecoder.AdpcmState state = new DviAdpcmDecoder.AdpcmState();
-                        state.valprev = br.ReadInt16();
-                        state.index = br.ReadByte();
-                        states[j] = state;
-                    }
-                }
-            }
-
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      get
+      {
+        return HashResolver.Resolve(hash);
+      }
     }
+
+    public int NumberOfSamples
+    {
+      get { return numSamples16Bit; }
+    }
+
+    public int SamplesPerSecond
+    {
+      get { return samplerate; }
+    }
+
+    public int BlockSize
+    {
+      get { return 2048; }
+    }
+
+    public int BlockCount
+    {
+      get { return numSamplesInBytes_computed / BlockSize; }
+    }
+
+    public WaveInfo(WaveInfoHeader header) : this()
+    {
+      Header = header;
+    }
+
+    public WaveInfo(WaveInfoHeader header, BinaryReader br) : this()
+    {
+      Header = header;
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      offset = br.ReadInt64();
+      hash = br.ReadUInt32();
+      numSamplesInBytes = br.ReadInt32();
+      numSamplesInBytes_computed = SoundBankMono.GetPaddedSize(numSamplesInBytes);
+      numSamples16Bit = br.ReadInt32();
+      unk5 = br.ReadInt32();
+      samplerate = br.ReadUInt16();
+      unk6 = br.ReadUInt16();
+
+      if (Header.size > 32)
+      {
+        unk7 = br.ReadInt32();
+        offsetToStates = br.ReadInt64();
+        numSamples16Bit2 = br.ReadUInt32();
+        unk11 = br.ReadUInt32();
+        unk12 = br.ReadUInt32();
+        numStates = br.ReadInt32();
+        if (numStates > 0)
+        {
+          is_compressed = true;
+          states = new DviAdpcmDecoder.AdpcmState[numStates];
+          for (int j = 0; j < numStates; j++)
+          {
+            DviAdpcmDecoder.AdpcmState state = new DviAdpcmDecoder.AdpcmState();
+            state.valprev = br.ReadInt16();
+            state.index = br.ReadByte();
+            states[j] = state;
+          }
+        }
+      }
+
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

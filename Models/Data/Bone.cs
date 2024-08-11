@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,42 +23,42 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Data
 {
-    public class Bone
+  public class Bone
+  {
+    public Bone Parent { get; private set; }
+    public string Name { get; private set; }
+    public int Index { get; private set; }
+
+    public Vector4 Position { get; private set; }
+    public Vector4 Rotation { get; private set; }
+
+    public Vector4 AbsolutePosition { get; private set; }
+    public Vector4 AbsoluteRotation { get; private set; }
+
+    public List<Bone> Children { get; private set; }
+
+    internal Bone(Resource.Skeletons.Bone bone, Bone parent)
     {
-        public Bone Parent { get; private set; }
-        public string Name { get; private set; }
-        public int Index { get; private set; }
-        
-        public Vector4 Position { get; private set; }
-        public Vector4 Rotation { get; private set; }
+      Parent = parent;
+      Name = bone.Name;
+      Index = bone.BoneIndex;
 
-        public Vector4 AbsolutePosition { get; private set; }
-        public Vector4 AbsoluteRotation { get; private set; }
+      Position = bone.Position;
+      Rotation = bone.RotationEuler;
 
-        public List<Bone> Children { get; private set; }
+      AbsolutePosition = bone.AbsolutePosition;
+      AbsoluteRotation = bone.AbsoluteRotationEuler;
 
-        internal Bone(Resource.Skeletons.Bone bone, Bone parent)
-        {
-            Parent = parent;
-            Name = bone.Name;
-            Index = bone.BoneIndex;
-
-            Position = bone.Position;
-            Rotation = bone.RotationEuler;
-
-            AbsolutePosition = bone.AbsolutePosition;
-            AbsoluteRotation = bone.AbsoluteRotationEuler;
-
-            Children = new List<Bone>();
-        }
-
-        #region Overrides of Object
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        #endregion
+      Children = new List<Bone>();
     }
+
+    #region Overrides of Object
+
+    public override string ToString()
+    {
+      return Name;
+    }
+
+    #endregion
+  }
 }

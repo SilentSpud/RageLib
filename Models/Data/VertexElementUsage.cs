@@ -20,21 +20,21 @@
 
 namespace RageLib.Models.Data
 {
-    public enum VertexElementUsage
-    {
-        Position = 0,
-        BlendWeight = 1,
-        BlendIndices = 2,
-        Normal = 3,
-        PointSize = 4,
-        TextureCoordinate = 5,
-        Tangent = 6,
-        Binormal = 7,
-        TesselateFactor = 8,
-        PositionT = 9,
-        Color = 10,
-        Fog = 11,
-        Depth = 12,
-        Sample = 13,
-    }
+  public enum VertexElementUsage
+  {
+    Position = 0,
+    BlendWeight = 1,
+    BlendIndices = 2,
+    Normal = 3,
+    PointSize = 4,
+    TextureCoordinate = 5,
+    Tangent = 6,
+    Binormal = 7,
+    TesselateFactor = 8,
+    PositionT = 9,
+    Color = 10,
+    Fog = 11,
+    Depth = 12,
+    Sample = 13,
+  }
 }

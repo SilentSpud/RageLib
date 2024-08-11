@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -22,62 +22,62 @@ using System.IO;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public struct Matrix44 : IFileAccess
-    {
-        private float[] M;
+  public struct Matrix44 : IFileAccess
+  {
+    private float[] M;
 
-        public static Matrix44 Identity
+    public static Matrix44 Identity
+    {
+      get
+      {
+        var m = new Matrix44
         {
-            get
-            {
-                var m = new Matrix44
-                                 {
-                                     M = new[]
-                                             {
+          M = new[]
+                                     {
                                                  1f, 0f, 0f, 0f,
                                                  0f, 1f, 0f, 0f,
                                                  0f, 0f, 1f, 0f,
                                                  0f, 0f, 0f, 1f,
                                              }
-                                 };
-                return m;
-            }
-        }
-
-        public float this[int i, int j]
-        {
-            get { return M[i*4 + j]; }
-            set { M[i*4 + j] = value; }
-        }
-
-        public float this[int m]
-        {
-            get { return M[m]; }
-            set { M[m] = value; }
-        }
-
-        public Matrix44(BinaryReader br)
-            : this()
-        {
-            Read(br);
-        }
-
-        public void Read(BinaryReader br)
-        {
-            M = new float[16];
-            for (int i = 0; i < 16; i++)
-            {
-                M[i] = br.ReadSingle();
-            }
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            for (int i = 0; i < 16; i++)
-            {
-                bw.Write(M[i]);
-            }
-        }
-
+        };
+        return m;
+      }
     }
+
+    public float this[int i, int j]
+    {
+      get { return M[i * 4 + j]; }
+      set { M[i * 4 + j] = value; }
+    }
+
+    public float this[int m]
+    {
+      get { return M[m]; }
+      set { M[m] = value; }
+    }
+
+    public Matrix44(BinaryReader br)
+        : this()
+    {
+      Read(br);
+    }
+
+    public void Read(BinaryReader br)
+    {
+      M = new float[16];
+      for (int i = 0; i < 16; i++)
+      {
+        M[i] = br.ReadSingle();
+      }
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      for (int i = 0; i < 16; i++)
+      {
+        bw.Write(M[i]);
+      }
+    }
+
+  }
 }

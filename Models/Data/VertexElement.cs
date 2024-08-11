@@ -20,24 +20,24 @@
 
 namespace RageLib.Models.Data
 {
-    public struct VertexElement
+  public struct VertexElement
+  {
+    public static readonly VertexElement End = new VertexElement()
     {
-        public static readonly VertexElement End = new VertexElement()
-                                                       {
-                                                           Stream = -1,
-                                                           Offset = 0,
-                                                           Type = VertexElementType.Unused,
-                                                           Method = 0,
-                                                           Usage = 0,
-                                                           UsageIndex = 0
-                                                       };
+      Stream = -1,
+      Offset = 0,
+      Type = VertexElementType.Unused,
+      Method = 0,
+      Usage = 0,
+      UsageIndex = 0
+    };
 
-        public int Stream { get; set; }
-        public int Size { get; set; }  // Not part of any D3D struct, but we include it here
-        public int Offset { get; set; }
-        public VertexElementType Type { get; set; }
-        public VertexElementMethod Method { get; set; }
-        public VertexElementUsage Usage { get; set; }
-        public int UsageIndex { get; set; }
-    }
+    public int Stream { get; set; }
+    public int Size { get; set; }  // Not part of any D3D struct, but we include it here
+    public int Offset { get; set; }
+    public VertexElementType Type { get; set; }
+    public VertexElementMethod Method { get; set; }
+    public VertexElementUsage Usage { get; set; }
+    public int UsageIndex { get; set; }
+  }
 }

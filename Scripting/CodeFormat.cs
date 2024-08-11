@@ -20,16 +20,16 @@
 
 namespace RageLib.Scripting
 {
-    public enum CodeFormat
-    {
-        Disassemble,
-        ControlFlowDecompile,
-        FullDecompile,
-        FullDecompileAnnotate,
-        Variables,
-        CodePath,
-        
-        ScruffDecompile,
-        ScruffHeader,
-    }
+  public enum CodeFormat
+  {
+    Disassemble,
+    ControlFlowDecompile,
+    FullDecompile,
+    FullDecompileAnnotate,
+    Variables,
+    CodePath,
+
+    ScruffDecompile,
+    ScruffHeader,
+  }
 }

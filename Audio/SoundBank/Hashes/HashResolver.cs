@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -25,45 +25,45 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.Hashes
 {
-    internal static class HashResolver
+  internal static class HashResolver
+  {
+    private static readonly Dictionary<uint, string> _knownNames;
+
+    static HashResolver()
     {
-        private static readonly Dictionary<uint, string> _knownNames;
+      _knownNames = new Dictionary<uint, string>();
 
-        static HashResolver()
-        {
-            _knownNames = new Dictionary<uint, string>();
-
-            LoadFromResource("Names.txt");
-        }
-
-        private static void LoadFromResource(string filename)
-        {
-            using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(HashResolver), filename))
-            {
-                var sw = new StreamReader(s);
-
-                string name;
-                while ((name = sw.ReadLine()) != null)
-                {
-                    uint hash = Hasher.Hash(name);
-                    if (!_knownNames.ContainsKey(hash))
-                    {
-                        _knownNames.Add(hash, name);
-                    }
-                }
-            }
-        }
-
-        public static string Resolve(uint hash)
-        {
-            if (_knownNames.ContainsKey(hash))
-            {
-                return _knownNames[hash];
-            }
-            else
-            {
-                return string.Format("0x{0:x}", hash);
-            }
-        }
+      LoadFromResource("Names.txt");
     }
+
+    private static void LoadFromResource(string filename)
+    {
+      using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(HashResolver), filename))
+      {
+        var sw = new StreamReader(s);
+
+        string name;
+        while ((name = sw.ReadLine()) != null)
+        {
+          uint hash = Hasher.Hash(name);
+          if (!_knownNames.ContainsKey(hash))
+          {
+            _knownNames.Add(hash, name);
+          }
+        }
+      }
+    }
+
+    public static string Resolve(uint hash)
+    {
+      if (_knownNames.ContainsKey(hash))
+      {
+        return _knownNames[hash];
+      }
+      else
+      {
+        return string.Format("0x{0:x}", hash);
+      }
+    }
+  }
 }

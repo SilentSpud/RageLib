@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  iv_audio_rip Copyright (C) 2009  DerPlaya78
  
@@ -21,22 +21,22 @@
 
 namespace RageLib.Audio.SoundBank
 {
-    public class DviAdpcmDecoder
+  public class DviAdpcmDecoder
+  {
+    #region intel/dvi adpcm decoder
+
+    public struct AdpcmState
     {
-        #region intel/dvi adpcm decoder
+      public short valprev;
+      public byte index;
+    }
 
-        public struct AdpcmState
-        {
-            public short valprev;
-            public byte index;
-        }
-
-        private static readonly int[] indexTable = {
+    private static readonly int[] indexTable = {
                                                        -1, -1, -1, -1, 2, 4, 6, 8,
                                                        -1, -1, -1, -1, 2, 4, 6, 8,
                                                    };
 
-        private static readonly int[] stepsizeTable = {
+    private static readonly int[] stepsizeTable = {
                                                           7, 8, 9, 10, 11, 12, 13, 14, 16, 17,
                                                           19, 21, 23, 25, 28, 31, 34, 37, 41, 45,
                                                           50, 55, 60, 66, 73, 80, 88, 97, 107, 118,
@@ -48,36 +48,36 @@ namespace RageLib.Audio.SoundBank
                                                           15289, 16818, 18500, 20350, 22385, 24623, 27086, 29794, 32767
                                                       };
 
-        public static short DecodeAdpcm(byte input, ref AdpcmState state)
-        {
-            int index = state.index;
-            int step = stepsizeTable[index];
-            int valpred = state.valprev;
-            int delta = input;
+    public static short DecodeAdpcm(byte input, ref AdpcmState state)
+    {
+      int index = state.index;
+      int step = stepsizeTable[index];
+      int valpred = state.valprev;
+      int delta = input;
 
-            index += indexTable[delta];
-            if (index < 0) index = 0;
-            if (index > 88) index = 88;
+      index += indexTable[delta];
+      if (index < 0) index = 0;
+      if (index > 88) index = 88;
 
-            bool sign = ((delta & 8) == 8);
-            delta = delta & 7;
+      bool sign = ((delta & 8) == 8);
+      delta = delta & 7;
 
-            int vpdiff = step >> 3;
-            if ((delta & 4) == 4) vpdiff += step;
-            if ((delta & 2) == 2) vpdiff += step >> 1;
-            if ((delta & 1) == 1) vpdiff += step >> 2;
+      int vpdiff = step >> 3;
+      if ((delta & 4) == 4) vpdiff += step;
+      if ((delta & 2) == 2) vpdiff += step >> 1;
+      if ((delta & 1) == 1) vpdiff += step >> 2;
 
-            if (sign) valpred -= vpdiff;
-            else valpred += vpdiff;
+      if (sign) valpred -= vpdiff;
+      else valpred += vpdiff;
 
-            if (valpred > 32767) valpred = 32767;
-            else if (valpred < -32768) valpred = -32768;
+      if (valpred > 32767) valpred = 32767;
+      else if (valpred < -32768) valpred = -32768;
 
-            state.valprev = (short) valpred;
-            state.index = (byte) index;
-            return (short) valpred;
-        }
-
-        #endregion
+      state.valprev = (short)valpred;
+      state.index = (byte)index;
+      return (short)valpred;
     }
+
+    #endregion
+  }
 }

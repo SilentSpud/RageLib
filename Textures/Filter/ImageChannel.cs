@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,12 +20,12 @@
 
 namespace RageLib.Textures.Filter
 {
-    enum ImageChannel
-    {
-        All,
-        Red,
-        Green,
-        Blue,
-        Alpha
-    }
+  enum ImageChannel
+  {
+    All,
+    Red,
+    Green,
+    Blue,
+    Alpha
+  }
 }

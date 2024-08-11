@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -22,35 +22,35 @@ using System.Text;
 
 namespace RageLib.Models.Export
 {
-    internal static class ExportFactory
-    {
-        private static readonly IExporter[] exporterTypes;
+  internal static class ExportFactory
+  {
+    private static readonly IExporter[] exporterTypes;
 
-        static ExportFactory()
-        {
-            exporterTypes = new[]
-                               {
+    static ExportFactory()
+    {
+      exporterTypes = new[]
+                         {
                                    new StudiomdlExport(),
                                };
-        }
-
-        public static string GenerateFilterString()
-        {
-            var sb = new StringBuilder();
-            foreach (var type in exporterTypes)
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append("|");
-                }
-                sb.AppendFormat("{0} (*.{1})|*.{1}", type.Name, type.Extension);
-            }
-            return sb.ToString();
-        }
-
-        public static IExporter GetExporter( int exporterIndex )
-        {
-            return exporterTypes[exporterIndex];
-        }
     }
+
+    public static string GenerateFilterString()
+    {
+      var sb = new StringBuilder();
+      foreach (var type in exporterTypes)
+      {
+        if (sb.Length > 0)
+        {
+          sb.Append("|");
+        }
+        sb.AppendFormat("{0} (*.{1})|*.{1}", type.Name, type.Extension);
+      }
+      return sb.ToString();
+    }
+
+    public static IExporter GetExporter(int exporterIndex)
+    {
+      return exporterTypes[exporterIndex];
+    }
+  }
 }

@@ -24,40 +24,40 @@ using RageLib.Common;
 
 namespace RageLib.Shaders.ShaderFX
 {
-    internal class VariableDefinition : IFileAccess
+  internal class VariableDefinition : IFileAccess
+  {
+    public byte Unknown1;
+    public byte Unknown2;
+    public short Unknown3;
+    public string VariableName;
+
+    public VariableDefinition()
     {
-        public byte Unknown1;
-        public byte Unknown2;
-        public short Unknown3;
-        public string VariableName;
-
-        public VariableDefinition()
-        {
-        }
-
-        public VariableDefinition(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            Unknown1 = br.ReadByte();
-            Unknown2 = br.ReadByte();
-            Unknown3 = br.ReadInt16();
-            
-            byte nameLength = br.ReadByte();
-            byte[] nameBytes = br.ReadBytes(nameLength);
-            VariableName = Encoding.ASCII.GetString(nameBytes, 0, nameLength - 1);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public VariableDefinition(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      Unknown1 = br.ReadByte();
+      Unknown2 = br.ReadByte();
+      Unknown3 = br.ReadInt16();
+
+      byte nameLength = br.ReadByte();
+      byte[] nameBytes = br.ReadBytes(nameLength);
+      VariableName = Encoding.ASCII.GetString(nameBytes, 0, nameLength - 1);
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

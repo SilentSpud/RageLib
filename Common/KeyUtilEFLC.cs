@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,38 +20,38 @@
 
 namespace RageLib.Common
 {
-    public class KeyUtilEFLC : KeyUtil
+  public class KeyUtilEFLC : KeyUtil
+  {
+    public override string ExecutableName
     {
-        public override string ExecutableName
-        {
-            get { return "EFLC.exe"; }
-        }
+      get { return "EFLC.exe"; }
+    }
 
-        protected override string[] PathRegistryKeys
-        {
-            get
-            {
-                return new[]
-                           {
+    protected override string[] PathRegistryKeys
+    {
+      get
+      {
+        return new[]
+                   {
                                @"SOFTWARE\Rockstar Games\EFLC",
                                @"SOFTWARE\Wow6432Node\Rockstar Games\EFLC"
                            };
-            }
-        }
+      }
+    }
 
-        protected override uint[] SearchOffsets
-        {
-            get
-            {
-                return new uint[]
-                           {
+    protected override uint[] SearchOffsets
+    {
+      get
+      {
+        return new uint[]
+                   {
                                //EFLC
                                0xB82A28 /* 1.1.3 */,
                                0xBEF028 /* 1.1.2 */,
                                0xC705E0 /* 1.1.1 */,
                                0xC6DEEC /* 1.1.0 */,
-                           };
-            }
-        }
+                   };
+      }
     }
+  }
 }

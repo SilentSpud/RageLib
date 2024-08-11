@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,9 +20,9 @@
 
 namespace RageLib.Common.Compression
 {
-    internal static class CompressionCodecFactory
-    {
-        public static readonly ICompressionCodec LZX = new CompressionLZXCodec();
-        public static readonly ICompressionCodec Deflate = new CompressionDeflateCodec();
-    }
+  internal static class CompressionCodecFactory
+  {
+    public static readonly ICompressionCodec LZX = new CompressionLZXCodec();
+    public static readonly ICompressionCodec Deflate = new CompressionDeflateCodec();
+  }
 }

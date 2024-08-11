@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,45 +23,45 @@ using System.Windows.Forms;
 
 namespace RageLib.Textures
 {
-    public partial class TextureEditView : UserControl
+  public partial class TextureEditView : UserControl
+  {
+    public TextureEditView()
     {
-        public TextureEditView()
-        {
-            InitializeComponent();
-        }
-
-        public int TextureCount
-        {
-            set
-            {
-                tslTexturesInfo.Text = value + " Texture" + (value == 1 ? "" : "s");
-            }
-        }
-
-        public TextureView TextureView
-        {
-            get
-            {
-                return textureView;
-            }
-        }
-
-        public event EventHandler ExportClicked
-        {
-            add { tsbExport.Click += value; }
-            remove { tsbExport.Click -= value; }
-        }
-
-        public event EventHandler ImportClicked
-        {
-            add { tsbImport.Click += value; }
-            remove { tsbImport.Click -= value; }
-        }
-
-        public event EventHandler SaveCloseClicked
-        {
-            add { tsbSaveClose.Click += value; }
-            remove { tsbSaveClose.Click -= value; }
-        }
+      InitializeComponent();
     }
+
+    public int TextureCount
+    {
+      set
+      {
+        tslTexturesInfo.Text = value + " Texture" + (value == 1 ? "" : "s");
+      }
+    }
+
+    public TextureView TextureView
+    {
+      get
+      {
+        return textureView;
+      }
+    }
+
+    public event EventHandler ExportClicked
+    {
+      add { tsbExport.Click += value; }
+      remove { tsbExport.Click -= value; }
+    }
+
+    public event EventHandler ImportClicked
+    {
+      add { tsbImport.Click += value; }
+      remove { tsbImport.Click -= value; }
+    }
+
+    public event EventHandler SaveCloseClicked
+    {
+      add { tsbSaveClose.Click += value; }
+      remove { tsbSaveClose.Click -= value; }
+    }
+  }
 }

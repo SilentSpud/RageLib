@@ -22,20 +22,20 @@ using System.Collections.Generic;
 
 namespace RageLib.Models.Data
 {
-    public class Geometry
-    {
-        public List<Mesh> Meshes { get; private set; }
+  public class Geometry
+  {
+    public List<Mesh> Meshes { get; private set; }
 
-        internal Geometry(Resource.Models.Model info)
-        {
-            int index = 0;
-            Meshes = new List<Mesh>(info.Geometries.Count);
-            foreach (var dataInfo in info.Geometries)
-            {
-                var mesh = new Mesh(dataInfo);
-                mesh.MaterialIndex = info.ShaderMappings[index++];
-                Meshes.Add(mesh);
-            }
-        }
+    internal Geometry(Resource.Models.Model info)
+    {
+      int index = 0;
+      Meshes = new List<Mesh>(info.Geometries.Count);
+      foreach (var dataInfo in info.Geometries)
+      {
+        var mesh = new Mesh(dataInfo);
+        mesh.MaterialIndex = info.ShaderMappings[index++];
+        Meshes.Add(mesh);
+      }
     }
+  }
 }

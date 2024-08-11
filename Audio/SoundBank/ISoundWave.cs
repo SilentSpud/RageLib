@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -20,12 +20,12 @@
 
 namespace RageLib.Audio.SoundBank
 {
-    interface ISoundWave
-    {
-        string Name { get; }
-        int NumberOfSamples { get; }
-        int SamplesPerSecond { get; }
-        int BlockSize { get; }
-        int BlockCount { get; }
-    }
+  interface ISoundWave
+  {
+    string Name { get; }
+    int NumberOfSamples { get; }
+    int SamplesPerSecond { get; }
+    int BlockSize { get; }
+    int BlockCount { get; }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,57 +23,57 @@ using RageLib.Scripting.Script;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class Function
+  internal class Function
+  {
+    public Function()
     {
-        public Function()
-        {
-            CodePaths = new List<CodePath>();
+      CodePaths = new List<CodePath>();
 
-            CreateCodePath("main");
-        }
-
-        public Instruction Instruction { get; set; }
-
-        public int StartOffset { get; set; }
-        public int EndOffset { get; set; }
-        public string Name { get; set; }
-
-        public CodePath MainCodePath
-        {
-            get { return CodePaths[0]; }
-        }
-
-        public List<CodePath> CodePaths { get; private set; }
-
-        public int ParameterCount { get; set; }
-        public int VariableCount { get; set; }
-        public int TemporaryCount { get; set; }
-        public int ReturnCount { get; set; }
-
-        public CodePath CreateCodePath(string name)
-        {
-            var path = new CodePath();
-            path.Name = name;
-            path.ParentFunction = this;
-            CodePaths.Add(path);
-            return path;
-        }
-
-        public CodePath DetermineCodePathFromOffset(int offset)
-        {
-            foreach (CodePath path in CodePaths)
-            {
-                if (path.GetInstruction(offset) != null)
-                {
-                    return path;
-                }
-            }
-            return null;
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+      CreateCodePath("main");
     }
+
+    public Instruction Instruction { get; set; }
+
+    public int StartOffset { get; set; }
+    public int EndOffset { get; set; }
+    public string Name { get; set; }
+
+    public CodePath MainCodePath
+    {
+      get { return CodePaths[0]; }
+    }
+
+    public List<CodePath> CodePaths { get; private set; }
+
+    public int ParameterCount { get; set; }
+    public int VariableCount { get; set; }
+    public int TemporaryCount { get; set; }
+    public int ReturnCount { get; set; }
+
+    public CodePath CreateCodePath(string name)
+    {
+      var path = new CodePath();
+      path.Name = name;
+      path.ParentFunction = this;
+      CodePaths.Add(path);
+      return path;
+    }
+
+    public CodePath DetermineCodePathFromOffset(int offset)
+    {
+      foreach (CodePath path in CodePaths)
+      {
+        if (path.GetInstruction(offset) != null)
+        {
+          return path;
+        }
+      }
+      return null;
+    }
+
+    public override string ToString()
+    {
+      return Name;
+    }
+  }
 }

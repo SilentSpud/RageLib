@@ -23,33 +23,33 @@ using RageLib.Common;
 
 namespace RageLib.Models.Resource.Skeletons
 {
-    internal class BoneIDMapping : IFileAccess
+  internal class BoneIDMapping : IFileAccess
+  {
+    public short ID { get; set; }
+    public short Index { get; set; }
+
+    public BoneIDMapping()
     {
-        public short ID { get; set; }
-        public short Index { get; set; }
-
-        public BoneIDMapping()
-        {
-        }
-
-        public BoneIDMapping(BinaryReader br)
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            ID = br.ReadInt16();
-            Index = br.ReadInt16();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
+
+    public BoneIDMapping(BinaryReader br)
+    {
+      Read(br);
+    }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      ID = br.ReadInt16();
+      Index = br.ReadInt16();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

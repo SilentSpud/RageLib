@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -19,12 +19,12 @@
 \**********************************************************************/
 
 using System.IO;
-using File=RageLib.Scripting.Script.File;
+using File = RageLib.Scripting.Script.File;
 
 namespace RageLib.Scripting.Output
 {
-    internal interface IOutputProvider
-    {
-        void Process(File file, TextWriter writer);
-    }
+  internal interface IOutputProvider
+  {
+    void Process(File file, TextWriter writer);
+  }
 }

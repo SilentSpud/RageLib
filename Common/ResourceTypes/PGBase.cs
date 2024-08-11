@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,24 +23,24 @@ using RageLib.Common.Resources;
 
 namespace RageLib.Common.ResourceTypes
 {
-    public class PGBase : DATBase, IFileAccess
+  public class PGBase : DATBase, IFileAccess
+  {
+    public uint BlockMapAddress { get; set; }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
     {
-        public uint BlockMapAddress { get; set; }
-
-        #region Implementation of IFileAccess
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-            BlockMapAddress = ResourceUtil.ReadOffset(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            base.Write(bw);
-            bw.Write(BlockMapAddress);
-        }
-
-        #endregion
+      base.Read(br);
+      BlockMapAddress = ResourceUtil.ReadOffset(br);
     }
+
+    public new void Write(BinaryWriter bw)
+    {
+      base.Write(bw);
+      bw.Write(BlockMapAddress);
+    }
+
+    #endregion
+  }
 }

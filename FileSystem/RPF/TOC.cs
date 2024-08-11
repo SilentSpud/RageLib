@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -27,100 +27,100 @@ using RageLib.Common;
 
 namespace RageLib.FileSystem.RPF
 {
-    internal class TOC : IFileAccess, IEnumerable<TOCEntry>
+  internal class TOC : IFileAccess, IEnumerable<TOCEntry>
+  {
+    private readonly List<TOCEntry> _entries = new List<TOCEntry>();
+    private string _nameStringTable;
+
+    public TOC(File file)
     {
-        private readonly List<TOCEntry> _entries = new List<TOCEntry>();
-        private string _nameStringTable;
-
-        public TOC(File file)
-        {
-            File = file;
-        }
-
-        public File File { get; private set; }
-
-        public TOCEntry this[int index]
-        {
-            get { return _entries[index]; }
-        }
-
-        public string GetName(int offset)
-        {
-            if (offset > _nameStringTable.Length)
-            {
-                throw new Exception("Invalid offset for name");
-            }
-
-            int endOffset = offset;
-            while (_nameStringTable[endOffset] != 0)
-            {
-                endOffset++;
-            }
-            return _nameStringTable.Substring(offset, endOffset - offset);
-        }
-
-        #region IFileAccess Members
-
-        public void Read(BinaryReader br)
-        {
-            if (File.Header.Encrypted)
-            {
-                int tocSize = File.Header.TOCSize;
-                byte[] tocData = br.ReadBytes(tocSize);
-
-                tocData = DataUtil.Decrypt(tocData);
-
-                // Create a memory stream and override our active binary reader
-                var ms = new MemoryStream(tocData);
-                br = new BinaryReader(ms);
-            }
-
-            int entryCount = File.Header.EntryCount;
-            for (int i = 0; i < entryCount; i++)
-            {
-                TOCEntry entry;
-                if (TOCEntry.ReadAsDirectoryEntry(br))
-                {
-                    entry = new DirectoryEntry(this);
-                }
-                else
-                {
-                    entry = new FileEntry(this);
-                }
-                entry.Read(br);
-                _entries.Add(entry);
-            }
-
-            int stringDataSize = File.Header.TOCSize - File.Header.EntryCount*16;
-            byte[] stringData = br.ReadBytes(stringDataSize);
-            _nameStringTable = Encoding.ASCII.GetString(stringData);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            foreach (var entry in _entries)
-            {
-                entry.Write(bw);
-            }
-
-            byte[] stringData = Encoding.ASCII.GetBytes(_nameStringTable);
-            bw.Write(stringData);
-        }
-
-        #endregion
-
-        #region Implementation of IEnumerable
-
-        public IEnumerator<TOCEntry> GetEnumerator()
-        {
-            return _entries.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
+      File = file;
     }
+
+    public File File { get; private set; }
+
+    public TOCEntry this[int index]
+    {
+      get { return _entries[index]; }
+    }
+
+    public string GetName(int offset)
+    {
+      if (offset > _nameStringTable.Length)
+      {
+        throw new Exception("Invalid offset for name");
+      }
+
+      int endOffset = offset;
+      while (_nameStringTable[endOffset] != 0)
+      {
+        endOffset++;
+      }
+      return _nameStringTable.Substring(offset, endOffset - offset);
+    }
+
+    #region IFileAccess Members
+
+    public void Read(BinaryReader br)
+    {
+      if (File.Header.Encrypted)
+      {
+        int tocSize = File.Header.TOCSize;
+        byte[] tocData = br.ReadBytes(tocSize);
+
+        tocData = DataUtil.Decrypt(tocData);
+
+        // Create a memory stream and override our active binary reader
+        var ms = new MemoryStream(tocData);
+        br = new BinaryReader(ms);
+      }
+
+      int entryCount = File.Header.EntryCount;
+      for (int i = 0; i < entryCount; i++)
+      {
+        TOCEntry entry;
+        if (TOCEntry.ReadAsDirectoryEntry(br))
+        {
+          entry = new DirectoryEntry(this);
+        }
+        else
+        {
+          entry = new FileEntry(this);
+        }
+        entry.Read(br);
+        _entries.Add(entry);
+      }
+
+      int stringDataSize = File.Header.TOCSize - File.Header.EntryCount * 16;
+      byte[] stringData = br.ReadBytes(stringDataSize);
+      _nameStringTable = Encoding.ASCII.GetString(stringData);
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      foreach (var entry in _entries)
+      {
+        entry.Write(bw);
+      }
+
+      byte[] stringData = Encoding.ASCII.GetBytes(_nameStringTable);
+      bw.Write(stringData);
+    }
+
+    #endregion
+
+    #region Implementation of IEnumerable
+
+    public IEnumerator<TOCEntry> GetEnumerator()
+    {
+      return _entries.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    #endregion
+  }
 }

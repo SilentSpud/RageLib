@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -24,101 +24,101 @@ using System.Text;
 
 namespace RageLib.Common.Resources
 {
-    public static class ResourceUtil
+  public static class ResourceUtil
+  {
+    public static bool IsResource(Stream stream)
     {
-        public static bool IsResource(Stream stream)
-        {
-            var rh = new ResourceHeader();
-            rh.Read(new BinaryReader(stream));
-            return rh.Magic == ResourceHeader.MagicValue;
-        }
-
-        public static void GetResourceData(Stream stream, out uint flags, out ResourceType type)
-        {
-            var rh = new ResourceHeader();
-            rh.Read(new BinaryReader(stream));
-            flags = rh.Flags;
-            type = rh.Type;
-        }
-
-        public static uint ReadOffset(BinaryReader br)
-        {
-            uint value;
-            uint offset = br.ReadUInt32();
-            
-            if (offset == 0)
-            {
-                value = 0;
-            }
-            else
-            {
-                if (offset >> 28 != 5)
-                {
-                    throw new Exception("Expected an offset.");
-                }
-                value = offset & 0x0fffffff;
-            }
-
-            return value;
-        }
-
-        public static uint ReadDataOffset(BinaryReader br)
-        {
-            uint value;
-            uint offset = br.ReadUInt32();
-
-            if (offset == 0)
-            {
-                value = 0;
-            }
-            else
-            {
-                if (offset >> 28 != 6)
-                {
-                    throw new Exception("Expected a data offset.");
-                }
-                value = offset & 0x0fffffff;
-            }
-
-            return value;
-        }
-
-        public static uint ReadDataOffset(BinaryReader br, uint mask, out uint lowerBits)
-        {
-            uint value;
-            uint offset = br.ReadUInt32();
-
-            if (offset == 0)
-            {
-                lowerBits = 0;
-                value = 0;
-            }
-            else
-            {
-                if (offset >> 28 != 6)
-                {
-                    throw new Exception("Expected a data offset.");
-                }
-                value = offset & mask;
-                lowerBits = offset & (~mask & 0xff);
-            }
-
-            return value;
-        }
-
-        public static string ReadNullTerminatedString(BinaryReader br)
-        {
-            var sb = new StringBuilder();
-
-            var c = (char) br.ReadByte();
-            while (c != 0)
-            {
-                sb.Append(c);
-                c = (char) br.ReadByte();
-            }
-
-            return sb.ToString();
-        }
-
+      var rh = new ResourceHeader();
+      rh.Read(new BinaryReader(stream));
+      return rh.Magic == ResourceHeader.MagicValue;
     }
+
+    public static void GetResourceData(Stream stream, out uint flags, out ResourceType type)
+    {
+      var rh = new ResourceHeader();
+      rh.Read(new BinaryReader(stream));
+      flags = rh.Flags;
+      type = rh.Type;
+    }
+
+    public static uint ReadOffset(BinaryReader br)
+    {
+      uint value;
+      uint offset = br.ReadUInt32();
+
+      if (offset == 0)
+      {
+        value = 0;
+      }
+      else
+      {
+        if (offset >> 28 != 5)
+        {
+          throw new Exception("Expected an offset.");
+        }
+        value = offset & 0x0fffffff;
+      }
+
+      return value;
+    }
+
+    public static uint ReadDataOffset(BinaryReader br)
+    {
+      uint value;
+      uint offset = br.ReadUInt32();
+
+      if (offset == 0)
+      {
+        value = 0;
+      }
+      else
+      {
+        if (offset >> 28 != 6)
+        {
+          throw new Exception("Expected a data offset.");
+        }
+        value = offset & 0x0fffffff;
+      }
+
+      return value;
+    }
+
+    public static uint ReadDataOffset(BinaryReader br, uint mask, out uint lowerBits)
+    {
+      uint value;
+      uint offset = br.ReadUInt32();
+
+      if (offset == 0)
+      {
+        lowerBits = 0;
+        value = 0;
+      }
+      else
+      {
+        if (offset >> 28 != 6)
+        {
+          throw new Exception("Expected a data offset.");
+        }
+        value = offset & mask;
+        lowerBits = offset & (~mask & 0xff);
+      }
+
+      return value;
+    }
+
+    public static string ReadNullTerminatedString(BinaryReader br)
+    {
+      var sb = new StringBuilder();
+
+      var c = (char)br.ReadByte();
+      while (c != 0)
+      {
+        sb.Append(c);
+        c = (char)br.ReadByte();
+      }
+
+      return sb.ToString();
+    }
+
+  }
 }

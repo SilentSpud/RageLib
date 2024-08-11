@@ -20,10 +20,10 @@
 
 namespace RageLib.Models.Resource.Shaders
 {
-    public enum ParamType
-    {
-        Texture = 0,
-        Vector4 = 1,
-        Matrix = 4,
-    }
+  public enum ParamType
+  {
+    Texture = 0,
+    Vector4 = 1,
+    Matrix = 4,
+  }
 }

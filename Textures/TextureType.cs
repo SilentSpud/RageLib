@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,12 +20,12 @@
 
 namespace RageLib.Textures
 {
-    public enum TextureType
-    {
-        DXT1,
-        DXT3,
-        DXT5,
-        A8R8G8B8,
-        L8,
-    }
+  public enum TextureType
+  {
+    DXT1,
+    DXT3,
+    DXT5,
+    A8R8G8B8,
+    L8,
+  }
 }

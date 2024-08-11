@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Audio
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,42 +23,42 @@ using RageLib.Audio.SoundBank;
 
 namespace RageLib.Audio.WaveFile
 {
-    static class WaveExport
+  static class WaveExport
+  {
+    public static void Export(AudioFile file, AudioWave wave, Stream outStream)
     {
-        public static void Export(AudioFile file, AudioWave wave, Stream outStream)
-        {
-            WaveHeader header = new WaveHeader();
-            
-            // Skip the header
-            outStream.Seek(header.HeaderSize, SeekOrigin.Begin);
+      WaveHeader header = new WaveHeader();
 
-            // Write the data
-            file.SoundBank.ExportAsPCM(wave.Index, file.Stream, outStream);
+      // Skip the header
+      outStream.Seek(header.HeaderSize, SeekOrigin.Begin);
 
-            // Create header and write it
-            outStream.Seek(0, SeekOrigin.Begin);
-            header.FileSize = (int)outStream.Length;
-            header.SamplesPerSecond = wave.SamplesPerSecond;
-            header.Write(new BinaryWriter(outStream));
-        }
+      // Write the data
+      file.SoundBank.ExportAsPCM(wave.Index, file.Stream, outStream);
 
-        public static void ExportMultichannel(AudioFile file, Stream outStream)
-        {
-            WaveHeader header = new WaveHeader(true);
-
-            // Skip the header
-            outStream.Seek(header.HeaderSize, SeekOrigin.Begin);
-
-            // Write the data
-            IMultichannelSound sound = file.SoundBank as IMultichannelSound;
-            sound.ExportMultichannelAsPCM(file.Stream, outStream);
-
-            // Create header and write it
-            outStream.Seek(0, SeekOrigin.Begin);
-            header.FileSize = (int)outStream.Length;
-            header.SamplesPerSecond = sound.CommonSamplesPerSecond;
-            header.ChannelMask = sound.ChannelMask;
-            header.Write(new BinaryWriter(outStream));
-        }
+      // Create header and write it
+      outStream.Seek(0, SeekOrigin.Begin);
+      header.FileSize = (int)outStream.Length;
+      header.SamplesPerSecond = wave.SamplesPerSecond;
+      header.Write(new BinaryWriter(outStream));
     }
+
+    public static void ExportMultichannel(AudioFile file, Stream outStream)
+    {
+      WaveHeader header = new WaveHeader(true);
+
+      // Skip the header
+      outStream.Seek(header.HeaderSize, SeekOrigin.Begin);
+
+      // Write the data
+      IMultichannelSound sound = file.SoundBank as IMultichannelSound;
+      sound.ExportMultichannelAsPCM(file.Stream, outStream);
+
+      // Create header and write it
+      outStream.Seek(0, SeekOrigin.Begin);
+      header.FileSize = (int)outStream.Length;
+      header.SamplesPerSecond = sound.CommonSamplesPerSecond;
+      header.ChannelMask = sound.ChannelMask;
+      header.Write(new BinaryWriter(outStream));
+    }
+  }
 }

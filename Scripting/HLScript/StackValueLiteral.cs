@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,47 +23,47 @@ using RageLib.Scripting.Script;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValueLiteral : StackValue
+  internal class StackValueLiteral : StackValue
+  {
+    public StackValueLiteral(string value)
     {
-        public StackValueLiteral(string value)
-        {
-            ValueType = StackValueType.String;
-            Value = value;
-        }
-
-        public StackValueLiteral(int value)
-        {
-            ValueType = StackValueType.Integer;
-            Value = value;
-        }
-
-        public StackValueLiteral(float value)
-        {
-            ValueType = StackValueType.Float;
-            Value = value;
-        }
-
-        public object Value { get; set; }
-
-        public T GetValue<T>()
-        {
-            return (T) Value;
-        }
-
-        public override string ToString()
-        {
-            switch (ValueType)
-            {
-                case StackValueType.Integer:
-                    return LiteralFormatter.FormatInteger((int) Value);
-                case StackValueType.Float:
-                    return LiteralFormatter.FormatFloat((float) Value);
-                case StackValueType.String:
-                    return LiteralFormatter.FormatString(Value.ToString());
-                default:
-                    Debug.Assert(false);
-                    return null;
-            }
-        }
+      ValueType = StackValueType.String;
+      Value = value;
     }
+
+    public StackValueLiteral(int value)
+    {
+      ValueType = StackValueType.Integer;
+      Value = value;
+    }
+
+    public StackValueLiteral(float value)
+    {
+      ValueType = StackValueType.Float;
+      Value = value;
+    }
+
+    public object Value { get; set; }
+
+    public T GetValue<T>()
+    {
+      return (T)Value;
+    }
+
+    public override string ToString()
+    {
+      switch (ValueType)
+      {
+        case StackValueType.Integer:
+          return LiteralFormatter.FormatInteger((int)Value);
+        case StackValueType.Float:
+          return LiteralFormatter.FormatFloat((float)Value);
+        case StackValueType.String:
+          return LiteralFormatter.FormatString(Value.ToString());
+        default:
+          Debug.Assert(false);
+          return null;
+      }
+    }
+  }
 }

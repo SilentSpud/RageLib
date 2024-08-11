@@ -23,22 +23,22 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Shaders
 {
-    internal class ShaderParamVector4 : IShaderParam
+  internal class ShaderParamVector4 : IShaderParam
+  {
+    public Vector4 Data { get; private set; }
+
+    #region Overrides of MaterialInfoDataObject
+
+    public void Read(BinaryReader br)
     {
-        public Vector4 Data { get; private set; }
-
-        #region Overrides of MaterialInfoDataObject
-
-        public void Read(BinaryReader br)
-        {
-            Data = new Vector4(br);
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            
-        }
-
-        #endregion
+      Data = new Vector4(br);
     }
+
+    public void Write(BinaryWriter bw)
+    {
+
+    }
+
+    #endregion
+  }
 }

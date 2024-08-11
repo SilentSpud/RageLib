@@ -24,41 +24,41 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Resource.Shaders
 {
-    internal class ShaderParamTexture : DATBase, IShaderParam
+  internal class ShaderParamTexture : DATBase, IShaderParam
+  {
+    private uint Unknown1 { get; set; }
+    private ushort Unknown2 { get; set; }
+    private ushort Unknown3 { get; set; }
+    private uint Unknown4 { get; set; }
+    private uint Unknown5 { get; set; }
+    private uint TextureNameOffset { get; set; }
+    private uint Unknown7 { get; set; }
+
+    public string TextureName { get; private set; }
+
+    #region Implementation of IFileAccess
+
+    public new void Read(BinaryReader br)
     {
-        private uint Unknown1 { get; set; }
-        private ushort Unknown2 { get; set; }
-        private ushort Unknown3 { get; set; }
-        private uint Unknown4 { get; set; }
-        private uint Unknown5 { get; set; }
-        private uint TextureNameOffset { get; set; }
-        private uint Unknown7 { get; set; }
+      base.Read(br);
 
-        public string TextureName { get; private set; }
+      Unknown1 = br.ReadUInt32();
+      Unknown2 = br.ReadUInt16();
+      Unknown3 = br.ReadUInt16();
+      Unknown4 = br.ReadUInt32();
+      Unknown5 = br.ReadUInt32();
+      TextureNameOffset = ResourceUtil.ReadOffset(br);
+      Unknown7 = br.ReadUInt32();
 
-        #region Implementation of IFileAccess
-
-        public new void Read(BinaryReader br)
-        {
-            base.Read(br);
-            
-            Unknown1 = br.ReadUInt32();
-            Unknown2 = br.ReadUInt16();
-            Unknown3 = br.ReadUInt16();
-            Unknown4 = br.ReadUInt32();
-            Unknown5 = br.ReadUInt32();
-            TextureNameOffset = ResourceUtil.ReadOffset(br);
-            Unknown7 = br.ReadUInt32();
-
-            br.BaseStream.Seek(TextureNameOffset, SeekOrigin.Begin);
-            TextureName = ResourceUtil.ReadNullTerminatedString(br);
-        }
-
-        public new void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      br.BaseStream.Seek(TextureNameOffset, SeekOrigin.Begin);
+      TextureName = ResourceUtil.ReadNullTerminatedString(br);
     }
+
+    public new void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

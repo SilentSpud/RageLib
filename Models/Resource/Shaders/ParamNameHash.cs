@@ -20,10 +20,10 @@
 
 namespace RageLib.Models.Resource.Shaders
 {
-    public enum ParamNameHash
-    {
-        Texture = 0x2b5170fd,
-        SpecularTexture = 0x608799c6,
-        NormalTexture = 0x46b7c64f,
-    }
+  public enum ParamNameHash
+  {
+    Texture = 0x2b5170fd,
+    SpecularTexture = 0x608799c6,
+    NormalTexture = 0x46b7c64f,
+  }
 }

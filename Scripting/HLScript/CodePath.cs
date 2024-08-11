@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -22,84 +22,84 @@ using System.Collections.Generic;
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class CodePath
+  internal class CodePath
+  {
+    public CodePath()
     {
-        public CodePath()
-        {
-            InstructionMap = new Dictionary<int, HLInstruction>();
-        }
-
-        public Function ParentFunction { get; set; }
-        public CodePath ParentCodePath { get; set; }
-
-        public int StartOffset { get; set; }
-        public int EndOffset { get; set; }
-        public string Name { get; set; }
-
-        public HLInstruction ParentExitInstruction { get; set; } // The instruction in Parent that we exit from
-        public HLInstruction ParentEntryInstruction { get; set; } // The instruction in Parent that we re-enter into (if null, exit parent path)
-
-        public HLInstruction StartInstruction { get; set; } // The instruction we start executing this code path from
-        public HLInstruction EndInstruction { get; set; } // The very last instruction in this code path before we re-enter into parent
-
-        public HLInstruction ParentEntryTargetInstruction
-        {
-            get
-            {
-                if (ParentEntryInstruction == null)
-                {
-                    if (ParentCodePath == null)
-                    {
-                        // This can can only mean that we are in the function root, but this case is not really possible, is it?
-                        return null;
-                    }
-                    else
-                    {
-                        return ParentCodePath.ParentEntryTargetInstruction;
-                    }
-                }
-                else
-                {
-                    return ParentEntryInstruction;
-                }
-            }
-        }
-
-        public Dictionary<int, HLInstruction> InstructionMap { get; private set; }
-
-        public HLInstruction GetInstruction(int offset)
-        {
-            if (InstructionMap.ContainsKey(offset))
-            {
-                return InstructionMap[offset];
-            }
-            return null;
-        }
-
-        public bool IsInstructionOffsetInPathTree(int offset)
-        {
-            bool found = false;
-
-            if (InstructionMap.ContainsKey(offset))
-            {
-                found = true;
-            }
-            else if (ParentCodePath != null)
-            {
-                found = ParentCodePath.IsInstructionOffsetInPathTree(offset);
-            }
-
-            return found;
-        }
-
-        public HLInstruction GetFirstInstruction()
-        {
-            return StartInstruction;
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+      InstructionMap = new Dictionary<int, HLInstruction>();
     }
+
+    public Function ParentFunction { get; set; }
+    public CodePath ParentCodePath { get; set; }
+
+    public int StartOffset { get; set; }
+    public int EndOffset { get; set; }
+    public string Name { get; set; }
+
+    public HLInstruction ParentExitInstruction { get; set; } // The instruction in Parent that we exit from
+    public HLInstruction ParentEntryInstruction { get; set; } // The instruction in Parent that we re-enter into (if null, exit parent path)
+
+    public HLInstruction StartInstruction { get; set; } // The instruction we start executing this code path from
+    public HLInstruction EndInstruction { get; set; } // The very last instruction in this code path before we re-enter into parent
+
+    public HLInstruction ParentEntryTargetInstruction
+    {
+      get
+      {
+        if (ParentEntryInstruction == null)
+        {
+          if (ParentCodePath == null)
+          {
+            // This can can only mean that we are in the function root, but this case is not really possible, is it?
+            return null;
+          }
+          else
+          {
+            return ParentCodePath.ParentEntryTargetInstruction;
+          }
+        }
+        else
+        {
+          return ParentEntryInstruction;
+        }
+      }
+    }
+
+    public Dictionary<int, HLInstruction> InstructionMap { get; private set; }
+
+    public HLInstruction GetInstruction(int offset)
+    {
+      if (InstructionMap.ContainsKey(offset))
+      {
+        return InstructionMap[offset];
+      }
+      return null;
+    }
+
+    public bool IsInstructionOffsetInPathTree(int offset)
+    {
+      bool found = false;
+
+      if (InstructionMap.ContainsKey(offset))
+      {
+        found = true;
+      }
+      else if (ParentCodePath != null)
+      {
+        found = ParentCodePath.IsInstructionOffsetInPathTree(offset);
+      }
+
+      return found;
+    }
+
+    public HLInstruction GetFirstInstruction()
+    {
+      return StartInstruction;
+    }
+
+    public override string ToString()
+    {
+      return Name;
+    }
+  }
 }

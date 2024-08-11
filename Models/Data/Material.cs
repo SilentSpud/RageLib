@@ -23,20 +23,20 @@ using RageLib.Models.Resource.Shaders;
 
 namespace RageLib.Models.Data
 {
-    public class Material
+  public class Material
+  {
+    public string ShaderName { get; private set; }
+    public Dictionary<uint, MaterialParam> Parameters { get; private set; }
+
+    internal Material(ShaderFx info)
     {
-        public string ShaderName { get; private set; }
-        public Dictionary<uint, MaterialParam> Parameters { get; private set; }
+      ShaderName = info.ShaderName;
 
-        internal Material(ShaderFx info)
-        {
-            ShaderName = info.ShaderName;
-
-            Parameters = new Dictionary<uint, MaterialParam>(info.ShaderParamCount);
-            foreach (var data in info.ShaderParams)
-            {
-                Parameters.Add((uint) data.Key, MaterialParam.Create((uint) data.Key, data.Value));
-            }
-        }
+      Parameters = new Dictionary<uint, MaterialParam>(info.ShaderParamCount);
+      foreach (var data in info.ShaderParams)
+      {
+        Parameters.Add((uint)data.Key, MaterialParam.Create((uint)data.Key, data.Value));
+      }
     }
+  }
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -24,91 +24,91 @@ using RageLib.Common;
 
 namespace RageLib.Scripting.Script
 {
-    internal class File
+  internal class File
+  {
+    public File()
     {
-        public File()
-        {
-            Header = new Header(this);
-        }
-
-        public Header Header { get; set; }
-        public byte[] Code { get; set; }
-        public uint[] LocalVars { get; set; }
-        public uint[] GlobalVars { get; set; }
-
-        public bool Open(string filename)
-        {
-            var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-            return Open(fs);
-        }
-
-        public bool Open(Stream stream)
-        {
-            var br = new BinaryReader(stream);
-
-            Header.Read(br);
-
-            if (Header.Identifier != Header.Magic && 
-                Header.Identifier != Header.MagicEncrypted && 
-                Header.Identifier != Header.MagicEncryptedCompressed)
-            {
-                stream.Close();
-                return false;
-            }
-
-            byte[] code, data1, data2;
-            bool encrypted = Header.Identifier == Header.MagicEncrypted;
-            bool encryptedCompressed = Header.Identifier == Header.MagicEncryptedCompressed;
-
-            if (encryptedCompressed)
-            {
-                byte[] encryptedData = br.ReadBytes(Header.CompressedSize);
-                byte[] compressedData = DataUtil.Decrypt(encryptedData);
-
-                IntPtr handle = RageZip.InflateInit(compressedData, compressedData.Length);
-                
-                code = new byte[Header.CodeSize];
-                RageZip.InflateProcess(handle, code, code.Length);
-
-                data1 = new byte[Header.LocalVarCount*4];
-                RageZip.InflateProcess(handle, data1, data1.Length);
-
-                data2 = new byte[Header.GlobalVarCount * 4];
-                RageZip.InflateProcess(handle, data2, data2.Length);
-
-                RageZip.InflateEnd(handle);
-            }
-            else
-            {
-                code = br.ReadBytes(Header.CodeSize);
-                data1 = br.ReadBytes(Header.LocalVarCount * 4);
-                data2 = br.ReadBytes(Header.GlobalVarCount * 4);
-
-                if (encrypted)
-                {
-                    code = DataUtil.Decrypt(code);
-                    data1 = DataUtil.Decrypt(data1);
-                    data2 = DataUtil.Decrypt(data2);
-                }
-            }
-
-            Code = code;
-
-            LocalVars = new uint[Header.LocalVarCount];
-            for (int i = 0; i < Header.LocalVarCount; i++)
-            {
-                LocalVars[i] = BitConverter.ToUInt32(data1, i*4);
-            }
-
-            GlobalVars = new uint[Header.GlobalVarCount];
-            for (int i = 0; i < Header.GlobalVarCount; i++)
-            {
-                GlobalVars[i] = BitConverter.ToUInt32(data2, i*4);
-            }
-
-            stream.Close();
-
-            return true;
-        }
+      Header = new Header(this);
     }
+
+    public Header Header { get; set; }
+    public byte[] Code { get; set; }
+    public uint[] LocalVars { get; set; }
+    public uint[] GlobalVars { get; set; }
+
+    public bool Open(string filename)
+    {
+      var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+      return Open(fs);
+    }
+
+    public bool Open(Stream stream)
+    {
+      var br = new BinaryReader(stream);
+
+      Header.Read(br);
+
+      if (Header.Identifier != Header.Magic &&
+          Header.Identifier != Header.MagicEncrypted &&
+          Header.Identifier != Header.MagicEncryptedCompressed)
+      {
+        stream.Close();
+        return false;
+      }
+
+      byte[] code, data1, data2;
+      bool encrypted = Header.Identifier == Header.MagicEncrypted;
+      bool encryptedCompressed = Header.Identifier == Header.MagicEncryptedCompressed;
+
+      if (encryptedCompressed)
+      {
+        byte[] encryptedData = br.ReadBytes(Header.CompressedSize);
+        byte[] compressedData = DataUtil.Decrypt(encryptedData);
+
+        IntPtr handle = RageZip.InflateInit(compressedData, compressedData.Length);
+
+        code = new byte[Header.CodeSize];
+        RageZip.InflateProcess(handle, code, code.Length);
+
+        data1 = new byte[Header.LocalVarCount * 4];
+        RageZip.InflateProcess(handle, data1, data1.Length);
+
+        data2 = new byte[Header.GlobalVarCount * 4];
+        RageZip.InflateProcess(handle, data2, data2.Length);
+
+        RageZip.InflateEnd(handle);
+      }
+      else
+      {
+        code = br.ReadBytes(Header.CodeSize);
+        data1 = br.ReadBytes(Header.LocalVarCount * 4);
+        data2 = br.ReadBytes(Header.GlobalVarCount * 4);
+
+        if (encrypted)
+        {
+          code = DataUtil.Decrypt(code);
+          data1 = DataUtil.Decrypt(data1);
+          data2 = DataUtil.Decrypt(data2);
+        }
+      }
+
+      Code = code;
+
+      LocalVars = new uint[Header.LocalVarCount];
+      for (int i = 0; i < Header.LocalVarCount; i++)
+      {
+        LocalVars[i] = BitConverter.ToUInt32(data1, i * 4);
+      }
+
+      GlobalVars = new uint[Header.GlobalVarCount];
+      for (int i = 0; i < Header.GlobalVarCount; i++)
+      {
+        GlobalVars[i] = BitConverter.ToUInt32(data2, i * 4);
+      }
+
+      stream.Close();
+
+      return true;
+    }
+  }
 }

@@ -24,82 +24,82 @@ using RageLib.Models.Resource;
 
 namespace RageLib.Models.Data
 {
-    public class Mesh
+  public class Mesh
+  {
+    public PrimitiveType PrimitiveType { get; private set; }
+    public int FaceCount { get; private set; }
+
+    public int VertexCount { get; private set; }
+    public byte[] VertexData { get; private set; }
+    public VertexDeclaration VertexDeclaration { get; private set; }
+    public bool VertexHasNormal { get; set; }
+    public bool VertexHasTexture { get; set; }
+    public bool VertexHasBlendInfo { get; set; }
+    public int VertexStride { get; private set; }
+
+    public int IndexCount { get; private set; }
+    public byte[] IndexData { get; private set; }
+
+    public int MaterialIndex { get; set; }
+
+    internal Mesh(Resource.Models.Geometry info)
     {
-        public PrimitiveType PrimitiveType { get; private set; }
-        public int FaceCount { get; private set; }
+      PrimitiveType = (PrimitiveType)info.PrimitiveType;
 
-        public int VertexCount { get; private set; }
-        public byte[] VertexData { get; private set; }
-        public VertexDeclaration VertexDeclaration { get; private set; }
-        public bool VertexHasNormal { get; set; }
-        public bool VertexHasTexture { get; set; }
-        public bool VertexHasBlendInfo { get; set; }
-        public int VertexStride { get; private set; }
-        
-        public int IndexCount { get; private set; }
-        public byte[] IndexData { get; private set; }
+      FaceCount = (int)info.FaceCount;
 
-        public int MaterialIndex { get; set; }
+      VertexCount = info.VertexCount;
+      VertexStride = info.VertexStride;
+      VertexData = info.VertexBuffer.RawData;
 
-        internal Mesh(Resource.Models.Geometry info)
+      IndexCount = (int)info.IndexCount;
+      IndexData = info.IndexBuffer.RawData;
+
+      VertexDeclaration = new VertexDeclaration(info.VertexBuffer.VertexDeclaration);
+      foreach (var element in VertexDeclaration.Elements)
+      {
+        if (element.Usage == VertexElementUsage.Normal)
         {
-            PrimitiveType = (PrimitiveType) info.PrimitiveType;
-            
-            FaceCount = (int) info.FaceCount;
-            
-            VertexCount = info.VertexCount;
-            VertexStride = info.VertexStride;
-            VertexData = info.VertexBuffer.RawData;
-
-            IndexCount = (int) info.IndexCount;
-            IndexData = info.IndexBuffer.RawData;
-
-            VertexDeclaration = new VertexDeclaration(info.VertexBuffer.VertexDeclaration);
-            foreach (var element in VertexDeclaration.Elements)
-            {
-                if (element.Usage == VertexElementUsage.Normal)
-                {
-                    VertexHasNormal = true;
-                }
-                if (element.Usage == VertexElementUsage.TextureCoordinate)
-                {
-                    VertexHasTexture = true;
-                }
-                if (element.Usage == VertexElementUsage.BlendIndices)
-                {
-                    VertexHasBlendInfo = true;
-                }
-            }
+          VertexHasNormal = true;
         }
-
-        public ushort[] DecodeIndexData()
+        if (element.Usage == VertexElementUsage.TextureCoordinate)
         {
-            byte[] indexData = IndexData;
-            ushort[] indices = new ushort[IndexCount];
-            for (int i = 0; i < IndexCount; i++)
-            {
-                indices[i] = BitConverter.ToUInt16(indexData, i*2);
-            }
-            return indices;
+          VertexHasTexture = true;
         }
-
-        public Vertex[] DecodeVertexData()
+        if (element.Usage == VertexElementUsage.BlendIndices)
         {
-            byte[] vertexData = VertexData;
-            Vertex[] vertices = new Vertex[VertexCount];
-
-            using(MemoryStream ms = new MemoryStream(vertexData))
-            {
-                BinaryReader br = new BinaryReader(ms);
-                for (int i = 0; i < VertexCount; i++)
-                {
-                    ms.Seek(i*VertexStride, SeekOrigin.Begin);
-                    vertices[i] = new Vertex(br, this);
-                }
-            }
-
-            return vertices;
+          VertexHasBlendInfo = true;
         }
+      }
     }
+
+    public ushort[] DecodeIndexData()
+    {
+      byte[] indexData = IndexData;
+      ushort[] indices = new ushort[IndexCount];
+      for (int i = 0; i < IndexCount; i++)
+      {
+        indices[i] = BitConverter.ToUInt16(indexData, i * 2);
+      }
+      return indices;
+    }
+
+    public Vertex[] DecodeVertexData()
+    {
+      byte[] vertexData = VertexData;
+      Vertex[] vertices = new Vertex[VertexCount];
+
+      using (MemoryStream ms = new MemoryStream(vertexData))
+      {
+        BinaryReader br = new BinaryReader(ms);
+        for (int i = 0; i < VertexCount; i++)
+        {
+          ms.Seek(i * VertexStride, SeekOrigin.Begin);
+          vertices[i] = new Vertex(br, this);
+        }
+      }
+
+      return vertices;
+    }
+  }
 }

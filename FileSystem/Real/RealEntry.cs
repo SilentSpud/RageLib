@@ -20,12 +20,12 @@
 
 namespace RageLib.FileSystem.Real
 {
-    internal abstract class RealEntry
-    {
-        public RealContext Context { get; set; }
+  internal abstract class RealEntry
+  {
+    public RealContext Context { get; set; }
 
-        public abstract bool IsDirectory { get; }
+    public abstract bool IsDirectory { get; }
 
-        public abstract string Name { get; }
-    }
+    public abstract string Name { get; }
+  }
 }

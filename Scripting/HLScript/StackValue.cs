@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,9 +20,9 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValue
-    {
-        public StackValueType ValueType { get; set; }
-        public bool ProcessedValue { get; set; } // Indicates if the value is the result of an operation/function call/etc
-    }
+  internal class StackValue
+  {
+    public StackValueType ValueType { get; set; }
+    public bool ProcessedValue { get; set; } // Indicates if the value is the result of an operation/function call/etc
+  }
 }

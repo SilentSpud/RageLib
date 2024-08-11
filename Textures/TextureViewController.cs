@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Textures
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,86 +23,86 @@ using RageLib.Textures.Filter;
 
 namespace RageLib.Textures
 {
-    class TextureViewController
+  class TextureViewController
+  {
+    private readonly TextureView _view;
+    private TextureFile _textureFile;
+
+    public TextureViewController(TextureView view)
     {
-        private readonly TextureView _view;
-        private TextureFile _textureFile;
+      _view = view;
 
-        public TextureViewController(TextureView view)
-        {
-            _view = view;
-
-            _view.SelectedTextureChanged += View_SelectedTextureChanged;
-            _view.SelectedMipMapChanged += View_SelectedMipMapChanged;
-            _view.ImageChannelChanged += View_ImageChannelChanged;
-        }
-
-        public TextureFile TextureFile
-        {
-            get { return _textureFile; }
-            set
-            {
-                _textureFile = value;
-                UpdateView();
-            }
-        }
-
-        private void UpdateView()
-        {
-            _view.ClearTextures();
-            
-            if (_textureFile != null)
-            {
-                foreach (var texture in _textureFile)
-                {
-                    _view.AddTexture(texture);
-                }
-                if (_textureFile.Count > 0)
-                {
-                    _view.SelectedTexture = _textureFile.Textures[0];
-                    _view.InfoPanelEnabled = true;
-                }
-            }
-            else
-            {
-                _view.InfoPanelEnabled = false;
-            }
-        }
-
-        private void View_SelectedTextureChanged(object sender, EventArgs e)
-        {
-            var texture = _view.SelectedTexture;
-            if (texture != null)
-            {
-                _view.SetTextureInfo(texture.TitleName, texture.TextureType, texture.Width, texture.Height, texture.Levels);
-                UpdateImage();
-            }
-        }
-
-        private void View_SelectedMipMapChanged(object sender, EventArgs e)
-        {
-            UpdateImage();
-        }
-
-
-        private void View_ImageChannelChanged(object sender, EventArgs e)
-        {
-            UpdateImage();
-        }
-
-        public void UpdateImage()
-        {
-            var texture = _view.SelectedTexture;
-            if (texture != null)
-            {
-                var image = texture.Decode(_view.SelectedMipMap);
-                if (_view.SelectedImageChannel != ImageChannel.All)
-                {
-                    var channelFilter = new ChannelFilter(_view.SelectedImageChannel);
-                    channelFilter.Apply(image);
-                }
-                _view.PreviewImage = image;
-            }
-        }
+      _view.SelectedTextureChanged += View_SelectedTextureChanged;
+      _view.SelectedMipMapChanged += View_SelectedMipMapChanged;
+      _view.ImageChannelChanged += View_ImageChannelChanged;
     }
+
+    public TextureFile TextureFile
+    {
+      get { return _textureFile; }
+      set
+      {
+        _textureFile = value;
+        UpdateView();
+      }
+    }
+
+    private void UpdateView()
+    {
+      _view.ClearTextures();
+
+      if (_textureFile != null)
+      {
+        foreach (var texture in _textureFile)
+        {
+          _view.AddTexture(texture);
+        }
+        if (_textureFile.Count > 0)
+        {
+          _view.SelectedTexture = _textureFile.Textures[0];
+          _view.InfoPanelEnabled = true;
+        }
+      }
+      else
+      {
+        _view.InfoPanelEnabled = false;
+      }
+    }
+
+    private void View_SelectedTextureChanged(object sender, EventArgs e)
+    {
+      var texture = _view.SelectedTexture;
+      if (texture != null)
+      {
+        _view.SetTextureInfo(texture.TitleName, texture.TextureType, texture.Width, texture.Height, texture.Levels);
+        UpdateImage();
+      }
+    }
+
+    private void View_SelectedMipMapChanged(object sender, EventArgs e)
+    {
+      UpdateImage();
+    }
+
+
+    private void View_ImageChannelChanged(object sender, EventArgs e)
+    {
+      UpdateImage();
+    }
+
+    public void UpdateImage()
+    {
+      var texture = _view.SelectedTexture;
+      if (texture != null)
+      {
+        var image = texture.Decode(_view.SelectedMipMap);
+        if (_view.SelectedImageChannel != ImageChannel.All)
+        {
+          var channelFilter = new ChannelFilter(_view.SelectedImageChannel);
+          channelFilter.Apply(image);
+        }
+        _view.PreviewImage = image;
+      }
+    }
+  }
 }

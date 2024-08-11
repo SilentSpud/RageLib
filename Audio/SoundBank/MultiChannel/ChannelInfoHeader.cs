@@ -27,32 +27,32 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal struct ChannelInfoHeader : IFileAccess
+  internal struct ChannelInfoHeader : IFileAccess
+  {
+    // header
+    public long offset;
+    public uint hash;
+    public int size;
+
+    public ChannelInfoHeader(BinaryReader br) : this()
     {
-        // header
-        public long offset;
-        public uint hash;
-        public int size;
-
-        public ChannelInfoHeader(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            offset = br.ReadInt64();
-            hash = br.ReadUInt32();
-            size = br.ReadInt32();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      offset = br.ReadInt64();
+      hash = br.ReadUInt32();
+      size = br.ReadInt32();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

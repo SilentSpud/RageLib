@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,25 +20,26 @@
 
 namespace RageLib.FileSystem.Common
 {
-    public abstract class FSObject
+  public abstract class FSObject
+  {
+    public string Name { get; set; }
+    public Directory ParentDirectory { get; set; }
+
+    public string FullName
     {
-        public string Name { get; set; }
-        public Directory ParentDirectory { get; set; }
-
-        public string FullName { 
-            get
-            {
-                if (ParentDirectory == null)
-                {
-                    return Name;
-                }
-                else
-                {
-                    return ParentDirectory.FullName + @"\" + Name;
-                }
-            }
+      get
+      {
+        if (ParentDirectory == null)
+        {
+          return Name;
         }
-
-        public abstract bool IsDirectory { get; }
+        else
+        {
+          return ParentDirectory.FullName + @"\" + Name;
+        }
+      }
     }
+
+    public abstract bool IsDirectory { get; }
+  }
 }

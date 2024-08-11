@@ -27,33 +27,33 @@ using RageLib.Common;
 
 namespace RageLib.Audio.SoundBank.MultiChannel
 {
-    internal struct BlockChannelInfo : IFileAccess
+  internal struct BlockChannelInfo : IFileAccess
+  {
+    public int startIndex;
+    public int count;
+    public int offsetIntoCodeBlockIndices;
+    public int numCodeNibbles;
+
+    public BlockChannelInfo(BinaryReader br) : this()
     {
-        public int startIndex;
-        public int count;
-        public int offsetIntoCodeBlockIndices;
-        public int numCodeNibbles;
-
-        public BlockChannelInfo(BinaryReader br) : this()
-        {
-            Read(br);
-        }
-
-        #region Implementation of IFileAccess
-
-        public void Read(BinaryReader br)
-        {
-            startIndex = br.ReadInt32();
-            count = br.ReadInt32();
-            offsetIntoCodeBlockIndices = br.ReadInt32();
-            numCodeNibbles = br.ReadInt32();
-        }
-
-        public void Write(BinaryWriter bw)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
+      Read(br);
     }
+
+    #region Implementation of IFileAccess
+
+    public void Read(BinaryReader br)
+    {
+      startIndex = br.ReadInt32();
+      count = br.ReadInt32();
+      offsetIntoCodeBlockIndices = br.ReadInt32();
+      numCodeNibbles = br.ReadInt32();
+    }
+
+    public void Write(BinaryWriter bw)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    #endregion
+  }
 }

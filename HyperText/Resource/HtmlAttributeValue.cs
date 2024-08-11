@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - HyperText
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -20,45 +20,45 @@
 
 namespace RageLib.HyperText.Resource
 {
-    enum HtmlAttributeValue
-    {
-        Left = 0,
-        Right = 1,
-        Center = 2,
-        Justify = 3,
+  enum HtmlAttributeValue
+  {
+    Left = 0,
+    Right = 1,
+    Center = 2,
+    Justify = 3,
 
-        Top = 4,
-        Bottom = 5,
-        Middle = 6,
+    Top = 4,
+    Bottom = 5,
+    Middle = 6,
 
-        Inherit = 7,
+    Inherit = 7,
 
-        XXSmall = 8,
-        XSmall = 9,
-        Small = 10,
-        Medium = 11,
-        Large = 12,
-        XLarge = 13,
-        XXLarge = 14,
+    XXSmall = 8,
+    XSmall = 9,
+    Small = 10,
+    Medium = 11,
+    Large = 12,
+    XLarge = 13,
+    XXLarge = 14,
 
-        Block = 15,
-        Table = 16,
-        TableCell = 17,
-        Inline = 18,
-        None = 19,
+    Block = 15,
+    Table = 16,
+    TableCell = 17,
+    Inline = 18,
+    None = 19,
 
-        Solid = 20,
-        Underline = 21,
-        Overline = 22,
-        LineThrough = 23,
-        Blink = 24,
+    Solid = 20,
+    Underline = 21,
+    Overline = 22,
+    LineThrough = 23,
+    Blink = 24,
 
-        Repeat = 25,
-        NoRepeat = 26,
-        RepeatX = 27,
-        RepeatY = 28,
+    Repeat = 25,
+    NoRepeat = 26,
+    RepeatX = 27,
+    RepeatY = 28,
 
-        Collapse = 29,
-        Separate = 30
-    }
+    Collapse = 29,
+    Separate = 30
+  }
 }

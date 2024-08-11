@@ -22,8 +22,8 @@ using System.IO;
 
 namespace RageLib.Models
 {
-    internal interface IEmbeddedResourceReader
-    {
-        void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory);
-    }
+  internal interface IEmbeddedResourceReader
+  {
+    void ReadEmbeddedResources(Stream systemMemory, Stream graphicsMemory);
+  }
 }

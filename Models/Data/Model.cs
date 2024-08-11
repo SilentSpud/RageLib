@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Models
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -23,17 +23,17 @@ using RageLib.Common.ResourceTypes;
 
 namespace RageLib.Models.Data
 {
-    public class Model
-    {
-        public List<Geometry> Geometries { get; private set; }
+  public class Model
+  {
+    public List<Geometry> Geometries { get; private set; }
 
-        internal Model(PtrCollection<Resource.Models.Model> infos)
-        {
-            Geometries = new List<Geometry>(infos.Count);
-            foreach (var info in infos)
-            {
-                Geometries.Add(new Geometry(info));
-            }
-        }
+    internal Model(PtrCollection<Resource.Models.Model> infos)
+    {
+      Geometries = new List<Geometry>(infos.Count);
+      foreach (var info in infos)
+      {
+        Geometries.Add(new Geometry(info));
+      }
     }
+  }
 }

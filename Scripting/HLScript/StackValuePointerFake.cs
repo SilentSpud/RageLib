@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -20,30 +20,30 @@
 
 namespace RageLib.Scripting.HLScript
 {
-    internal class StackValuePointerFake : StackValuePointerBase
+  internal class StackValuePointerFake : StackValuePointerBase
+  {
+    public StackValuePointerFake(StackValue pointer)
     {
-        public StackValuePointerFake(StackValue pointer)
-        {
-            UnknownPointer = pointer;
-        }
-
-        public StackValue UnknownPointer { get; set; }
-
-        public override string GetDisplayText()
-        {
-            if (UnknownPointer.ProcessedValue)
-            {
-                return "*(" + UnknownPointer + ")";
-            }
-            else
-            {
-                return "*" + UnknownPointer;
-            }
-        }
-
-        public override string ToString()
-        {
-            return UnknownPointer.ToString();
-        }
+      UnknownPointer = pointer;
     }
+
+    public StackValue UnknownPointer { get; set; }
+
+    public override string GetDisplayText()
+    {
+      if (UnknownPointer.ProcessedValue)
+      {
+        return "*(" + UnknownPointer + ")";
+      }
+      else
+      {
+        return "*" + UnknownPointer;
+      }
+    }
+
+    public override string ToString()
+    {
+      return UnknownPointer.ToString();
+    }
+  }
 }

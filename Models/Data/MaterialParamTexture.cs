@@ -22,14 +22,14 @@ using RageLib.Models.Resource.Shaders;
 
 namespace RageLib.Models.Data
 {
-    public class MaterialParamTexture : MaterialParam
-    {
-        public string TextureName { get; private set; }
+  public class MaterialParamTexture : MaterialParam
+  {
+    public string TextureName { get; private set; }
 
-        internal MaterialParamTexture(uint hash, ShaderParamTexture texture) 
-            : base(hash)
-        {
-            TextureName = texture.TextureName;
-        }
+    internal MaterialParamTexture(uint hash, ShaderParamTexture texture)
+        : base(hash)
+    {
+      TextureName = texture.TextureName;
     }
+  }
 }

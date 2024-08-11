@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - Shaders
  Copyright (C) 2009  Arushan/Aru <oneforaru at gmail.com>
@@ -22,23 +22,23 @@ using System.IO;
 
 namespace RageLib.Shaders.ShaderFX
 {
-    class File
+  class File
+  {
+    internal CompiledShaderFX ShaderFX;
+
+    public void Open(string filename)
     {
-        internal CompiledShaderFX ShaderFX;
-
-        public void Open(string filename)
-        {
-            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            {
-                Open(fs);
-            }
-        }
-
-        public void Open(Stream stream)
-        {
-            var br = new BinaryReader(stream);
-            ShaderFX = new CompiledShaderFX();
-            ShaderFX.Read(br);
-        }
+      using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+      {
+        Open(fs);
+      }
     }
+
+    public void Open(Stream stream)
+    {
+      var br = new BinaryReader(stream);
+      ShaderFX = new CompiledShaderFX();
+      ShaderFX.Read(br);
+    }
+  }
 }

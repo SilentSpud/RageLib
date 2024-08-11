@@ -1,4 +1,4 @@
-﻿﻿
+
 /**********************************************************************\
 
  RageLib
@@ -21,31 +21,31 @@
 
 namespace RageLib.Common
 {
-    public class KeyUtilGTAIV : KeyUtil
+  public class KeyUtilGTAIV : KeyUtil
+  {
+    public override string ExecutableName
     {
-        public override string ExecutableName
-        {
-            get { return "GTAIV.exe"; }
-        }
+      get { return "GTAIV.exe"; }
+    }
 
-        protected override string[] PathRegistryKeys
-        {
-            get
-            {
-                return new[]
-                           {
+    protected override string[] PathRegistryKeys
+    {
+      get
+      {
+        return new[]
+                   {
                                @"SOFTWARE\Rockstar Games\Grand Theft Auto IV", // 32bit
                                @"SOFTWARE\Wow6432Node\Rockstar Games\Grand Theft Auto IV" // 64bit
                            };
-            }
-        }
+      }
+    }
 
-        protected override uint[] SearchOffsets
-        {
-            get
-            {
-                return new uint[]
-                           {
+    protected override uint[] SearchOffsets
+    {
+      get
+      {
+        return new uint[]
+                   {
                                //EFIGS EXEs
                                0xA94204 /* 1.0 */,
                                0xB607C4 /* 1.0.1 */,
@@ -68,8 +68,8 @@ namespace RageLib.Common
                                0xB8813C /* 1.0.1.2 */,
                                0xB8C38C /* 1.0.2.2 */,
                                0xBE6510 /* 1.0.5.2 */,
-                           };
-            }
-        }
+                   };
+      }
     }
+  }
 }

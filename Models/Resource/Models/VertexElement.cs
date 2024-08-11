@@ -20,18 +20,18 @@
 
 namespace RageLib.Models.Resource.Models
 {
-    internal struct VertexElement
-    {
-        public int StreamIndex;
-        public VertexElementUsage Usage;
-        public int UsageIndex;
-        public int Size;
-        public VertexElementType Type;
-        /*
-        // The following fields are used for some other purposes, and we don't really need them here
-        public int F14;
-        public short F18;
-        public short F1A;
-         */
-    }
+  internal struct VertexElement
+  {
+    public int StreamIndex;
+    public VertexElementUsage Usage;
+    public int UsageIndex;
+    public int Size;
+    public VertexElementType Type;
+    /*
+    // The following fields are used for some other purposes, and we don't really need them here
+    public int F14;
+    public short F18;
+    public short F1A;
+     */
+  }
 }

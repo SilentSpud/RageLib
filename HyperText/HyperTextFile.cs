@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib - HyperText
  Copyright (C) 2008-2009  Arushan/Aru <oneforaru at gmail.com>
@@ -20,36 +20,36 @@
 
 using System.IO;
 using RageLib.Textures;
-using File=RageLib.HyperText.Resource.File;
-using Stream=System.IO.Stream;
+using File = RageLib.HyperText.Resource.File;
+using Stream = System.IO.Stream;
 
 namespace RageLib.HyperText
 {
-    public class HyperTextFile
+  public class HyperTextFile
+  {
+    internal File File { get; private set; }
+
+    public void Open(string filename)
     {
-        internal File File { get; private set; }
-
-        public void Open(string filename)
-        {
-            File = new File();
-            File.Open(filename);
-        }
-
-        public void Open(Stream stream)
-        {
-            File = new File();
-            File.Open(stream);
-        }
-
-        public TextureFile EmbeddedTextureFile
-        {
-            get { return File.Data.TextureDictionary; }
-        }
-
-        public void WriteHTML(TextWriter writer)
-        {
-            HyperTextExport.Export(File.Data.RootElement, writer);
-        }
-
+      File = new File();
+      File.Open(filename);
     }
+
+    public void Open(Stream stream)
+    {
+      File = new File();
+      File.Open(stream);
+    }
+
+    public TextureFile EmbeddedTextureFile
+    {
+      get { return File.Data.TextureDictionary; }
+    }
+
+    public void WriteHTML(TextWriter writer)
+    {
+      HyperTextExport.Export(File.Data.RootElement, writer);
+    }
+
+  }
 }

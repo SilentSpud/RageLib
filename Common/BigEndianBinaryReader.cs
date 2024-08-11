@@ -1,4 +1,4 @@
-﻿/**********************************************************************\
+/**********************************************************************\
 
  RageLib
  Copyright (C) 2008  Arushan/Aru <oneforaru at gmail.com>
@@ -23,38 +23,38 @@ using System.IO;
 
 namespace RageLib.Common
 {
-    public class BigEndianBinaryReader : BinaryReader
+  public class BigEndianBinaryReader : BinaryReader
+  {
+    public BigEndianBinaryReader(Stream input) : base(input) { }
+
+    public override short ReadInt16()
     {
-        public BigEndianBinaryReader(Stream input) : base(input) { }
-
-        public override short ReadInt16()
-        {
-            byte[] byteBuffer = base.ReadBytes(2);
-            return (short)((byteBuffer[0] << 8) | byteBuffer[1]);
-        }
-
-        public override int ReadInt32()
-        {
-            byte[] byteBuffer = base.ReadBytes(4);
-            return (int)((byteBuffer[0] << 24) | (byteBuffer[1] << 16) | (byteBuffer[2] << 8) | byteBuffer[3]);
-        }
-
-        public override ushort ReadUInt16()
-        {
-            byte[] byteBuffer = base.ReadBytes(2);
-            return (ushort)((byteBuffer[0] << 8) | byteBuffer[1]);
-        }
-
-        public override uint ReadUInt32()
-        {
-            byte[] byteBuffer = base.ReadBytes(4);
-            return (uint)((byteBuffer[0] << 24) | (byteBuffer[1] << 16) | (byteBuffer[2] << 8) | byteBuffer[3]);
-        }
-
-        public override float ReadSingle()
-        {
-            byte[] byteBuffer = BitConverter.GetBytes(ReadUInt32());
-            return BitConverter.ToSingle(byteBuffer, 0);
-        }
+      byte[] byteBuffer = base.ReadBytes(2);
+      return (short)((byteBuffer[0] << 8) | byteBuffer[1]);
     }
+
+    public override int ReadInt32()
+    {
+      byte[] byteBuffer = base.ReadBytes(4);
+      return (int)((byteBuffer[0] << 24) | (byteBuffer[1] << 16) | (byteBuffer[2] << 8) | byteBuffer[3]);
+    }
+
+    public override ushort ReadUInt16()
+    {
+      byte[] byteBuffer = base.ReadBytes(2);
+      return (ushort)((byteBuffer[0] << 8) | byteBuffer[1]);
+    }
+
+    public override uint ReadUInt32()
+    {
+      byte[] byteBuffer = base.ReadBytes(4);
+      return (uint)((byteBuffer[0] << 24) | (byteBuffer[1] << 16) | (byteBuffer[2] << 8) | byteBuffer[3]);
+    }
+
+    public override float ReadSingle()
+    {
+      byte[] byteBuffer = BitConverter.GetBytes(ReadUInt32());
+      return BitConverter.ToSingle(byteBuffer, 0);
+    }
+  }
 }
