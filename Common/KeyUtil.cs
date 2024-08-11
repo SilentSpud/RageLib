@@ -23,13 +23,13 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Ookii.Dialogs.Wpf;
+using Ookii.Dialogs.WinForms;
 
 namespace RageLib.Common
 {
   public abstract class KeyUtil
   {
-    public static string dir { get; set; }
+    public static string Dir { get; set; }
 
     public static class StringExtensions
     {
@@ -57,19 +57,19 @@ namespace RageLib.Common
 
       if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), ExecutableName)))
       {
-        dir = Directory.GetCurrentDirectory();
+        Dir = Directory.GetCurrentDirectory();
       }
       else
       {
         if (ExecutableName == "GTAIV.exe" && File.Exists(@"path.iv") && !StringExtensions.IsNullOrWhiteSpace(File.ReadAllText(@"path.iv")) && File.Exists(Path.Combine(File.ReadAllText(@"path.iv"), ExecutableName)))
         {
-          dir = File.ReadAllText(@"path.iv");
+          Dir = File.ReadAllText(@"path.iv");
         }
         else
         {
           if (ExecutableName == "EFLC.exe" && File.Exists(@"path.eflc") && !StringExtensions.IsNullOrWhiteSpace(File.ReadAllText(@"path.eflc")) && File.Exists(Path.Combine(File.ReadAllText(@"path.eflc"), ExecutableName)))
           {
-            dir = File.ReadAllText(@"path.eflc");
+            Dir = File.ReadAllText(@"path.eflc");
           }
           else
           {
@@ -81,7 +81,7 @@ namespace RageLib.Common
               {
                 if (key.GetValue("InstallFolder") != null && File.Exists(Path.Combine(key.GetValue("InstallFolder").ToString(), ExecutableName)))
                 {
-                  dir = key.GetValue("InstallFolder").ToString();
+                  Dir = key.GetValue("InstallFolder").ToString();
                   key.Close();
                   break;
                 }
@@ -92,9 +92,9 @@ namespace RageLib.Common
                     Description = "Select game folder"
                   };
                   //DialogResult result = fbd.ShowDialog();
-                  if (fbd.ShowDialog() != false && !StringExtensions.IsNullOrWhiteSpace(fbd.SelectedPath))
+                  if (fbd.ShowDialog() == DialogResult.OK && !StringExtensions.IsNullOrWhiteSpace(fbd.SelectedPath))
                   {
-                    dir = fbd.SelectedPath;
+                    Dir = fbd.SelectedPath;
                     break;
                   }
                   else
@@ -109,7 +109,7 @@ namespace RageLib.Common
         }
       }
 
-      return dir;
+      return Dir;
     }
 
     public byte[] FindKey(string gamePath)
@@ -203,7 +203,7 @@ namespace RageLib.Common
     {
       public static string Get()
       {
-        return KeyUtil.dir;
+        return KeyUtil.Dir;
       }
     }
   }
