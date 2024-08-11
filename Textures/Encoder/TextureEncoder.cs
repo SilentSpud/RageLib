@@ -53,18 +53,15 @@ namespace RageLib.Textures.Encoder
         var newData = new byte[width * height];
 
         // Convert to L8
-        unsafe
+        for (var y = 0; y < bitmap.Height; y++)
         {
-          var p = (byte*)bmpdata.Scan0;
-          for (var y = 0; y < bitmap.Height; y++)
+          for (var x = 0; x < bitmap.Width; x++)
           {
-            for (var x = 0; x < bitmap.Width; x++)
-            {
-              var offset = y * bmpdata.Stride + x * 4;
-              var dataOffset = y * width + x;
+            var pixel = bitmap.GetPixel(x, y);
+            var grayValue = (byte)((pixel.R + pixel.G + pixel.B) / 3);
+            var dataOffset = y * width + x;
 
-              newData[dataOffset] = (byte)((p[offset + 2] + p[offset + 1] + p[offset + 0]) / 3);
-            }
+            newData[dataOffset] = grayValue;
           }
         }
 
@@ -73,20 +70,20 @@ namespace RageLib.Textures.Encoder
       else
       {
         // Convert from the B G R A format stored by GDI+ to R G B A
-        unsafe
+        var imgWidth = bitmap.Width;
+        var imgHeight = bitmap.Height;
+        var imgData = new byte[width * height * 4];
+
+        for (var y = 0; y < imgHeight; y++)
         {
-          var p = (byte*)bmpdata.Scan0;
-          for (var y = 0; y < bitmap.Height; y++)
+          for (var x = 0; x < imgWidth; x++)
           {
-            for (var x = 0; x < bitmap.Width; x++)
-            {
-              var offset = y * bmpdata.Stride + x * 4;
-              var dataOffset = y * width * 4 + x * 4;
-              data[dataOffset + 0] = p[offset + 2];       // R
-              data[dataOffset + 1] = p[offset + 1];       // G
-              data[dataOffset + 2] = p[offset + 0];       // B
-              data[dataOffset + 3] = p[offset + 3];       // A
-            }
+            var pixel = bitmap.GetPixel(x, y);
+            var dataOffset = y * width * 4 + x * 4;
+            imgData[dataOffset + 0] = pixel.R; // R
+            imgData[dataOffset + 1] = pixel.G; // G
+            imgData[dataOffset + 2] = pixel.B; // B
+            imgData[dataOffset + 3] = pixel.A; // A
           }
         }
       }

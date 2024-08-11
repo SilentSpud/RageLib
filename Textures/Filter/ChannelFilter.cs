@@ -69,20 +69,14 @@ namespace RageLib.Textures.Filter
           var rect = new Rectangle(0, 0, image.Width, image.Height);
           var bmpdata = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
-          unsafe
+          for (var y = 0; y < bmp.Height; y++)
           {
-            var p = (byte*)bmpdata.Scan0;
-            for (var y = 0; y < bmp.Height; y++)
+            for (var x = 0; x < bmp.Width; x++)
             {
-              for (var x = 0; x < bmp.Width; x++)
-              {
-                var offset = y * bmpdata.Stride + x * 4;
-                var data = (byte)(((*(int*)(p + offset)) & mask) >> shift);
-                p[offset + 0] = data;
-                p[offset + 1] = data;
-                p[offset + 2] = data;
-                p[offset + 3] = 255;
-              }
+              var pixel = bmp.GetPixel(x, y);
+              var data = (byte)(((pixel.ToArgb() & mask) >> shift) & 0xFF);
+              var newColor = Color.FromArgb(255, data, data, data);
+              bmp.SetPixel(x, y, newColor);
             }
           }
 
