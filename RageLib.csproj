@@ -1,0 +1,442 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!--ProductVersion>9.0.21022</ProductVersion-->
+    <!--SchemaVersion>2.0</SchemaVersion-->
+    <ProjectGuid>{B2A6C9F9-A2BA-49EE-A364-2E839BD381BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RageLib</RootNamespace>
+    <AssemblyName>RageLib</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <!--OldToolsVersion>3.5</OldToolsVersion-->
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>7.0</LangVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Audio\AudioPlayer.cs" />
+    <Compile Include="Audio\AudioWave.cs" />
+    <Compile Include="Audio\AudioFile.cs" />
+    <Compile Include="Audio\AudioView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Audio\AudioView.Designer.cs">
+      <DependentUpon>AudioView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Audio\AudioViewController.cs" />
+    <Compile Include="Audio\ListViewItemComparer.cs" />
+    <Compile Include="Audio\SoundBank\IMultichannelSound.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\AdpcmInfo.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\BlockChannelInfo.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\BlockInfo.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\BlockInfoHeader.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\ChannelInfo.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\ChannelInfoHeader.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\CodeIndices.cs" />
+    <Compile Include="Audio\SoundBank\Hashes\HashResolver.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\Header.cs" />
+    <Compile Include="Audio\SoundBank\ISoundWave.cs" />
+    <Compile Include="Audio\SoundBank\SoundBankFile.cs" />
+    <Compile Include="Audio\SoundBank\Mono\WaveInfo.cs" />
+    <Compile Include="Audio\SoundBank\Mono\WaveInfoHeader.cs" />
+    <Compile Include="Audio\SoundBank\DviAdpcmDecoder.cs" />
+    <Compile Include="Audio\SoundBank\Mono\Header.cs" />
+    <Compile Include="Audio\SoundBank\ISoundBank.cs" />
+    <Compile Include="Audio\SoundBank\SoundBankException.cs" />
+    <Compile Include="Audio\SoundBank\SoundBankMono.cs" />
+    <Compile Include="Audio\SoundBank\SoundBankMultiChannel.cs" />
+    <Compile Include="Audio\SoundBank\MultiChannel\SoundWave.cs" />
+    <Compile Include="Audio\WaveFile\ChannelMask.cs" />
+    <Compile Include="Audio\WaveFile\WaveExport.cs" />
+    <Compile Include="Audio\WaveFile\WaveHeader.cs" />
+    <Compile Include="Audio\Player\WaveNative.cs" />
+    <Compile Include="Audio\Player\WaveOut.cs" />
+    <Compile Include="Common\BigEndianBinaryReader.cs" />
+    <Compile Include="Common\Compression\CompressionCodecFactory.cs" />
+    <Compile Include="Common\KeyUtil.cs" />
+    <Compile Include="Common\KeyUtilEFLC.cs" />
+    <Compile Include="Common\DataUtil.cs" />
+    <Compile Include="Common\Hasher.cs" />
+    <Compile Include="Common\IFileAccess.cs" />
+    <Compile Include="Common\KeyUtilGTAIV.cs" />
+    <Compile Include="Common\KeyStore.cs" />
+    <Compile Include="Common\Compression\ICompressionCodec.cs" />
+    <Compile Include="Common\RageZip.cs" />
+    <Compile Include="Common\Resources\CompressionType.cs" />
+    <Compile Include="Common\Compression\CompressionDeflateCodec.cs" />
+    <Compile Include="Common\Resources\ResourceFile.cs" />
+    <Compile Include="Common\Resources\ResourceHeader.cs" />
+    <Compile Include="Common\Compression\CompressionLZXCodec.cs" />
+    <Compile Include="Common\Resources\ResourceType.cs" />
+    <Compile Include="Common\Resources\ResourceUtil.cs" />
+    <Compile Include="Common\ResourceTypes\DATBase.cs" />
+    <Compile Include="Common\ResourceTypes\KnownVTable.cs" />
+    <Compile Include="Common\ResourceTypes\Matrix44.cs" />
+    <Compile Include="Common\ResourceTypes\PGBase.cs" />
+    <Compile Include="Common\ResourceTypes\PGDictionary.cs" />
+    <Compile Include="Common\ResourceTypes\PtrString.cs" />
+    <Compile Include="Common\ResourceTypes\PtrValue.cs" />
+    <Compile Include="Common\ResourceTypes\PtrCollection.cs" />
+    <Compile Include="Common\ResourceTypes\SimpleArray.cs" />
+    <Compile Include="Common\ResourceTypes\SimpleCollection.cs" />
+    <Compile Include="Common\ResourceTypes\UnDocData.cs" />
+    <Compile Include="Common\ResourceTypes\Vector2.cs" />
+    <Compile Include="Common\ResourceTypes\Vector3.cs" />
+    <Compile Include="Common\ResourceTypes\Vector4.cs" />
+    <Compile Include="Common\StreamContext.cs" />
+    <Compile Include="FileSystem\Common\Directory.cs" />
+    <Compile Include="FileSystem\Common\File.cs" />
+    <Compile Include="FileSystem\Common\FileSystem.cs" />
+    <Compile Include="FileSystem\Common\FSObject.cs" />
+    <Compile Include="FileSystem\IMGFileSystem.cs" />
+    <Compile Include="FileSystem\IMG\File.cs" />
+    <Compile Include="FileSystem\IMG\Header.cs" />
+    <Compile Include="FileSystem\IMG\TOC.cs" />
+    <Compile Include="FileSystem\IMG\TOCEntry.cs" />
+    <Compile Include="FileSystem\RealFileSystem.cs" />
+    <Compile Include="FileSystem\Real\DirectoryEntry.cs" />
+    <Compile Include="FileSystem\Real\FileEntry.cs" />
+    <Compile Include="FileSystem\Real\RealContext.cs" />
+    <Compile Include="FileSystem\Real\RealEntry.cs" />
+    <Compile Include="FileSystem\RPFFileSystem.cs" />
+    <Compile Include="FileSystem\RPF\DirectoryEntry.cs" />
+    <Compile Include="FileSystem\RPF\File.cs" />
+    <Compile Include="FileSystem\RPF\FileEntry.cs" />
+    <Compile Include="FileSystem\RPF\Header.cs" />
+    <Compile Include="FileSystem\RPF\MagicId.cs" />
+    <Compile Include="FileSystem\RPF\TOC.cs" />
+    <Compile Include="FileSystem\RPF\TOCEntry.cs" />
+    <Compile Include="HyperText\HyperTextFile.cs" />
+    <Compile Include="HyperText\HyperTextExport.cs" />
+    <Compile Include="HyperText\Resource\File.cs" />
+    <Compile Include="HyperText\Resource\HtmlAttributeValue.cs" />
+    <Compile Include="HyperText\Resource\HtmlDocument.cs" />
+    <Compile Include="HyperText\Resource\HtmlNode.cs" />
+    <Compile Include="HyperText\Resource\HtmlNodeType.cs" />
+    <Compile Include="HyperText\Resource\HtmlRenderState.cs" />
+    <Compile Include="HyperText\Resource\HtmlTag.cs" />
+    <Compile Include="HyperText\Resource\TextureInfo.cs" />
+    <Compile Include="Models\Data\Drawable.cs" />
+    <Compile Include="Models\Data\Geometry.cs" />
+    <Compile Include="Models\Data\Material.cs" />
+    <Compile Include="Models\Data\MaterialParam.cs" />
+    <Compile Include="Models\Data\MaterialParamMatrix44.cs" />
+    <Compile Include="Models\Data\MaterialParamTexture.cs" />
+    <Compile Include="Models\Data\MaterialParamVector4.cs" />
+    <Compile Include="Models\Data\Mesh.cs" />
+    <Compile Include="Models\Data\Model.cs" />
+    <Compile Include="Models\Data\PrimitiveType.cs" />
+    <Compile Include="Models\Data\Bone.cs" />
+    <Compile Include="Models\Data\Skeleton.cs" />
+    <Compile Include="Models\Data\Vertex.cs" />
+    <Compile Include="Models\Data\VertexDeclaration.cs" />
+    <Compile Include="Models\Data\VertexElement.cs" />
+    <Compile Include="Models\Data\VertexElementMethod.cs" />
+    <Compile Include="Models\Data\VertexElementType.cs" />
+    <Compile Include="Models\Data\VertexElementUsage.cs" />
+    <Compile Include="Models\Export\ExportFactory.cs" />
+    <Compile Include="Models\Export\IExporter.cs" />
+    <Compile Include="Models\Export\StudiomdlExport.cs" />
+    <Compile Include="Models\IModelFile.cs" />
+    <Compile Include="Models\Model3DViewer\MathUtils.cs" />
+    <Compile Include="Models\Model3DViewer\Matrix3DStack.cs" />
+    <Compile Include="Models\Model3DViewer\Model3DView.xaml.cs">
+      <DependentUpon>Model3DView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model3DViewer\ObjectTracker.cs" />
+    <Compile Include="Models\Model3DViewer\RenderMode.cs" />
+    <Compile Include="Models\Model3DViewer\ScreenSpaceLines3D.cs" />
+    <Compile Include="Models\ModelDictionaryFile.cs" />
+    <Compile Include="Models\ModelFile.cs" />
+    <Compile Include="Models\ModelFragTypeFile.cs" />
+    <Compile Include="Models\ModelGenerator.cs" />
+    <Compile Include="Models\ModelNode.cs" />
+    <Compile Include="Models\ModelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Models\ModelView.Designer.cs">
+      <DependentUpon>ModelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelViewController.cs" />
+    <Compile Include="Models\Resource\DrawableModelDictionary.cs" />
+    <Compile Include="Models\Resource\File.cs" />
+    <Compile Include="Models\Resource\FragTypeModel.cs" />
+    <Compile Include="Models\Resource\Models\Geometry.cs" />
+    <Compile Include="Models\Resource\Models\IndexBuffer.cs" />
+    <Compile Include="Models\Resource\DrawableModel.cs" />
+    <Compile Include="Models\Resource\Shaders\IShaderParam.cs" />
+    <Compile Include="Models\Resource\Models\Model.cs" />
+    <Compile Include="Models\IDataReader.cs" />
+    <Compile Include="Models\IEmbeddedResourceReader.cs" />
+    <Compile Include="Models\Resource\Models\VertexDeclaration.cs" />
+    <Compile Include="Models\Resource\Models\VertexElement.cs" />
+    <Compile Include="Models\Resource\Models\VertexElementType.cs" />
+    <Compile Include="Models\Resource\Models\VertexElementUsage.cs" />
+    <Compile Include="Models\Resource\Shaders\ShaderFx.cs" />
+    <Compile Include="Models\Resource\Shaders\ShaderGroup.cs" />
+    <Compile Include="Models\Resource\Shaders\ParamNameHash.cs" />
+    <Compile Include="Models\Resource\Shaders\ParamObjectFactory.cs" />
+    <Compile Include="Models\Resource\Shaders\ShaderParamTexture.cs" />
+    <Compile Include="Models\Resource\Shaders\ParamType.cs" />
+    <Compile Include="Models\Resource\Shaders\Shader.cs" />
+    <Compile Include="Models\Resource\Shaders\ShaderParamMatrix.cs" />
+    <Compile Include="Models\Resource\Shaders\ShaderParamVector4.cs" />
+    <Compile Include="Models\Resource\Models\VertexBuffer.cs" />
+    <Compile Include="Models\Resource\Skeletons\Bone.cs" />
+    <Compile Include="Models\Resource\Skeletons\BoneIDMapping.cs" />
+    <Compile Include="Models\Resource\Skeletons\Skeleton.cs" />
+    <Compile Include="Scripting\CodeFormat.cs" />
+    <Compile Include="Scripting\HLScript\CodePath.cs" />
+    <Compile Include="Scripting\HLScript\ControlFlowAnalyzer.cs" />
+    <Compile Include="Scripting\HLScript\Function.cs" />
+    <Compile Include="Scripting\HLScript\HLInstruction.cs" />
+    <Compile Include="Scripting\HLScript\StackValueRef.cs" />
+    <Compile Include="Scripting\HLScript\StackValueStringOperation.cs" />
+    <Compile Include="Scripting\Output\DecompileScruffOutput.cs" />
+    <Compile Include="Scripting\Output\DecompileScruffHeaderOutput.cs" />
+    <Compile Include="Scripting\Output\VariablesOutput.cs" />
+    <Compile Include="Scripting\Script\LiteralFormatter.cs" />
+    <Compile Include="Scripting\HLScript\ProcessedStackValueGroup.cs" />
+    <Compile Include="Scripting\HLScript\ScriptProgram.cs" />
+    <Compile Include="Scripting\HLScript\StackUseAnalyzer.cs" />
+    <Compile Include="Scripting\HLScript\StackValue.cs" />
+    <Compile Include="Scripting\HLScript\StackValueAssign.cs" />
+    <Compile Include="Scripting\HLScript\StackValueAssignMulti.cs" />
+    <Compile Include="Scripting\HLScript\StackValueDeref.cs" />
+    <Compile Include="Scripting\HLScript\StackValueLiteral.cs" />
+    <Compile Include="Scripting\HLScript\StackValueOperation.cs" />
+    <Compile Include="Scripting\HLScript\StackValueOperationType.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerArray.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerBase.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerFake.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerIndex.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerType.cs" />
+    <Compile Include="Scripting\HLScript\StackValuePointerVar.cs" />
+    <Compile Include="Scripting\HLScript\StackValueType.cs" />
+    <Compile Include="Scripting\Output\CodePathOutput.cs" />
+    <Compile Include="Scripting\Output\DecompileFullOutput.cs" />
+    <Compile Include="Scripting\Output\DecompileCFOutput.cs" />
+    <Compile Include="Scripting\Output\DisassembleOutput.cs" />
+    <Compile Include="Scripting\Output\IOutputProvider.cs" />
+    <Compile Include="Scripting\Output\OutputFactory.cs" />
+    <Compile Include="Scripting\ScriptFile.cs" />
+    <Compile Include="Scripting\Script\Decoder.cs" />
+    <Compile Include="Scripting\Script\File.cs" />
+    <Compile Include="Scripting\Script\Header.cs" />
+    <Compile Include="Scripting\Script\Instruction.cs" />
+    <Compile Include="Scripting\Script\InstructionBranch.cs" />
+    <Compile Include="Scripting\Script\InstructionFnBegin.cs" />
+    <Compile Include="Scripting\Script\InstructionFnEnd.cs" />
+    <Compile Include="Scripting\Script\InstructionNative.cs" />
+    <Compile Include="Scripting\Script\InstructionPush.cs" />
+    <Compile Include="Scripting\Script\InstructionSwitch.cs" />
+    <Compile Include="Scripting\Script\Natives.cs" />
+    <Compile Include="Scripting\Script\OpCode.cs" />
+    <Compile Include="Scripting\Script\StackUsage.cs" />
+    <Compile Include="Scripting\Script\StackUsageInfo.cs" />
+    <Compile Include="Shaders\Shader.cs" />
+    <Compile Include="Shaders\ShaderFile.cs" />
+    <Compile Include="Shaders\ShaderFX\CompiledShaderFX.cs" />
+    <Compile Include="Shaders\ShaderFX\File.cs" />
+    <Compile Include="Shaders\ShaderFX\PixelShader.cs" />
+    <Compile Include="Shaders\ShaderFX\VariableDefinition.cs" />
+    <Compile Include="Shaders\ShaderFX\Variables.cs" />
+    <Compile Include="Shaders\ShaderFX\VertexShader.cs" />
+    <Compile Include="Shaders\ShaderType.cs" />
+    <Compile Include="Textures\Decoder\DXTDecoder.cs" />
+    <Compile Include="Textures\Decoder\TextureDecoder.cs" />
+    <Compile Include="Textures\Encoder\DXTEncoder.cs" />
+    <Compile Include="Textures\Encoder\Squish.cs" />
+    <Compile Include="Textures\Encoder\TextureEncoder.cs" />
+    <Compile Include="Textures\Filter\ChannelFilter.cs" />
+    <Compile Include="Textures\Filter\IFilter.cs" />
+    <Compile Include="Textures\Filter\ImageChannel.cs" />
+    <Compile Include="Textures\Resource\D3DFormat.cs" />
+    <Compile Include="Textures\Resource\File.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Textures\Resource\Header.cs" />
+    <Compile Include="Textures\Resource\TextureInfo.cs" />
+    <Compile Include="Textures\Texture.cs" />
+    <Compile Include="Textures\TextureEditController.cs" />
+    <Compile Include="Textures\TextureEditView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Textures\TextureEditView.Designer.cs">
+      <DependentUpon>TextureEditView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Textures\TextureFile.cs" />
+    <Compile Include="Textures\TexturePreviewController.cs" />
+    <Compile Include="Textures\TexturePreviewView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Textures\TexturePreviewView.Designer.cs">
+      <DependentUpon>TexturePreviewView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Textures\TextureType.cs" />
+    <Compile Include="Textures\TextureView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Textures\TextureView.Designer.cs">
+      <DependentUpon>TextureView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Textures\TextureViewController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Audio\SoundBank\Hashes\Names.txt" />
+    <EmbeddedResource Include="Scripting\Script\NativesList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Vendor\ragezip.dll">
+      <Link>ragezip.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Audio\AudioView.resx">
+      <DependentUpon>AudioView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\ModelView.resx">
+      <DependentUpon>ModelView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\TextureEditView.resx">
+      <DependentUpon>TextureEditView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\TexturePreviewView.resx">
+      <DependentUpon>TexturePreviewView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\TextureView.resx">
+      <DependentUpon>TextureView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Models\Model3DViewer\Model3DView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="MaterialSkin">
+      <Version>0.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Ookii.Dialogs.Wpf">
+      <Version>5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpZipLib">
+      <Version>1.4.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

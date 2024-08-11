@@ -23,7 +23,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Ookii.Dialogs;
+using Ookii.Dialogs.Wpf;
 
 namespace RageLib.Common
 {
@@ -87,10 +87,12 @@ namespace RageLib.Common
                                 }
                                 else
                                 {
-                                    var fbd = new VistaFolderBrowserDialog();
-                                    fbd.Description = "Select game folder";
+                                    var fbd = new VistaFolderBrowserDialog
+                                    {
+                                      Description = "Select game folder"
+                                    };
                                     //DialogResult result = fbd.ShowDialog();
-                                    if (fbd.ShowDialog() == DialogResult.OK && !StringExtensions.IsNullOrWhiteSpace(fbd.SelectedPath))
+                                    if (fbd.ShowDialog() != false && !StringExtensions.IsNullOrWhiteSpace(fbd.SelectedPath))
                                     {
                                         dir = fbd.SelectedPath;
                                         break;
