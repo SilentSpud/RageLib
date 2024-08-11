@@ -341,7 +341,7 @@
     <EmbeddedResource Include="Scripting\Script\NativesList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Vendor\ragezip.dll">
+    <Content Include="lib\ragezip.dll">
       <Link>ragezip.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
